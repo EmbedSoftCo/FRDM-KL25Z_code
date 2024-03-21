@@ -45,18 +45,18 @@ static void delay_us(uint32_t d);
 /*!
  * \brief Main application
  */
-int main(void)
-{
+int main(void) {
     rgb_init();
     uart0_init();
-    
+
     uart0_send_string("Serial Lab\r\n");
 
-    while(1)
-    {
-				uint8_t data = uart2_receive_poll();
+    while (1) {
+        uint8_t data = uart2_receive_poll();
         uart0_put_char(data);
-		}
+        // todo put data into a buffer;
+        // todo parsebuffer with nmea_single_parse()
+    }
 }
 
 /*!
@@ -72,17 +72,14 @@ int main(void)
  *
  * \param[in]  d  delay in microseconds
  */
-static void delay_us(uint32_t d)
-{
-
+static void delay_us(uint32_t d) {
 #if (CLOCK_SETUP != 1)
 #warning This delay function does not work as designed
 #endif
 
     volatile uint32_t t;
 
-    for(t=4*d; t>0; t--)
-    {
+    for (t = 4 * d; t > 0; t--) {
         __asm("nop");
         __asm("nop");
     }
