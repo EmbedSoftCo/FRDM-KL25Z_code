@@ -80,7 +80,7 @@
 
 /* ==================== FUNCIONS ==================== */
 
-bool init_bme280(void);
+bool bme280_init(void);
 bool reset_bme280(void);
 bool configure_bme280(void);
 bool read_calibration_status(void);

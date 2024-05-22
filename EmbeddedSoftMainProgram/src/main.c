@@ -57,15 +57,24 @@ static uint8_t data_read[511] = {0};
  */
 int main(void)
 {
-    rg_init();
-    pit_init();
-    tpm1_init();
+		uart0_init();
+		
+		uart0_send_string("Init RG leds\n");
+		rg_init();
+		
+    uart0_send_string("Init PIT\n");
+		pit_init();
     
+		uart0_send_string("Init TPM1\n");
+		tpm1_init();  
+		
+		uart0_send_string("Init EEPROM\n");
 		EEPROM_init();
-    uart0_init();
-		init_bme280();
+    
+		uart0_send_string("Init BME 280\n");
+		bme280_init();
 	
-		uart0_send_string("code Begins!\r\n");
+		uart0_send_string("code Initialised!\r\n");
 		
 		uint8_t block = 0x0; 									// Block 0 = 0x0 	// Block 15 = 0xF
 		uint8_t sector = 0x0;									// Sector 0 = 0x0 // Sector 15 = 0xF
@@ -74,7 +83,7 @@ int main(void)
 		char antwoord[32];
 		
 		EEPROM_write_page(block, sector, page, data_write, sizeof(data_write));
-		
+	
 		EEPROM_read_page(block, sector, page, data_read, sizeof(data_read));
 		
 		bool green = false;
@@ -88,10 +97,10 @@ int main(void)
     while(1)
     {
 			temp = get_temperature();
-			sprintf(antwoord, "%d\r\n", temp); // Shows temperature without comma "2405" is 24,05 degC
+			
+			sprintf(antwoord, "%d\r\n", temp);
 			
 			uart0_send_string(antwoord);
-			
 			rg_onoff(toggleLED,green);
 			delay_us(100000UL);
     }

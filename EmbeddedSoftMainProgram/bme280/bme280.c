@@ -30,7 +30,7 @@
  *
  *****************************************************************************/
 #include "bme280.h"
-#include "i2c0.h"
+#include "i2c1.h"
 
 /* ==================== CALIBRATION VALUES ==================== */
 
@@ -46,18 +46,18 @@
  *          False on failed read or wrong device adress   *
  *                                                        *
  **********************************************************/
-bool init_bme280(void)
+bool bme280_init(void)
 {
     uint8_t chipId = 0x00;
     bool read_succes = false;
 		bool config_succes = false;
 	 
 		// Startup the I2C procotol
-    i2c0_init();
+    i2c1_init();
 
 		// Read the sensor ID
 		// Test communication to sensor and checks that sensor is indeed BME280
-    read_succes = i2c0_read(deviceAdress, CHIP_ID_ADDR , &chipId, 1);
+    read_succes = i2c1_read(deviceAdress, CHIP_ID_ADDR , &chipId, 1);
 
     if(chipId != CHIP_ID || read_succes != true)
     {
@@ -82,7 +82,7 @@ bool reset_bme280(void)
 {
 	uint8_t rw_i2c_succes = 0x00;
 	
-	rw_i2c_succes = i2c0_write(deviceAdress, SOFTRESET_BME, &RESET_COMMAND, 1);
+	rw_i2c_succes = i2c1_write(deviceAdress, SOFTRESET_BME, &RESET_COMMAND, 1);
 	if(rw_i2c_succes != 0x1)
 	{	
 			return false;
@@ -116,26 +116,26 @@ bool configure_bme280(void)
 //			CONFIGURE BME 280
 		
 		// Set BME 280 in sleep mode, otherwise writes will be ignored see DS 7.4.6
-    rw_i2c_succes = i2c0_write(deviceAdress, CTRL_MEAS_ADDR, &SLEEP_COMMAND, 1);
+    rw_i2c_succes = i2c1_write(deviceAdress, CTRL_MEAS_ADDR, &SLEEP_COMMAND, 1);
     if(rw_i2c_succes != I2C_RW_SUCCES)
     { 
         return false;
     }
 
-    rw_i2c_succes = i2c0_write(deviceAdress, CTRL_HUM_ADDR, &hum_config_reg, 1);
+    rw_i2c_succes = i2c1_write(deviceAdress, CTRL_HUM_ADDR, &hum_config_reg, 1);
     if(rw_i2c_succes != I2C_RW_SUCCES)
     { 
         return false;
     }
 		
-    rw_i2c_succes = i2c0_write(deviceAdress, CONFIG_ADDR, &config_reg, 1);
+    rw_i2c_succes = i2c1_write(deviceAdress, CONFIG_ADDR, &config_reg, 1);
     if(rw_i2c_succes != I2C_RW_SUCCES)
     { 
         return false;
     }
 
 	
-    rw_i2c_succes = i2c0_write(deviceAdress, CTRL_MEAS_ADDR, &ctrl_meas_reg, 1);
+    rw_i2c_succes = i2c1_write(deviceAdress, CTRL_MEAS_ADDR, &ctrl_meas_reg, 1);
     if(rw_i2c_succes != I2C_RW_SUCCES)
     { 
         return false;
@@ -161,7 +161,7 @@ bool configure_bme280(void)
 bool read_calibration_status(void)
 {
 	uint8_t CALIBRATION_VALUE	= 0x00;
-  i2c0_read(deviceAdress, REGISTER_STATUS, &CALIBRATION_VALUE, 1);
+  i2c1_read(deviceAdress, REGISTER_STATUS, &CALIBRATION_VALUE, 1);
 	
 		return ( (CALIBRATION_VALUE & (1 << 0)) != 0);
 }
@@ -180,9 +180,9 @@ bool get_calibration(void)
 	uint8_t dig_t3_local[2];
 	
 	// Read the data from BME 280
-	i2c_read_succes = i2c0_read(deviceAdress, DIG_T1_ADDR, dig_t1_local, 2);
-	i2c_read_succes = i2c0_read(deviceAdress, DIG_T2_ADDR, dig_t2_local, 2);
-	i2c_read_succes = i2c0_read(deviceAdress, DIG_T3_ADDR, dig_t3_local, 2);
+	i2c_read_succes = i2c1_read(deviceAdress, DIG_T1_ADDR, dig_t1_local, 2);
+	i2c_read_succes = i2c1_read(deviceAdress, DIG_T2_ADDR, dig_t2_local, 2);
+	i2c_read_succes = i2c1_read(deviceAdress, DIG_T3_ADDR, dig_t3_local, 2);
 	
 	if(i2c_read_succes != I2C_RW_SUCCES) 
 	{	
@@ -207,9 +207,9 @@ int32_t get_temperature(void)
 	int32_t adc_T =  0x0000;
 	int32_t T 		=  0x0000;
 	
-	i2c0_write(deviceAdress, CTRL_MEAS_ADDR, &ctrl_meas_reg, 1);
+	i2c1_write(deviceAdress, CTRL_MEAS_ADDR, &ctrl_meas_reg, 1);
 	
-	i2c_read_succes = i2c0_read(deviceAdress, TEMP_ADDR, temperature, 3);
+	i2c_read_succes = i2c1_read(deviceAdress, TEMP_ADDR, temperature, 3);
 	if(i2c_read_succes != I2C_RW_SUCCES)
     { 
         return 0x00;
