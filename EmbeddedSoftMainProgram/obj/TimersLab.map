@@ -1,0 +1,1279 @@
+Component: Arm Compiler for Embedded 6.21 Tool: armlink [5ec1fa00]
+
+==============================================================================
+
+Section Cross References
+
+    pit.o(.ARM.exidx.text.pit_init) refers to pit.o(.text.pit_init) for [Anonymous Symbol]
+    pit.o(.text.PIT_IRQHandler) refers to pit.o(.bss..L_MergedGlobals) for [Anonymous Symbol]
+    pit.o(.ARM.exidx.text.PIT_IRQHandler) refers to pit.o(.text.PIT_IRQHandler) for [Anonymous Symbol]
+    queue.o(.text.q_init) refers to memseta.o(.text) for __aeabi_memclr
+    queue.o(.ARM.exidx.text.q_init) refers to queue.o(.text.q_init) for [Anonymous Symbol]
+    queue.o(.ARM.exidx.text.q_empty) refers to queue.o(.text.q_empty) for [Anonymous Symbol]
+    queue.o(.ARM.exidx.text.q_full) refers to queue.o(.text.q_full) for [Anonymous Symbol]
+    queue.o(.ARM.exidx.text.q_size) refers to queue.o(.text.q_size) for [Anonymous Symbol]
+    queue.o(.ARM.exidx.text.q_enqueue) refers to queue.o(.text.q_enqueue) for [Anonymous Symbol]
+    queue.o(.ARM.exidx.text.q_dequeue) refers to queue.o(.text.q_dequeue) for [Anonymous Symbol]
+    main.o(.text.main) refers to delay.o(.text.delay_us) for delay_us
+    main.o(.text.main) refers to uart0.o(.text.uart0_init) for uart0_init
+    main.o(.text.main) refers to uart0.o(.text.uart0_send_string) for uart0_send_string
+    main.o(.text.main) refers to rg.o(.text.rg_init) for rg_init
+    main.o(.text.main) refers to pit.o(.text.pit_init) for pit_init
+    main.o(.text.main) refers to tpm1.o(.text.tpm1_init) for tpm1_init
+    main.o(.text.main) refers to eeprom.o(.text.EEPROM_init) for EEPROM_init
+    main.o(.text.main) refers to bme280.o(.text.bme280_init) for bme280_init
+    main.o(.text.main) refers to configscreen.o(.text.displayStart) for displayStart
+    main.o(.text.main) refers to eeprom.o(.text.EEPROM_write_page) for EEPROM_write_page
+    main.o(.text.main) refers to eeprom.o(.text.EEPROM_read_page) for EEPROM_read_page
+    main.o(.text.main) refers to configscreen.o(.text.updateDisplay) for updateDisplay
+    main.o(.text.main) refers to rg.o(.text.rg_onoff) for rg_onoff
+    main.o(.text.main) refers to switches.o(.text.sw_pressed) for sw_pressed
+    main.o(.text.main) refers to bme280.o(.text.get_temperature) for get_temperature
+    main.o(.text.main) refers to idiv_div0.o(.text) for __aeabi_idiv
+    main.o(.text.main) refers to dflti.o(.text) for __aeabi_i2d
+    main.o(.text.main) refers to printfa.o(i.__0sprintf) for __2sprintf
+    main.o(.text.main) refers to configscreen.o(.text.displayDistance) for displayDistance
+    main.o(.text.main) refers to main.o(.data.data_write) for [Anonymous Symbol]
+    main.o(.text.main) refers to main.o(.bss.data_read) for [Anonymous Symbol]
+    main.o(.text.main) refers to pit.o(.bss..L_MergedGlobals) for toggleLED
+    main.o(.ARM.exidx.text.main) refers to main.o(.text.main) for [Anonymous Symbol]
+    tpm1.o(.ARM.exidx.text.tpm1_init) refers to tpm1.o(.text.tpm1_init) for [Anonymous Symbol]
+    uart0.o(.text.uart0_init) refers to queue.o(.text.q_init) for q_init
+    uart0.o(.text.uart0_init) refers to uart0.o(.bss.TxQ) for [Anonymous Symbol]
+    uart0.o(.text.uart0_init) refers to uart0.o(.bss.RxQ) for [Anonymous Symbol]
+    uart0.o(.ARM.exidx.text.uart0_init) refers to uart0.o(.text.uart0_init) for [Anonymous Symbol]
+    uart0.o(.text.UART0_IRQHandler) refers to queue.o(.text.q_dequeue) for q_dequeue
+    uart0.o(.text.UART0_IRQHandler) refers to queue.o(.text.q_enqueue) for q_enqueue
+    uart0.o(.text.UART0_IRQHandler) refers to uart0.o(.bss.TxQ) for [Anonymous Symbol]
+    uart0.o(.text.UART0_IRQHandler) refers to uart0.o(.bss.RxQ) for [Anonymous Symbol]
+    uart0.o(.ARM.exidx.text.UART0_IRQHandler) refers to uart0.o(.text.UART0_IRQHandler) for [Anonymous Symbol]
+    uart0.o(.text.uart0_send_string) refers to queue.o(.text.q_enqueue) for q_enqueue
+    uart0.o(.text.uart0_send_string) refers to uart0.o(.bss.TxQ) for [Anonymous Symbol]
+    uart0.o(.ARM.exidx.text.uart0_send_string) refers to uart0.o(.text.uart0_send_string) for [Anonymous Symbol]
+    uart0.o(.text.uart0_num_rx_chars_available) refers to queue.o(.text.q_size) for q_size
+    uart0.o(.text.uart0_num_rx_chars_available) refers to uart0.o(.bss.RxQ) for [Anonymous Symbol]
+    uart0.o(.ARM.exidx.text.uart0_num_rx_chars_available) refers to uart0.o(.text.uart0_num_rx_chars_available) for [Anonymous Symbol]
+    uart0.o(.text.uart0_get_char) refers to queue.o(.text.q_dequeue) for q_dequeue
+    uart0.o(.text.uart0_get_char) refers to uart0.o(.bss.RxQ) for [Anonymous Symbol]
+    uart0.o(.ARM.exidx.text.uart0_get_char) refers to uart0.o(.text.uart0_get_char) for [Anonymous Symbol]
+    uart0.o(.text.uart0_put_char) refers to queue.o(.text.q_enqueue) for q_enqueue
+    uart0.o(.text.uart0_put_char) refers to uart0.o(.bss.TxQ) for [Anonymous Symbol]
+    uart0.o(.ARM.exidx.text.uart0_put_char) refers to uart0.o(.text.uart0_put_char) for [Anonymous Symbol]
+    eeprom.o(.ARM.exidx.text.spi_init) refers to eeprom.o(.text.spi_init) for [Anonymous Symbol]
+    eeprom.o(.text.EEPROM_init) refers to delay.o(.text.delay_us) for delay_us
+    eeprom.o(.ARM.exidx.text.EEPROM_init) refers to eeprom.o(.text.EEPROM_init) for [Anonymous Symbol]
+    eeprom.o(.text.EEPROM_write_page) refers to delay.o(.text.delay_us) for delay_us
+    eeprom.o(.ARM.exidx.text.EEPROM_write_page) refers to eeprom.o(.text.EEPROM_write_page) for [Anonymous Symbol]
+    eeprom.o(.ARM.exidx.text.EEPROM_read_page) refers to eeprom.o(.text.EEPROM_read_page) for [Anonymous Symbol]
+    delay.o(.ARM.exidx.text.delay_us) refers to delay.o(.text.delay_us) for [Anonymous Symbol]
+    rg.o(.ARM.exidx.text.rg_init) refers to rg.o(.text.rg_init) for [Anonymous Symbol]
+    rg.o(.ARM.exidx.text.rg_pwmcontrol) refers to rg.o(.text.rg_pwmcontrol) for [Anonymous Symbol]
+    rg.o(.ARM.exidx.text.rg_onoff) refers to rg.o(.text.rg_onoff) for [Anonymous Symbol]
+    i2c0.o(.ARM.exidx.text.i2c0_init) refers to i2c0.o(.text.i2c0_init) for [Anonymous Symbol]
+    i2c0.o(.ARM.exidx.text.i2c0_read) refers to i2c0.o(.text.i2c0_read) for [Anonymous Symbol]
+    i2c0.o(.ARM.exidx.text.i2c0_write) refers to i2c0.o(.text.i2c0_write) for [Anonymous Symbol]
+    bme280.o(.text.bme280_init) refers to i2c1.o(.text.i2c1_init) for i2c1_init
+    bme280.o(.text.bme280_init) refers to i2c1.o(.text.i2c1_read) for i2c1_read
+    bme280.o(.text.bme280_init) refers to bme280.o(.text.configure_bme280) for configure_bme280
+    bme280.o(.ARM.exidx.text.bme280_init) refers to bme280.o(.text.bme280_init) for [Anonymous Symbol]
+    bme280.o(.text.configure_bme280) refers to i2c1.o(.text.i2c1_write) for i2c1_write
+    bme280.o(.text.configure_bme280) refers to i2c1.o(.text.i2c1_read) for i2c1_read
+    bme280.o(.text.configure_bme280) refers to bme280.o(.rodata.RESET_COMMAND) for [Anonymous Symbol]
+    bme280.o(.text.configure_bme280) refers to bme280.o(.rodata.SLEEP_COMMAND) for [Anonymous Symbol]
+    bme280.o(.text.configure_bme280) refers to bme280.o(.rodata.hum_config_reg) for [Anonymous Symbol]
+    bme280.o(.text.configure_bme280) refers to bme280.o(.rodata.config_reg) for [Anonymous Symbol]
+    bme280.o(.text.configure_bme280) refers to bme280.o(.rodata.ctrl_meas_reg) for [Anonymous Symbol]
+    bme280.o(.text.configure_bme280) refers to bme280.o(.bss..L_MergedGlobals) for [Anonymous Symbol]
+    bme280.o(.ARM.exidx.text.configure_bme280) refers to bme280.o(.text.configure_bme280) for [Anonymous Symbol]
+    bme280.o(.text.reset_bme280) refers to i2c1.o(.text.i2c1_write) for i2c1_write
+    bme280.o(.text.reset_bme280) refers to i2c1.o(.text.i2c1_read) for i2c1_read
+    bme280.o(.text.reset_bme280) refers to bme280.o(.rodata.RESET_COMMAND) for [Anonymous Symbol]
+    bme280.o(.ARM.exidx.text.reset_bme280) refers to bme280.o(.text.reset_bme280) for [Anonymous Symbol]
+    bme280.o(.text.read_calibration_status) refers to i2c1.o(.text.i2c1_read) for i2c1_read
+    bme280.o(.ARM.exidx.text.read_calibration_status) refers to bme280.o(.text.read_calibration_status) for [Anonymous Symbol]
+    bme280.o(.text.get_calibration) refers to i2c1.o(.text.i2c1_read) for i2c1_read
+    bme280.o(.text.get_calibration) refers to bme280.o(.bss..L_MergedGlobals) for [Anonymous Symbol]
+    bme280.o(.ARM.exidx.text.get_calibration) refers to bme280.o(.text.get_calibration) for [Anonymous Symbol]
+    bme280.o(.text.get_temperature) refers to i2c1.o(.text.i2c1_write) for i2c1_write
+    bme280.o(.text.get_temperature) refers to i2c1.o(.text.i2c1_read) for i2c1_read
+    bme280.o(.text.get_temperature) refers to bme280.o(.rodata.ctrl_meas_reg) for [Anonymous Symbol]
+    bme280.o(.text.get_temperature) refers to bme280.o(.bss..L_MergedGlobals) for [Anonymous Symbol]
+    bme280.o(.ARM.exidx.text.get_temperature) refers to bme280.o(.text.get_temperature) for [Anonymous Symbol]
+    i2c1.o(.ARM.exidx.text.i2c1_init) refers to i2c1.o(.text.i2c1_init) for [Anonymous Symbol]
+    i2c1.o(.ARM.exidx.text.i2c1_read) refers to i2c1.o(.text.i2c1_read) for [Anonymous Symbol]
+    i2c1.o(.ARM.exidx.text.i2c1_write) refers to i2c1.o(.text.i2c1_write) for [Anonymous Symbol]
+    configscreen.o(.text.setSelect) refers to ssd1306.o(.text.ssd1306_putstring) for ssd1306_putstring
+    configscreen.o(.text.setSelect) refers to ssd1306.o(.text.ssd1306_update) for ssd1306_update
+    configscreen.o(.text.setSelect) refers to configscreen.o(.rodata..Lswitch.table.getSelection) for [Anonymous Symbol]
+    configscreen.o(.text.setSelect) refers to configscreen.o(.rodata..Lswitch.table.getSelection.18) for [Anonymous Symbol]
+    configscreen.o(.text.setSelect) refers to configscreen.o(.rodata..Lswitch.table.getSelection.19) for [Anonymous Symbol]
+    configscreen.o(.ARM.exidx.text.setSelect) refers to configscreen.o(.text.setSelect) for [Anonymous Symbol]
+    configscreen.o(.text.displayStart) refers to switches.o(.text.sw_init) for sw_init
+    configscreen.o(.text.displayStart) refers to ssd1306.o(.text.ssd1306_init) for ssd1306_init
+    configscreen.o(.text.displayStart) refers to ssd1306.o(.text.ssd1306_setorientation) for ssd1306_setorientation
+    configscreen.o(.text.displayStart) refers to ssd1306.o(.text.ssd1306_clearscreen) for ssd1306_clearscreen
+    configscreen.o(.text.displayStart) refers to ssd1306.o(.text.ssd1306_setfont) for ssd1306_setfont
+    configscreen.o(.text.displayStart) refers to ssd1306.o(.text.ssd1306_putstring) for ssd1306_putstring
+    configscreen.o(.text.displayStart) refers to ssd1306.o(.text.ssd1306_update) for ssd1306_update
+    configscreen.o(.text.displayStart) refers to fonts.o(.rodata.Monospaced_bold_24) for Monospaced_bold_24
+    configscreen.o(.text.displayStart) refers to fonts.o(.rodata.Monospaced_plain_10) for Monospaced_plain_10
+    configscreen.o(.ARM.exidx.text.displayStart) refers to configscreen.o(.text.displayStart) for [Anonymous Symbol]
+    configscreen.o(.text.updateDisplay) refers to ssd1306.o(.text.ssd1306_clearscreen) for ssd1306_clearscreen
+    configscreen.o(.text.updateDisplay) refers to ssd1306.o(.text.ssd1306_setfont) for ssd1306_setfont
+    configscreen.o(.text.updateDisplay) refers to ssd1306.o(.text.ssd1306_putstring) for ssd1306_putstring
+    configscreen.o(.text.updateDisplay) refers to ssd1306.o(.text.ssd1306_update) for ssd1306_update
+    configscreen.o(.text.updateDisplay) refers to configscreen.o(.text.getSelection) for getSelection
+    configscreen.o(.text.updateDisplay) refers to fonts.o(.rodata.Monospaced_plain_10) for Monospaced_plain_10
+    configscreen.o(.ARM.exidx.text.updateDisplay) refers to configscreen.o(.text.updateDisplay) for [Anonymous Symbol]
+    configscreen.o(.text.displayPuzzle) refers to ssd1306.o(.text.ssd1306_clearscreen) for ssd1306_clearscreen
+    configscreen.o(.text.displayPuzzle) refers to ssd1306.o(.text.ssd1306_setfont) for ssd1306_setfont
+    configscreen.o(.text.displayPuzzle) refers to ssd1306.o(.text.ssd1306_putstring) for ssd1306_putstring
+    configscreen.o(.text.displayPuzzle) refers to ssd1306.o(.text.ssd1306_update) for ssd1306_update
+    configscreen.o(.text.displayPuzzle) refers to fonts.o(.rodata.Monospaced_plain_10) for Monospaced_plain_10
+    configscreen.o(.ARM.exidx.text.displayPuzzle) refers to configscreen.o(.text.displayPuzzle) for [Anonymous Symbol]
+    configscreen.o(.text.getSelection) refers to switches.o(.text.sw_pressed) for sw_pressed
+    configscreen.o(.text.getSelection) refers to ssd1306.o(.text.ssd1306_putstring) for ssd1306_putstring
+    configscreen.o(.text.getSelection) refers to ssd1306.o(.text.ssd1306_update) for ssd1306_update
+    configscreen.o(.text.getSelection) refers to ssd1306.o(.text.ssd1306_clearscreen) for ssd1306_clearscreen
+    configscreen.o(.text.getSelection) refers to configscreen.o(.rodata..Lswitch.table.getSelection) for [Anonymous Symbol]
+    configscreen.o(.text.getSelection) refers to configscreen.o(.rodata..Lswitch.table.getSelection.18) for [Anonymous Symbol]
+    configscreen.o(.text.getSelection) refers to configscreen.o(.rodata..Lswitch.table.getSelection.19) for [Anonymous Symbol]
+    configscreen.o(.ARM.exidx.text.getSelection) refers to configscreen.o(.text.getSelection) for [Anonymous Symbol]
+    configscreen.o(.text.displayDistance) refers to ssd1306.o(.text.ssd1306_clearscreen) for ssd1306_clearscreen
+    configscreen.o(.text.displayDistance) refers to ssd1306.o(.text.ssd1306_setfont) for ssd1306_setfont
+    configscreen.o(.text.displayDistance) refers to ssd1306.o(.text.ssd1306_putstring) for ssd1306_putstring
+    configscreen.o(.text.displayDistance) refers to ssd1306.o(.text.ssd1306_update) for ssd1306_update
+    configscreen.o(.text.displayDistance) refers to fonts.o(.rodata.Dialog_plain_12) for Dialog_plain_12
+    configscreen.o(.ARM.exidx.text.displayDistance) refers to configscreen.o(.text.displayDistance) for [Anonymous Symbol]
+    configscreen.o(.rodata..Lswitch.table.getSelection) refers to configscreen.o(.rodata.str1.1) for [Anonymous Symbol]
+    configscreen.o(.rodata..Lswitch.table.getSelection.18) refers to configscreen.o(.rodata.str1.1) for [Anonymous Symbol]
+    configscreen.o(.rodata..Lswitch.table.getSelection.19) refers to configscreen.o(.rodata.str1.1) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_init) refers to memseta.o(.text) for __aeabi_memclr4
+    ssd1306.o(.text.ssd1306_init) refers to display_i2c1.o(.text.display_i2c1_init) for display_i2c1_init
+    ssd1306.o(.text.ssd1306_init) refers to display_i2c1.o(.text.i2c1_write_cmd) for i2c1_write_cmd
+    ssd1306.o(.text.ssd1306_init) refers to ssd1306.o(.bss.ssd1306_framebuffer) for ssd1306_framebuffer
+    ssd1306.o(.text.ssd1306_init) refers to ssd1306.o(.rodata.ssd1306_init_commands) for [Anonymous Symbol]
+    ssd1306.o(.ARM.exidx.text.ssd1306_init) refers to ssd1306.o(.text.ssd1306_init) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_command) refers to display_i2c1.o(.text.i2c1_write_cmd) for i2c1_write_cmd
+    ssd1306.o(.text.ssd1306_command) refers to memseta.o(.text) for __aeabi_memclr4
+    ssd1306.o(.text.ssd1306_command) refers to display_i2c1.o(.text.display_i2c1_init) for display_i2c1_init
+    ssd1306.o(.text.ssd1306_command) refers to ssd1306.o(.bss.ssd1306_framebuffer) for ssd1306_framebuffer
+    ssd1306.o(.text.ssd1306_command) refers to ssd1306.o(.rodata.ssd1306_init_commands) for [Anonymous Symbol]
+    ssd1306.o(.ARM.exidx.text.ssd1306_command) refers to ssd1306.o(.text.ssd1306_command) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_data) refers to display_i2c1.o(.text.i2c1_write_data) for i2c1_write_data
+    ssd1306.o(.text.ssd1306_data) refers to memseta.o(.text) for __aeabi_memclr4
+    ssd1306.o(.text.ssd1306_data) refers to display_i2c1.o(.text.display_i2c1_init) for display_i2c1_init
+    ssd1306.o(.text.ssd1306_data) refers to display_i2c1.o(.text.i2c1_write_cmd) for i2c1_write_cmd
+    ssd1306.o(.text.ssd1306_data) refers to ssd1306.o(.bss.ssd1306_framebuffer) for ssd1306_framebuffer
+    ssd1306.o(.text.ssd1306_data) refers to ssd1306.o(.rodata.ssd1306_init_commands) for [Anonymous Symbol]
+    ssd1306.o(.ARM.exidx.text.ssd1306_data) refers to ssd1306.o(.text.ssd1306_data) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_update) refers to display_i2c1.o(.text.i2c1_write_cmd) for i2c1_write_cmd
+    ssd1306.o(.text.ssd1306_update) refers to delay.o(.text.delay_us) for delay_us
+    ssd1306.o(.text.ssd1306_update) refers to display_i2c1.o(.text.i2c1_write_data) for i2c1_write_data
+    ssd1306.o(.text.ssd1306_update) refers to memseta.o(.text) for __aeabi_memclr4
+    ssd1306.o(.text.ssd1306_update) refers to display_i2c1.o(.text.display_i2c1_init) for display_i2c1_init
+    ssd1306.o(.text.ssd1306_update) refers to ssd1306.o(.bss.ssd1306_framebuffer) for ssd1306_framebuffer
+    ssd1306.o(.text.ssd1306_update) refers to ssd1306.o(.rodata.ssd1306_init_commands) for [Anonymous Symbol]
+    ssd1306.o(.ARM.exidx.text.ssd1306_update) refers to ssd1306.o(.text.ssd1306_update) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_setfont) refers to ssd1306.o(.data.font) for [Anonymous Symbol]
+    ssd1306.o(.ARM.exidx.text.ssd1306_setfont) refers to ssd1306.o(.text.ssd1306_setfont) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_setorientation) refers to delay.o(.text.delay_us) for delay_us
+    ssd1306.o(.text.ssd1306_setorientation) refers to display_i2c1.o(.text.i2c1_write_cmd) for i2c1_write_cmd
+    ssd1306.o(.text.ssd1306_setorientation) refers to memseta.o(.text) for __aeabi_memclr4
+    ssd1306.o(.text.ssd1306_setorientation) refers to display_i2c1.o(.text.display_i2c1_init) for display_i2c1_init
+    ssd1306.o(.text.ssd1306_setorientation) refers to ssd1306.o(.bss.ssd1306_framebuffer) for ssd1306_framebuffer
+    ssd1306.o(.text.ssd1306_setorientation) refers to ssd1306.o(.rodata.ssd1306_init_commands) for [Anonymous Symbol]
+    ssd1306.o(.ARM.exidx.text.ssd1306_setorientation) refers to ssd1306.o(.text.ssd1306_setorientation) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_setinverse) refers to display_i2c1.o(.text.i2c1_write_cmd) for i2c1_write_cmd
+    ssd1306.o(.text.ssd1306_setinverse) refers to memseta.o(.text) for __aeabi_memclr4
+    ssd1306.o(.text.ssd1306_setinverse) refers to display_i2c1.o(.text.display_i2c1_init) for display_i2c1_init
+    ssd1306.o(.text.ssd1306_setinverse) refers to ssd1306.o(.bss.ssd1306_framebuffer) for ssd1306_framebuffer
+    ssd1306.o(.text.ssd1306_setinverse) refers to ssd1306.o(.rodata.ssd1306_init_commands) for [Anonymous Symbol]
+    ssd1306.o(.ARM.exidx.text.ssd1306_setinverse) refers to ssd1306.o(.text.ssd1306_setinverse) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_clearscreen) refers to memseta.o(.text) for __aeabi_memclr4
+    ssd1306.o(.text.ssd1306_clearscreen) refers to ssd1306.o(.bss.ssd1306_framebuffer) for ssd1306_framebuffer
+    ssd1306.o(.ARM.exidx.text.ssd1306_clearscreen) refers to ssd1306.o(.text.ssd1306_clearscreen) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_setcontrast) refers to display_i2c1.o(.text.i2c1_write_cmd) for i2c1_write_cmd
+    ssd1306.o(.text.ssd1306_setcontrast) refers to display_i2c1.o(.text.display_i2c1_init) for display_i2c1_init
+    ssd1306.o(.ARM.exidx.text.ssd1306_setcontrast) refers to ssd1306.o(.text.ssd1306_setcontrast) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_goto) refers to ssd1306.o(.bss..L_MergedGlobals) for [Anonymous Symbol]
+    ssd1306.o(.ARM.exidx.text.ssd1306_goto) refers to ssd1306.o(.text.ssd1306_goto) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_setpixel) refers to ssd1306.o(.bss.ssd1306_framebuffer) for ssd1306_framebuffer
+    ssd1306.o(.ARM.exidx.text.ssd1306_setpixel) refers to ssd1306.o(.text.ssd1306_setpixel) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_putchar) refers to uidiv_div0.o(.text) for __aeabi_uidivmod
+    ssd1306.o(.text.ssd1306_putchar) refers to ssd1306.o(.data.font) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_putchar) refers to ssd1306.o(.bss..L_MergedGlobals) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_putchar) refers to ssd1306.o(.bss.ssd1306_framebuffer) for ssd1306_framebuffer
+    ssd1306.o(.ARM.exidx.text.ssd1306_putchar) refers to ssd1306.o(.text.ssd1306_putchar) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_putstring) refers to ssd1306.o(.text.ssd1306_putchar) for ssd1306_putchar
+    ssd1306.o(.text.ssd1306_putstring) refers to ssd1306.o(.bss..L_MergedGlobals) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_putstring) refers to ssd1306.o(.data.font) for [Anonymous Symbol]
+    ssd1306.o(.ARM.exidx.text.ssd1306_putstring) refers to ssd1306.o(.text.ssd1306_putstring) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_terminal) refers to ssd1306.o(.text.ssd1306_putchar) for ssd1306_putchar
+    ssd1306.o(.text.ssd1306_terminal) refers to display_i2c1.o(.text.i2c1_write_cmd) for i2c1_write_cmd
+    ssd1306.o(.text.ssd1306_terminal) refers to delay.o(.text.delay_us) for delay_us
+    ssd1306.o(.text.ssd1306_terminal) refers to display_i2c1.o(.text.i2c1_write_data) for i2c1_write_data
+    ssd1306.o(.text.ssd1306_terminal) refers to memseta.o(.text) for __aeabi_memclr4
+    ssd1306.o(.text.ssd1306_terminal) refers to display_i2c1.o(.text.display_i2c1_init) for display_i2c1_init
+    ssd1306.o(.text.ssd1306_terminal) refers to ssd1306.o(.data.font) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_terminal) refers to ssd1306.o(.bss..L_MergedGlobals) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_terminal) refers to ssd1306.o(.bss.ssd1306_framebuffer) for ssd1306_framebuffer
+    ssd1306.o(.text.ssd1306_terminal) refers to ssd1306.o(.rodata.ssd1306_init_commands) for [Anonymous Symbol]
+    ssd1306.o(.ARM.exidx.text.ssd1306_terminal) refers to ssd1306.o(.text.ssd1306_terminal) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_drawline) refers to ssd1306.o(.bss.ssd1306_framebuffer) for ssd1306_framebuffer
+    ssd1306.o(.ARM.exidx.text.ssd1306_drawline) refers to ssd1306.o(.text.ssd1306_drawline) for [Anonymous Symbol]
+    ssd1306.o(.text.ssd1306_drawbitmap) refers to memcpya.o(.text) for __aeabi_memcpy
+    ssd1306.o(.text.ssd1306_drawbitmap) refers to ssd1306.o(.bss.ssd1306_framebuffer) for ssd1306_framebuffer
+    ssd1306.o(.ARM.exidx.text.ssd1306_drawbitmap) refers to ssd1306.o(.text.ssd1306_drawbitmap) for [Anonymous Symbol]
+    ssd1306.o(.data.font) refers to fonts.o(.rodata.Monospaced_plain_10) for Monospaced_plain_10
+    display_i2c1.o(.ARM.exidx.text.display_i2c1_init) refers to display_i2c1.o(.text.display_i2c1_init) for [Anonymous Symbol]
+    display_i2c1.o(.ARM.exidx.text.i2c1_write_cmd) refers to display_i2c1.o(.text.i2c1_write_cmd) for [Anonymous Symbol]
+    display_i2c1.o(.ARM.exidx.text.i2c1_write_data) refers to display_i2c1.o(.text.i2c1_write_data) for [Anonymous Symbol]
+    switches.o(.ARM.exidx.text.sw_init) refers to switches.o(.text.sw_init) for [Anonymous Symbol]
+    switches.o(.text.sw_pressed) refers to delay.o(.text.delay_us) for delay_us
+    switches.o(.ARM.exidx.text.sw_pressed) refers to switches.o(.text.sw_pressed) for [Anonymous Symbol]
+    switches.o(.text.PORTC_IRQHandler) refers to switches.o(.bss..L_MergedGlobals) for [Anonymous Symbol]
+    switches.o(.ARM.exidx.text.PORTC_IRQHandler) refers to switches.o(.text.PORTC_IRQHandler) for [Anonymous Symbol]
+    startup_mkl25z4.o(RESET) refers to startup_mkl25z4.o(STACK) for __initial_sp
+    startup_mkl25z4.o(RESET) refers to startup_mkl25z4.o(.text) for Reset_Handler
+    startup_mkl25z4.o(RESET) refers to uart0.o(.text.UART0_IRQHandler) for UART0_IRQHandler
+    startup_mkl25z4.o(RESET) refers to pit.o(.text.PIT_IRQHandler) for PIT_IRQHandler
+    startup_mkl25z4.o(.text) refers to system_mkl25z4.o(.text.SystemInit) for SystemInit
+    startup_mkl25z4.o(.text) refers to entry.o(.ARM.Collect$$$$00000000) for __main
+    system_mkl25z4.o(.ARM.exidx.text.SystemInit) refers to system_mkl25z4.o(.text.SystemInit) for [Anonymous Symbol]
+    system_mkl25z4.o(.text.SystemCoreClockUpdate) refers to uidiv_div0.o(.text) for __aeabi_uidiv
+    system_mkl25z4.o(.text.SystemCoreClockUpdate) refers to system_mkl25z4.o(.data.SystemCoreClock) for SystemCoreClock
+    system_mkl25z4.o(.ARM.exidx.text.SystemCoreClockUpdate) refers to system_mkl25z4.o(.text.SystemCoreClockUpdate) for [Anonymous Symbol]
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry10a.o(.ARM.Collect$$$$0000000D) for __rt_final_cpp
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry11a.o(.ARM.Collect$$$$0000000F) for __rt_final_exit
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry7b.o(.ARM.Collect$$$$00000008) for _main_clock
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry8b.o(.ARM.Collect$$$$0000000A) for _main_cpp_init
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry9a.o(.ARM.Collect$$$$0000000B) for _main_init
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry5.o(.ARM.Collect$$$$00000004) for _main_scatterload
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry2.o(.ARM.Collect$$$$00000001) for _main_stk
+    idiv.o(.text) refers to uidiv_div0.o(.text) for __aeabi_uidivmod
+    printfb.o(i.__0fprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
+    printfb.o(i.__0fprintf$bare) refers to fputc.o(i.fputc) for fputc
+    printfb.o(i.__0printf$bare) refers to printfb.o(i._printf_core) for _printf_core
+    printfb.o(i.__0printf$bare) refers to fputc.o(i.fputc) for fputc
+    printfb.o(i.__0printf$bare) refers to stdout.o(.data) for __stdout
+    printfb.o(i.__0snprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
+    printfb.o(i.__0snprintf$bare) refers to printfb.o(i._snputc) for _snputc
+    printfb.o(i.__0sprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
+    printfb.o(i.__0sprintf$bare) refers to printfb.o(i._sputc) for _sputc
+    printfb.o(i.__0vfprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
+    printfb.o(i.__0vfprintf$bare) refers to fputc.o(i.fputc) for fputc
+    printfb.o(i.__0vprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
+    printfb.o(i.__0vprintf$bare) refers to fputc.o(i.fputc) for fputc
+    printfb.o(i.__0vprintf$bare) refers to stdout.o(.data) for __stdout
+    printfb.o(i.__0vsnprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
+    printfb.o(i.__0vsnprintf$bare) refers to printfb.o(i._snputc) for _snputc
+    printfb.o(i.__0vsprintf$bare) refers to printfb.o(i._printf_core) for _printf_core
+    printfb.o(i.__0vsprintf$bare) refers to printfb.o(i._sputc) for _sputc
+    printf0.o(i.__0fprintf$0) refers to printf0.o(i._printf_core) for _printf_core
+    printf0.o(i.__0fprintf$0) refers to fputc.o(i.fputc) for fputc
+    printf0.o(i.__0printf$0) refers to printf0.o(i._printf_core) for _printf_core
+    printf0.o(i.__0printf$0) refers to fputc.o(i.fputc) for fputc
+    printf0.o(i.__0printf$0) refers to stdout.o(.data) for __stdout
+    printf0.o(i.__0snprintf$0) refers to printf0.o(i._printf_core) for _printf_core
+    printf0.o(i.__0snprintf$0) refers to printf0.o(i._snputc) for _snputc
+    printf0.o(i.__0sprintf$0) refers to printf0.o(i._printf_core) for _printf_core
+    printf0.o(i.__0sprintf$0) refers to printf0.o(i._sputc) for _sputc
+    printf0.o(i.__0vfprintf$0) refers to printf0.o(i._printf_core) for _printf_core
+    printf0.o(i.__0vfprintf$0) refers to fputc.o(i.fputc) for fputc
+    printf0.o(i.__0vprintf$0) refers to printf0.o(i._printf_core) for _printf_core
+    printf0.o(i.__0vprintf$0) refers to fputc.o(i.fputc) for fputc
+    printf0.o(i.__0vprintf$0) refers to stdout.o(.data) for __stdout
+    printf0.o(i.__0vsnprintf$0) refers to printf0.o(i._printf_core) for _printf_core
+    printf0.o(i.__0vsnprintf$0) refers to printf0.o(i._snputc) for _snputc
+    printf0.o(i.__0vsprintf$0) refers to printf0.o(i._printf_core) for _printf_core
+    printf0.o(i.__0vsprintf$0) refers to printf0.o(i._sputc) for _sputc
+    printf1.o(i.__0fprintf$1) refers to printf1.o(i._printf_core) for _printf_core
+    printf1.o(i.__0fprintf$1) refers to fputc.o(i.fputc) for fputc
+    printf1.o(i.__0printf$1) refers to printf1.o(i._printf_core) for _printf_core
+    printf1.o(i.__0printf$1) refers to fputc.o(i.fputc) for fputc
+    printf1.o(i.__0printf$1) refers to stdout.o(.data) for __stdout
+    printf1.o(i.__0snprintf$1) refers to printf1.o(i._printf_core) for _printf_core
+    printf1.o(i.__0snprintf$1) refers to printf1.o(i._snputc) for _snputc
+    printf1.o(i.__0sprintf$1) refers to printf1.o(i._printf_core) for _printf_core
+    printf1.o(i.__0sprintf$1) refers to printf1.o(i._sputc) for _sputc
+    printf1.o(i.__0vfprintf$1) refers to printf1.o(i._printf_core) for _printf_core
+    printf1.o(i.__0vfprintf$1) refers to fputc.o(i.fputc) for fputc
+    printf1.o(i.__0vprintf$1) refers to printf1.o(i._printf_core) for _printf_core
+    printf1.o(i.__0vprintf$1) refers to fputc.o(i.fputc) for fputc
+    printf1.o(i.__0vprintf$1) refers to stdout.o(.data) for __stdout
+    printf1.o(i.__0vsnprintf$1) refers to printf1.o(i._printf_core) for _printf_core
+    printf1.o(i.__0vsnprintf$1) refers to printf1.o(i._snputc) for _snputc
+    printf1.o(i.__0vsprintf$1) refers to printf1.o(i._printf_core) for _printf_core
+    printf1.o(i.__0vsprintf$1) refers to printf1.o(i._sputc) for _sputc
+    printf1.o(i._printf_core) refers to uidiv_div0.o(.text) for __aeabi_uidivmod
+    printf2.o(i.__0fprintf$2) refers to printf2.o(i._printf_core) for _printf_core
+    printf2.o(i.__0fprintf$2) refers to fputc.o(i.fputc) for fputc
+    printf2.o(i.__0printf$2) refers to printf2.o(i._printf_core) for _printf_core
+    printf2.o(i.__0printf$2) refers to fputc.o(i.fputc) for fputc
+    printf2.o(i.__0printf$2) refers to stdout.o(.data) for __stdout
+    printf2.o(i.__0snprintf$2) refers to printf2.o(i._printf_core) for _printf_core
+    printf2.o(i.__0snprintf$2) refers to printf2.o(i._snputc) for _snputc
+    printf2.o(i.__0sprintf$2) refers to printf2.o(i._printf_core) for _printf_core
+    printf2.o(i.__0sprintf$2) refers to printf2.o(i._sputc) for _sputc
+    printf2.o(i.__0vfprintf$2) refers to printf2.o(i._printf_core) for _printf_core
+    printf2.o(i.__0vfprintf$2) refers to fputc.o(i.fputc) for fputc
+    printf2.o(i.__0vprintf$2) refers to printf2.o(i._printf_core) for _printf_core
+    printf2.o(i.__0vprintf$2) refers to fputc.o(i.fputc) for fputc
+    printf2.o(i.__0vprintf$2) refers to stdout.o(.data) for __stdout
+    printf2.o(i.__0vsnprintf$2) refers to printf2.o(i._printf_core) for _printf_core
+    printf2.o(i.__0vsnprintf$2) refers to printf2.o(i._snputc) for _snputc
+    printf2.o(i.__0vsprintf$2) refers to printf2.o(i._printf_core) for _printf_core
+    printf2.o(i.__0vsprintf$2) refers to printf2.o(i._sputc) for _sputc
+    printf3.o(i.__0fprintf$3) refers to printf3.o(i._printf_core) for _printf_core
+    printf3.o(i.__0fprintf$3) refers to fputc.o(i.fputc) for fputc
+    printf3.o(i.__0printf$3) refers to printf3.o(i._printf_core) for _printf_core
+    printf3.o(i.__0printf$3) refers to fputc.o(i.fputc) for fputc
+    printf3.o(i.__0printf$3) refers to stdout.o(.data) for __stdout
+    printf3.o(i.__0snprintf$3) refers to printf3.o(i._printf_core) for _printf_core
+    printf3.o(i.__0snprintf$3) refers to printf3.o(i._snputc) for _snputc
+    printf3.o(i.__0sprintf$3) refers to printf3.o(i._printf_core) for _printf_core
+    printf3.o(i.__0sprintf$3) refers to printf3.o(i._sputc) for _sputc
+    printf3.o(i.__0vfprintf$3) refers to printf3.o(i._printf_core) for _printf_core
+    printf3.o(i.__0vfprintf$3) refers to fputc.o(i.fputc) for fputc
+    printf3.o(i.__0vprintf$3) refers to printf3.o(i._printf_core) for _printf_core
+    printf3.o(i.__0vprintf$3) refers to fputc.o(i.fputc) for fputc
+    printf3.o(i.__0vprintf$3) refers to stdout.o(.data) for __stdout
+    printf3.o(i.__0vsnprintf$3) refers to printf3.o(i._printf_core) for _printf_core
+    printf3.o(i.__0vsnprintf$3) refers to printf3.o(i._snputc) for _snputc
+    printf3.o(i.__0vsprintf$3) refers to printf3.o(i._printf_core) for _printf_core
+    printf3.o(i.__0vsprintf$3) refers to printf3.o(i._sputc) for _sputc
+    printf3.o(i._printf_core) refers to uidiv_div0.o(.text) for __aeabi_uidivmod
+    printf4.o(i.__0fprintf$4) refers to printf4.o(i._printf_core) for _printf_core
+    printf4.o(i.__0fprintf$4) refers to fputc.o(i.fputc) for fputc
+    printf4.o(i.__0printf$4) refers to printf4.o(i._printf_core) for _printf_core
+    printf4.o(i.__0printf$4) refers to fputc.o(i.fputc) for fputc
+    printf4.o(i.__0printf$4) refers to stdout.o(.data) for __stdout
+    printf4.o(i.__0snprintf$4) refers to printf4.o(i._printf_core) for _printf_core
+    printf4.o(i.__0snprintf$4) refers to printf4.o(i._snputc) for _snputc
+    printf4.o(i.__0sprintf$4) refers to printf4.o(i._printf_core) for _printf_core
+    printf4.o(i.__0sprintf$4) refers to printf4.o(i._sputc) for _sputc
+    printf4.o(i.__0vfprintf$4) refers to printf4.o(i._printf_core) for _printf_core
+    printf4.o(i.__0vfprintf$4) refers to fputc.o(i.fputc) for fputc
+    printf4.o(i.__0vprintf$4) refers to printf4.o(i._printf_core) for _printf_core
+    printf4.o(i.__0vprintf$4) refers to fputc.o(i.fputc) for fputc
+    printf4.o(i.__0vprintf$4) refers to stdout.o(.data) for __stdout
+    printf4.o(i.__0vsnprintf$4) refers to printf4.o(i._printf_core) for _printf_core
+    printf4.o(i.__0vsnprintf$4) refers to printf4.o(i._snputc) for _snputc
+    printf4.o(i.__0vsprintf$4) refers to printf4.o(i._printf_core) for _printf_core
+    printf4.o(i.__0vsprintf$4) refers to printf4.o(i._sputc) for _sputc
+    printf4.o(i._printf_core) refers to uldiv.o(.text) for __aeabi_uldivmod
+    printf5.o(i.__0fprintf$5) refers to printf5.o(i._printf_core) for _printf_core
+    printf5.o(i.__0fprintf$5) refers to fputc.o(i.fputc) for fputc
+    printf5.o(i.__0printf$5) refers to printf5.o(i._printf_core) for _printf_core
+    printf5.o(i.__0printf$5) refers to fputc.o(i.fputc) for fputc
+    printf5.o(i.__0printf$5) refers to stdout.o(.data) for __stdout
+    printf5.o(i.__0snprintf$5) refers to printf5.o(i._printf_core) for _printf_core
+    printf5.o(i.__0snprintf$5) refers to printf5.o(i._snputc) for _snputc
+    printf5.o(i.__0sprintf$5) refers to printf5.o(i._printf_core) for _printf_core
+    printf5.o(i.__0sprintf$5) refers to printf5.o(i._sputc) for _sputc
+    printf5.o(i.__0vfprintf$5) refers to printf5.o(i._printf_core) for _printf_core
+    printf5.o(i.__0vfprintf$5) refers to fputc.o(i.fputc) for fputc
+    printf5.o(i.__0vprintf$5) refers to printf5.o(i._printf_core) for _printf_core
+    printf5.o(i.__0vprintf$5) refers to fputc.o(i.fputc) for fputc
+    printf5.o(i.__0vprintf$5) refers to stdout.o(.data) for __stdout
+    printf5.o(i.__0vsnprintf$5) refers to printf5.o(i._printf_core) for _printf_core
+    printf5.o(i.__0vsnprintf$5) refers to printf5.o(i._snputc) for _snputc
+    printf5.o(i.__0vsprintf$5) refers to printf5.o(i._printf_core) for _printf_core
+    printf5.o(i.__0vsprintf$5) refers to printf5.o(i._sputc) for _sputc
+    printf5.o(i._printf_core) refers to uldiv.o(.text) for __aeabi_uldivmod
+    printf6.o(i.__0fprintf$6) refers to printf6.o(i._printf_core) for _printf_core
+    printf6.o(i.__0fprintf$6) refers to fputc.o(i.fputc) for fputc
+    printf6.o(i.__0printf$6) refers to printf6.o(i._printf_core) for _printf_core
+    printf6.o(i.__0printf$6) refers to fputc.o(i.fputc) for fputc
+    printf6.o(i.__0printf$6) refers to stdout.o(.data) for __stdout
+    printf6.o(i.__0snprintf$6) refers to printf6.o(i._printf_core) for _printf_core
+    printf6.o(i.__0snprintf$6) refers to printf6.o(i._snputc) for _snputc
+    printf6.o(i.__0sprintf$6) refers to printf6.o(i._printf_core) for _printf_core
+    printf6.o(i.__0sprintf$6) refers to printf6.o(i._sputc) for _sputc
+    printf6.o(i.__0vfprintf$6) refers to printf6.o(i._printf_core) for _printf_core
+    printf6.o(i.__0vfprintf$6) refers to fputc.o(i.fputc) for fputc
+    printf6.o(i.__0vprintf$6) refers to printf6.o(i._printf_core) for _printf_core
+    printf6.o(i.__0vprintf$6) refers to fputc.o(i.fputc) for fputc
+    printf6.o(i.__0vprintf$6) refers to stdout.o(.data) for __stdout
+    printf6.o(i.__0vsnprintf$6) refers to printf6.o(i._printf_core) for _printf_core
+    printf6.o(i.__0vsnprintf$6) refers to printf6.o(i._snputc) for _snputc
+    printf6.o(i.__0vsprintf$6) refers to printf6.o(i._printf_core) for _printf_core
+    printf6.o(i.__0vsprintf$6) refers to printf6.o(i._sputc) for _sputc
+    printf6.o(i._printf_core) refers to printf6.o(i._printf_pre_padding) for _printf_pre_padding
+    printf6.o(i._printf_core) refers to printf6.o(i._printf_post_padding) for _printf_post_padding
+    printf6.o(i._printf_core) refers to uidiv_div0.o(.text) for __aeabi_uidivmod
+    printf7.o(i.__0fprintf$7) refers to printf7.o(i._printf_core) for _printf_core
+    printf7.o(i.__0fprintf$7) refers to fputc.o(i.fputc) for fputc
+    printf7.o(i.__0printf$7) refers to printf7.o(i._printf_core) for _printf_core
+    printf7.o(i.__0printf$7) refers to fputc.o(i.fputc) for fputc
+    printf7.o(i.__0printf$7) refers to stdout.o(.data) for __stdout
+    printf7.o(i.__0snprintf$7) refers to printf7.o(i._printf_core) for _printf_core
+    printf7.o(i.__0snprintf$7) refers to printf7.o(i._snputc) for _snputc
+    printf7.o(i.__0sprintf$7) refers to printf7.o(i._printf_core) for _printf_core
+    printf7.o(i.__0sprintf$7) refers to printf7.o(i._sputc) for _sputc
+    printf7.o(i.__0vfprintf$7) refers to printf7.o(i._printf_core) for _printf_core
+    printf7.o(i.__0vfprintf$7) refers to fputc.o(i.fputc) for fputc
+    printf7.o(i.__0vprintf$7) refers to printf7.o(i._printf_core) for _printf_core
+    printf7.o(i.__0vprintf$7) refers to fputc.o(i.fputc) for fputc
+    printf7.o(i.__0vprintf$7) refers to stdout.o(.data) for __stdout
+    printf7.o(i.__0vsnprintf$7) refers to printf7.o(i._printf_core) for _printf_core
+    printf7.o(i.__0vsnprintf$7) refers to printf7.o(i._snputc) for _snputc
+    printf7.o(i.__0vsprintf$7) refers to printf7.o(i._printf_core) for _printf_core
+    printf7.o(i.__0vsprintf$7) refers to printf7.o(i._sputc) for _sputc
+    printf7.o(i._printf_core) refers to printf7.o(i._printf_pre_padding) for _printf_pre_padding
+    printf7.o(i._printf_core) refers to printf7.o(i._printf_post_padding) for _printf_post_padding
+    printf7.o(i._printf_core) refers to uldiv.o(.text) for __aeabi_uldivmod
+    printf8.o(i.__0fprintf$8) refers to printf8.o(i._printf_core) for _printf_core
+    printf8.o(i.__0fprintf$8) refers to fputc.o(i.fputc) for fputc
+    printf8.o(i.__0printf$8) refers to printf8.o(i._printf_core) for _printf_core
+    printf8.o(i.__0printf$8) refers to fputc.o(i.fputc) for fputc
+    printf8.o(i.__0printf$8) refers to stdout.o(.data) for __stdout
+    printf8.o(i.__0snprintf$8) refers to printf8.o(i._printf_core) for _printf_core
+    printf8.o(i.__0snprintf$8) refers to printf8.o(i._snputc) for _snputc
+    printf8.o(i.__0sprintf$8) refers to printf8.o(i._printf_core) for _printf_core
+    printf8.o(i.__0sprintf$8) refers to printf8.o(i._sputc) for _sputc
+    printf8.o(i.__0vfprintf$8) refers to printf8.o(i._printf_core) for _printf_core
+    printf8.o(i.__0vfprintf$8) refers to fputc.o(i.fputc) for fputc
+    printf8.o(i.__0vprintf$8) refers to printf8.o(i._printf_core) for _printf_core
+    printf8.o(i.__0vprintf$8) refers to fputc.o(i.fputc) for fputc
+    printf8.o(i.__0vprintf$8) refers to stdout.o(.data) for __stdout
+    printf8.o(i.__0vsnprintf$8) refers to printf8.o(i._printf_core) for _printf_core
+    printf8.o(i.__0vsnprintf$8) refers to printf8.o(i._snputc) for _snputc
+    printf8.o(i.__0vsprintf$8) refers to printf8.o(i._printf_core) for _printf_core
+    printf8.o(i.__0vsprintf$8) refers to printf8.o(i._sputc) for _sputc
+    printf8.o(i._printf_core) refers to printf8.o(i._printf_pre_padding) for _printf_pre_padding
+    printf8.o(i._printf_core) refers to printf8.o(i._printf_post_padding) for _printf_post_padding
+    printf8.o(i._printf_core) refers to uldiv.o(.text) for __aeabi_uldivmod
+    printfa.o(i.__0fprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0fprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0fprintf) refers to fputc.o(i.fputc) for fputc
+    printfa.o(i.__0printf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0printf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0printf) refers to fputc.o(i.fputc) for fputc
+    printfa.o(i.__0printf) refers to stdout.o(.data) for __stdout
+    printfa.o(i.__0snprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0snprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0snprintf) refers to printfa.o(i._snputc) for _snputc
+    printfa.o(i.__0sprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0sprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0sprintf) refers to printfa.o(i._sputc) for _sputc
+    printfa.o(i.__0vfprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0vfprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0vfprintf) refers to fputc.o(i.fputc) for fputc
+    printfa.o(i.__0vprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0vprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0vprintf) refers to fputc.o(i.fputc) for fputc
+    printfa.o(i.__0vprintf) refers to stdout.o(.data) for __stdout
+    printfa.o(i.__0vsnprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0vsnprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0vsnprintf) refers to printfa.o(i._snputc) for _snputc
+    printfa.o(i.__0vsprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0vsprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0vsprintf) refers to printfa.o(i._sputc) for _sputc
+    printfa.o(i._fp_digits) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i._fp_digits) refers to dmul.o(.text) for __aeabi_dmul
+    printfa.o(i._fp_digits) refers to ddiv.o(.text) for __aeabi_ddiv
+    printfa.o(i._fp_digits) refers to cdrcmple.o(.text) for __aeabi_cdrcmple
+    printfa.o(i._fp_digits) refers to dadd.o(.text) for __aeabi_dadd
+    printfa.o(i._fp_digits) refers to dfixul.o(.text) for __aeabi_d2ulz
+    printfa.o(i._fp_digits) refers to uldiv.o(.text) for __aeabi_uldivmod
+    printfa.o(i._printf_core) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i._printf_core) refers to printfa.o(i._printf_pre_padding) for _printf_pre_padding
+    printfa.o(i._printf_core) refers to uldiv.o(.text) for __aeabi_uldivmod
+    printfa.o(i._printf_core) refers to printfa.o(i._printf_post_padding) for _printf_post_padding
+    printfa.o(i._printf_core) refers to printfa.o(i._fp_digits) for _fp_digits
+    printfa.o(i._printf_core) refers to uidiv_div0.o(.text) for __aeabi_uidivmod
+    printfa.o(i._printf_post_padding) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i._printf_pre_padding) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i._snputc) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i._sputc) refers (Special) to iusefp.o(.text) for __I$use$fp
+    dflti.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    dflti.o(.text) refers to depilogue.o(.text) for _double_epilogue
+    entry2.o(.ARM.Collect$$$$00000001) refers to entry2.o(.ARM.Collect$$$$00002712) for __lit__00000000
+    entry2.o(.ARM.Collect$$$$00002712) refers to startup_mkl25z4.o(STACK) for __initial_sp
+    entry2.o(__vectab_stack_and_reset_area) refers to startup_mkl25z4.o(STACK) for __initial_sp
+    entry2.o(__vectab_stack_and_reset_area) refers to entry.o(.ARM.Collect$$$$00000000) for __main
+    entry5.o(.ARM.Collect$$$$00000004) refers to init.o(.text) for __scatterload
+    entry9a.o(.ARM.Collect$$$$0000000B) refers to main.o(.text.main) for main
+    entry9b.o(.ARM.Collect$$$$0000000C) refers to main.o(.text.main) for main
+    fputc.o(i.fputc) refers (Special) to iusesemip.o(.text) for __I$use$semihosting$fputc
+    fputc.o(i.fputc) refers (Special) to semi.o(.text) for __semihosting_library_function
+    fputc_h.o(i._fputc$hlt) refers (Special) to iusesemip.o(.text) for __I$use$semihosting$fputc
+    fputc_h.o(i._fputc$hlt) refers (Special) to semi.o(.text) for __semihosting_library_function
+    idiv_div0.o(.text) refers to uidiv_div0.o(.text) for __aeabi_uidivmod
+    uldiv.o(.text) refers to llushr.o(.text) for __aeabi_llsr
+    uldiv.o(.text) refers to llshl.o(.text) for __aeabi_llsl
+    depilogue.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    depilogue.o(.text) refers to depilogue.o(i.__ARM_clz) for __ARM_clz
+    depilogue.o(.text) refers to llshl.o(.text) for __aeabi_llsl
+    depilogue.o(.text) refers to llushr.o(.text) for __aeabi_llsr
+    dadd.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    dadd.o(.text) refers to llshl.o(.text) for __aeabi_llsl
+    dadd.o(.text) refers to llsshr.o(.text) for __aeabi_lasr
+    dadd.o(.text) refers to depilogue.o(.text) for _double_epilogue
+    dmul.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    dmul.o(.text) refers to depilogue.o(.text) for _double_epilogue
+    ddiv.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    ddiv.o(.text) refers to depilogue.o(.text) for _double_round
+    dfixul.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    dfixul.o(.text) refers to llushr.o(.text) for __aeabi_llsr
+    dfixul.o(.text) refers to llshl.o(.text) for __aeabi_llsl
+    cdrcmple.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    init.o(.text) refers to entry5.o(.ARM.Collect$$$$00000004) for __main_after_scatterload
+    depilogue.o(i.__ARM_clz) refers (Special) to iusefp.o(.text) for __I$use$fp
+
+
+==============================================================================
+
+Removing Unused input sections from the image.
+
+    Removing pit.o(.text), (0 bytes).
+    Removing pit.o(.ARM.exidx.text.pit_init), (8 bytes).
+    Removing pit.o(.ARM.exidx.text.PIT_IRQHandler), (8 bytes).
+    Removing queue.o(.text), (0 bytes).
+    Removing queue.o(.ARM.exidx.text.q_init), (8 bytes).
+    Removing queue.o(.text.q_empty), (12 bytes).
+    Removing queue.o(.ARM.exidx.text.q_empty), (8 bytes).
+    Removing queue.o(.text.q_full), (20 bytes).
+    Removing queue.o(.ARM.exidx.text.q_full), (8 bytes).
+    Removing queue.o(.text.q_size), (8 bytes).
+    Removing queue.o(.ARM.exidx.text.q_size), (8 bytes).
+    Removing queue.o(.ARM.exidx.text.q_enqueue), (8 bytes).
+    Removing queue.o(.ARM.exidx.text.q_dequeue), (8 bytes).
+    Removing main.o(.text), (0 bytes).
+    Removing main.o(.ARM.exidx.text.main), (8 bytes).
+    Removing main.o(.ARM.use_no_argv), (4 bytes).
+    Removing tpm1.o(.text), (0 bytes).
+    Removing tpm1.o(.ARM.exidx.text.tpm1_init), (8 bytes).
+    Removing uart0.o(.text), (0 bytes).
+    Removing uart0.o(.ARM.exidx.text.uart0_init), (8 bytes).
+    Removing uart0.o(.ARM.exidx.text.UART0_IRQHandler), (8 bytes).
+    Removing uart0.o(.ARM.exidx.text.uart0_send_string), (8 bytes).
+    Removing uart0.o(.text.uart0_num_rx_chars_available), (16 bytes).
+    Removing uart0.o(.ARM.exidx.text.uart0_num_rx_chars_available), (8 bytes).
+    Removing uart0.o(.text.uart0_get_char), (36 bytes).
+    Removing uart0.o(.ARM.exidx.text.uart0_get_char), (8 bytes).
+    Removing uart0.o(.text.uart0_put_char), (48 bytes).
+    Removing uart0.o(.ARM.exidx.text.uart0_put_char), (8 bytes).
+    Removing eeprom.o(.text), (0 bytes).
+    Removing eeprom.o(.text.spi_init), (100 bytes).
+    Removing eeprom.o(.ARM.exidx.text.spi_init), (8 bytes).
+    Removing eeprom.o(.ARM.exidx.text.EEPROM_init), (8 bytes).
+    Removing eeprom.o(.ARM.exidx.text.EEPROM_write_page), (8 bytes).
+    Removing eeprom.o(.ARM.exidx.text.EEPROM_read_page), (8 bytes).
+    Removing delay.o(.text), (0 bytes).
+    Removing delay.o(.ARM.exidx.text.delay_us), (8 bytes).
+    Removing rg.o(.text), (0 bytes).
+    Removing rg.o(.ARM.exidx.text.rg_init), (8 bytes).
+    Removing rg.o(.text.rg_pwmcontrol), (16 bytes).
+    Removing rg.o(.ARM.exidx.text.rg_pwmcontrol), (8 bytes).
+    Removing rg.o(.ARM.exidx.text.rg_onoff), (8 bytes).
+    Removing i2c0.o(.text), (0 bytes).
+    Removing i2c0.o(.text.i2c0_init), (76 bytes).
+    Removing i2c0.o(.ARM.exidx.text.i2c0_init), (8 bytes).
+    Removing i2c0.o(.text.i2c0_read), (852 bytes).
+    Removing i2c0.o(.ARM.exidx.text.i2c0_read), (8 bytes).
+    Removing i2c0.o(.text.i2c0_write), (636 bytes).
+    Removing i2c0.o(.ARM.exidx.text.i2c0_write), (8 bytes).
+    Removing bme280.o(.text), (0 bytes).
+    Removing bme280.o(.ARM.exidx.text.bme280_init), (8 bytes).
+    Removing bme280.o(.ARM.exidx.text.configure_bme280), (8 bytes).
+    Removing bme280.o(.text.reset_bme280), (56 bytes).
+    Removing bme280.o(.ARM.exidx.text.reset_bme280), (8 bytes).
+    Removing bme280.o(.text.read_calibration_status), (32 bytes).
+    Removing bme280.o(.ARM.exidx.text.read_calibration_status), (8 bytes).
+    Removing bme280.o(.text.get_calibration), (88 bytes).
+    Removing bme280.o(.ARM.exidx.text.get_calibration), (8 bytes).
+    Removing bme280.o(.ARM.exidx.text.get_temperature), (8 bytes).
+    Removing i2c1.o(.text), (0 bytes).
+    Removing i2c1.o(.ARM.exidx.text.i2c1_init), (8 bytes).
+    Removing i2c1.o(.ARM.exidx.text.i2c1_read), (8 bytes).
+    Removing i2c1.o(.ARM.exidx.text.i2c1_write), (8 bytes).
+    Removing bitmaps.o(.text), (0 bytes).
+    Removing bitmaps.o(.rodata.bitmap1), (1024 bytes).
+    Removing bitmaps.o(.rodata.bitmap2), (1024 bytes).
+    Removing bitmaps.o(.rodata.bitmap3), (1344 bytes).
+    Removing bitmaps.o(.rodata.lou), (1024 bytes).
+    Removing configscreen.o(.text), (0 bytes).
+    Removing configscreen.o(.text.setSelect), (68 bytes).
+    Removing configscreen.o(.ARM.exidx.text.setSelect), (8 bytes).
+    Removing configscreen.o(.ARM.exidx.text.displayStart), (8 bytes).
+    Removing configscreen.o(.ARM.exidx.text.updateDisplay), (8 bytes).
+    Removing configscreen.o(.text.displayPuzzle), (76 bytes).
+    Removing configscreen.o(.ARM.exidx.text.displayPuzzle), (8 bytes).
+    Removing configscreen.o(.ARM.exidx.text.getSelection), (8 bytes).
+    Removing configscreen.o(.ARM.exidx.text.displayDistance), (8 bytes).
+    Removing fonts.o(.text), (0 bytes).
+    Removing ssd1306.o(.text), (0 bytes).
+    Removing ssd1306.o(.ARM.exidx.text.ssd1306_init), (8 bytes).
+    Removing ssd1306.o(.text.ssd1306_command), (56 bytes).
+    Removing ssd1306.o(.ARM.exidx.text.ssd1306_command), (8 bytes).
+    Removing ssd1306.o(.text.ssd1306_data), (56 bytes).
+    Removing ssd1306.o(.ARM.exidx.text.ssd1306_data), (8 bytes).
+    Removing ssd1306.o(.ARM.exidx.text.ssd1306_update), (8 bytes).
+    Removing ssd1306.o(.ARM.exidx.text.ssd1306_setfont), (8 bytes).
+    Removing ssd1306.o(.ARM.exidx.text.ssd1306_setorientation), (8 bytes).
+    Removing ssd1306.o(.text.ssd1306_setinverse), (68 bytes).
+    Removing ssd1306.o(.ARM.exidx.text.ssd1306_setinverse), (8 bytes).
+    Removing ssd1306.o(.ARM.exidx.text.ssd1306_clearscreen), (8 bytes).
+    Removing ssd1306.o(.text.ssd1306_setcontrast), (32 bytes).
+    Removing ssd1306.o(.ARM.exidx.text.ssd1306_setcontrast), (8 bytes).
+    Removing ssd1306.o(.text.ssd1306_goto), (24 bytes).
+    Removing ssd1306.o(.ARM.exidx.text.ssd1306_goto), (8 bytes).
+    Removing ssd1306.o(.text.ssd1306_setpixel), (48 bytes).
+    Removing ssd1306.o(.ARM.exidx.text.ssd1306_setpixel), (8 bytes).
+    Removing ssd1306.o(.ARM.exidx.text.ssd1306_putchar), (8 bytes).
+    Removing ssd1306.o(.ARM.exidx.text.ssd1306_putstring), (8 bytes).
+    Removing ssd1306.o(.text.ssd1306_terminal), (900 bytes).
+    Removing ssd1306.o(.ARM.exidx.text.ssd1306_terminal), (8 bytes).
+    Removing ssd1306.o(.text.ssd1306_drawline), (316 bytes).
+    Removing ssd1306.o(.ARM.exidx.text.ssd1306_drawline), (8 bytes).
+    Removing ssd1306.o(.text.ssd1306_drawbitmap), (20 bytes).
+    Removing ssd1306.o(.ARM.exidx.text.ssd1306_drawbitmap), (8 bytes).
+    Removing display_i2c1.o(.text), (0 bytes).
+    Removing display_i2c1.o(.ARM.exidx.text.display_i2c1_init), (8 bytes).
+    Removing display_i2c1.o(.ARM.exidx.text.i2c1_write_cmd), (8 bytes).
+    Removing display_i2c1.o(.ARM.exidx.text.i2c1_write_data), (8 bytes).
+    Removing switches.o(.text), (0 bytes).
+    Removing switches.o(.ARM.exidx.text.sw_init), (8 bytes).
+    Removing switches.o(.ARM.exidx.text.sw_pressed), (8 bytes).
+    Removing switches.o(.text.PORTC_IRQHandler), (100 bytes).
+    Removing switches.o(.ARM.exidx.text.PORTC_IRQHandler), (8 bytes).
+    Removing switches.o(.bss..L_MergedGlobals), (4 bytes).
+    Removing startup_mkl25z4.o(HEAP), (0 bytes).
+    Removing system_mkl25z4.o(.text), (0 bytes).
+    Removing system_mkl25z4.o(.ARM.exidx.text.SystemInit), (8 bytes).
+    Removing system_mkl25z4.o(.text.SystemCoreClockUpdate), (268 bytes).
+    Removing system_mkl25z4.o(.ARM.exidx.text.SystemCoreClockUpdate), (8 bytes).
+    Removing system_mkl25z4.o(.data.SystemCoreClock), (4 bytes).
+
+119 unused section(s) (total 8984 bytes) removed from the image.
+
+==============================================================================
+
+Image Symbol Table
+
+    Local Symbols
+
+    Symbol Name                              Value     Ov Type        Size  Object(Section)
+
+    ../clib/../cmprslib/zerorunl.c           0x00000000   Number         0  __dczerorl.o ABSOLUTE
+    ../clib/division.s                       0x00000000   Number         0  aeabi_sdivfast.o ABSOLUTE
+    ../clib/division.s                       0x00000000   Number         0  aeabi_sdivfast_div0.o ABSOLUTE
+    ../clib/microlib/division.c              0x00000000   Number         0  uidiv.o ABSOLUTE
+    ../clib/microlib/division.c              0x00000000   Number         0  idiv.o ABSOLUTE
+    ../clib/microlib/division.c              0x00000000   Number         0  uidiv_div0.o ABSOLUTE
+    ../clib/microlib/division.c              0x00000000   Number         0  idiv_div0.o ABSOLUTE
+    ../clib/microlib/division.c              0x00000000   Number         0  idiv0.o ABSOLUTE
+    ../clib/microlib/division.c              0x00000000   Number         0  uldiv.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llshl.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llushr.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llsshr.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfb.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf0.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf1.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf2.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf3.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf4.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf5.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf6.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf7.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf8.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfa.o ABSOLUTE
+    ../clib/microlib/printf/stubs.s          0x00000000   Number         0  printfstubs.o ABSOLUTE
+    ../clib/microlib/stdio/fputc.c           0x00000000   Number         0  fputc.o ABSOLUTE
+    ../clib/microlib/stdio/fputc.c           0x00000000   Number         0  fputc_h.o ABSOLUTE
+    ../clib/microlib/stdio/semi.s            0x00000000   Number         0  semi.o ABSOLUTE
+    ../clib/microlib/stdio/streams.c         0x00000000   Number         0  stdout.o ABSOLUTE
+    ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpya.o ABSOLUTE
+    ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpyb.o ABSOLUTE
+    ../clib/microlib/string/memset.c         0x00000000   Number         0  memseta.o ABSOLUTE
+    ../clib/microlib/stubs.s                 0x00000000   Number         0  iusefp.o ABSOLUTE
+    ../clib/microlib/stubs.s                 0x00000000   Number         0  iusesemip.o ABSOLUTE
+    ../fplib/microlib/fpadd.c                0x00000000   Number         0  dadd.o ABSOLUTE
+    ../fplib/microlib/fpdiv.c                0x00000000   Number         0  ddiv.o ABSOLUTE
+    ../fplib/microlib/fpepilogue.c           0x00000000   Number         0  depilogue.o ABSOLUTE
+    ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixul.o ABSOLUTE
+    ../fplib/microlib/fpflt.c                0x00000000   Number         0  dflti.o ABSOLUTE
+    ../fplib/microlib/fpmul.c                0x00000000   Number         0  dmul.o ABSOLUTE
+    EEPROM.c                                 0x00000000   Number         0  eeprom.o ABSOLUTE
+    RTE/Device/MKL25Z128xxx4/startup_MKL25Z4.s 0x00000000   Number         0  startup_mkl25z4.o ABSOLUTE
+    bitmaps.c                                0x00000000   Number         0  bitmaps.o ABSOLUTE
+    bme280.c                                 0x00000000   Number         0  bme280.o ABSOLUTE
+    cdrcmple.s                               0x00000000   Number         0  cdrcmple.o ABSOLUTE
+    configScreen.c                           0x00000000   Number         0  configscreen.o ABSOLUTE
+    dc.s                                     0x00000000   Number         0  dc.o ABSOLUTE
+    delay.c                                  0x00000000   Number         0  delay.o ABSOLUTE
+    display_i2c1.c                           0x00000000   Number         0  display_i2c1.o ABSOLUTE
+    fonts.c                                  0x00000000   Number         0  fonts.o ABSOLUTE
+    handlers.s                               0x00000000   Number         0  handlers.o ABSOLUTE
+    i2c0.c                                   0x00000000   Number         0  i2c0.o ABSOLUTE
+    i2c1.c                                   0x00000000   Number         0  i2c1.o ABSOLUTE
+    init.s                                   0x00000000   Number         0  init.o ABSOLUTE
+    main.c                                   0x00000000   Number         0  main.o ABSOLUTE
+    pit.c                                    0x00000000   Number         0  pit.o ABSOLUTE
+    queue.c                                  0x00000000   Number         0  queue.o ABSOLUTE
+    rg.c                                     0x00000000   Number         0  rg.o ABSOLUTE
+    ssd1306.c                                0x00000000   Number         0  ssd1306.o ABSOLUTE
+    switches.c                               0x00000000   Number         0  switches.o ABSOLUTE
+    system_MKL25Z4.c                         0x00000000   Number         0  system_mkl25z4.o ABSOLUTE
+    tpm1.c                                   0x00000000   Number         0  tpm1.o ABSOLUTE
+    uart0.c                                  0x00000000   Number         0  uart0.o ABSOLUTE
+    RESET                                    0x00000000   Section      192  startup_mkl25z4.o(RESET)
+    .ARM.Collect$$$$00000000                 0x000000c0   Section        0  entry.o(.ARM.Collect$$$$00000000)
+    .ARM.Collect$$$$00000001                 0x000000c0   Section        4  entry2.o(.ARM.Collect$$$$00000001)
+    .ARM.Collect$$$$00000004                 0x000000c4   Section        4  entry5.o(.ARM.Collect$$$$00000004)
+    .ARM.Collect$$$$00000008                 0x000000c8   Section        0  entry7b.o(.ARM.Collect$$$$00000008)
+    .ARM.Collect$$$$0000000A                 0x000000c8   Section        0  entry8b.o(.ARM.Collect$$$$0000000A)
+    .ARM.Collect$$$$0000000B                 0x000000c8   Section        8  entry9a.o(.ARM.Collect$$$$0000000B)
+    __lit__00000000                          0x000000d0   Data           4  entry2.o(.ARM.Collect$$$$00002712)
+    .ARM.Collect$$$$0000000D                 0x000000d0   Section        0  entry10a.o(.ARM.Collect$$$$0000000D)
+    .ARM.Collect$$$$0000000F                 0x000000d0   Section        0  entry11a.o(.ARM.Collect$$$$0000000F)
+    .ARM.Collect$$$$00002712                 0x000000d0   Section        4  entry2.o(.ARM.Collect$$$$00002712)
+    .text                                    0x000000d4   Section       40  startup_mkl25z4.o(.text)
+    .text                                    0x000000fc   Section        0  memseta.o(.text)
+    .text                                    0x00000120   Section        0  dflti.o(.text)
+    .text                                    0x00000148   Section        0  uidiv_div0.o(.text)
+    .text                                    0x00000188   Section        0  idiv_div0.o(.text)
+    .text                                    0x000001d8   Section        0  uldiv.o(.text)
+    .text                                    0x00000238   Section        0  iusefp.o(.text)
+    .text                                    0x00000238   Section        0  depilogue.o(.text)
+    .text                                    0x000002f8   Section        0  dmul.o(.text)
+    .text                                    0x000003c8   Section       40  cdrcmple.o(.text)
+    [Anonymous Symbol]                       0x000003f0   Section        0  queue.o(.text.q_init)
+    i.__scatterload_null                     0x000003fc   Section        2  handlers.o(i.__scatterload_null)
+    RESET_COMMAND                            0x000003fe   Data           1  bme280.o(.rodata.RESET_COMMAND)
+    [Anonymous Symbol]                       0x000003fe   Section        0  bme280.o(.rodata.RESET_COMMAND)
+    SLEEP_COMMAND                            0x000003ff   Data           1  bme280.o(.rodata.SLEEP_COMMAND)
+    [Anonymous Symbol]                       0x000003ff   Section        0  bme280.o(.rodata.SLEEP_COMMAND)
+    .ARM.__at_0x400                          0x00000400   Section       16  startup_mkl25z4.o(.ARM.__at_0x400)
+    .text                                    0x00000410   Section        0  dadd.o(.text)
+    .text                                    0x00000574   Section        0  ddiv.o(.text)
+    .text                                    0x00000664   Section        0  dfixul.o(.text)
+    .text                                    0x000006a4   Section       48  init.o(.text)
+    .text                                    0x000006d4   Section        0  llshl.o(.text)
+    .text                                    0x000006f4   Section        0  llushr.o(.text)
+    .text                                    0x00000716   Section        0  llsshr.o(.text)
+    .text                                    0x0000073c   Section        0  __dczerorl.o(.text)
+    [Anonymous Symbol]                       0x00000778   Section        0  eeprom.o(.text.EEPROM_init)
+    __arm_cp.1_0                             0x000007cc   Number         4  eeprom.o(.text.EEPROM_init)
+    __arm_cp.1_1                             0x000007d0   Number         4  eeprom.o(.text.EEPROM_init)
+    __arm_cp.1_2                             0x000007d4   Number         4  eeprom.o(.text.EEPROM_init)
+    __arm_cp.1_3                             0x000007d8   Number         4  eeprom.o(.text.EEPROM_init)
+    __arm_cp.1_4                             0x000007dc   Number         4  eeprom.o(.text.EEPROM_init)
+    __arm_cp.1_5                             0x000007e0   Number         4  eeprom.o(.text.EEPROM_init)
+    [Anonymous Symbol]                       0x000007e4   Section        0  eeprom.o(.text.EEPROM_read_page)
+    __arm_cp.3_4                             0x00000b7c   Number         4  eeprom.o(.text.EEPROM_read_page)
+    __arm_cp.3_5                             0x00000b80   Number         4  eeprom.o(.text.EEPROM_read_page)
+    __arm_cp.3_0                             0x00000e0c   Number         4  eeprom.o(.text.EEPROM_read_page)
+    [Anonymous Symbol]                       0x00000e10   Section        0  eeprom.o(.text.EEPROM_write_page)
+    __arm_cp.2_5                             0x000011bc   Number         4  eeprom.o(.text.EEPROM_write_page)
+    __arm_cp.2_6                             0x000011c0   Number         4  eeprom.o(.text.EEPROM_write_page)
+    __arm_cp.2_0                             0x00001b74   Number         4  eeprom.o(.text.EEPROM_write_page)
+    __arm_cp.2_3                             0x00001b78   Number         4  eeprom.o(.text.EEPROM_write_page)
+    [Anonymous Symbol]                       0x00001b7c   Section        0  pit.o(.text.PIT_IRQHandler)
+    __arm_cp.1_1                             0x00001bc0   Number         4  pit.o(.text.PIT_IRQHandler)
+    __arm_cp.1_2                             0x00001bc4   Number         4  pit.o(.text.PIT_IRQHandler)
+    [Anonymous Symbol]                       0x00001bc8   Section        0  system_mkl25z4.o(.text.SystemInit)
+    __arm_cp.0_0                             0x00001cd4   Number         4  system_mkl25z4.o(.text.SystemInit)
+    __arm_cp.0_1                             0x00001cd8   Number         4  system_mkl25z4.o(.text.SystemInit)
+    __arm_cp.0_2                             0x00001cdc   Number         4  system_mkl25z4.o(.text.SystemInit)
+    __arm_cp.0_3                             0x00001ce0   Number         4  system_mkl25z4.o(.text.SystemInit)
+    __arm_cp.0_4                             0x00001ce4   Number         4  system_mkl25z4.o(.text.SystemInit)
+    __arm_cp.0_5                             0x00001ce8   Number         4  system_mkl25z4.o(.text.SystemInit)
+    __arm_cp.0_6                             0x00001cec   Number         4  system_mkl25z4.o(.text.SystemInit)
+    __arm_cp.0_7                             0x00001cf0   Number         4  system_mkl25z4.o(.text.SystemInit)
+    __arm_cp.0_8                             0x00001cf4   Number         4  system_mkl25z4.o(.text.SystemInit)
+    __arm_cp.0_9                             0x00001cf8   Number         4  system_mkl25z4.o(.text.SystemInit)
+    __arm_cp.0_10                            0x00001cfc   Number         4  system_mkl25z4.o(.text.SystemInit)
+    [Anonymous Symbol]                       0x00001d00   Section        0  uart0.o(.text.UART0_IRQHandler)
+    __arm_cp.1_0                             0x00001d5c   Number         4  uart0.o(.text.UART0_IRQHandler)
+    __arm_cp.1_1                             0x00001d60   Number         4  uart0.o(.text.UART0_IRQHandler)
+    __arm_cp.1_2                             0x00001d64   Number         4  uart0.o(.text.UART0_IRQHandler)
+    __arm_cp.1_3                             0x00001d68   Number         4  uart0.o(.text.UART0_IRQHandler)
+    [Anonymous Symbol]                       0x00001d6c   Section        0  bme280.o(.text.bme280_init)
+    [Anonymous Symbol]                       0x00001d9c   Section        0  bme280.o(.text.configure_bme280)
+    __arm_cp.1_0                             0x00001e64   Number         4  bme280.o(.text.configure_bme280)
+    __arm_cp.1_1                             0x00001e68   Number         4  bme280.o(.text.configure_bme280)
+    __arm_cp.1_2                             0x00001e6c   Number         4  bme280.o(.text.configure_bme280)
+    __arm_cp.1_3                             0x00001e70   Number         4  bme280.o(.text.configure_bme280)
+    [Anonymous Symbol]                       0x00001e74   Section        0  delay.o(.text.delay_us)
+    [Anonymous Symbol]                       0x00001e94   Section        0  configscreen.o(.text.displayDistance)
+    __arm_cp.5_0                             0x00001f14   Number         4  configscreen.o(.text.displayDistance)
+    [Anonymous Symbol]                       0x00001f50   Section        0  configscreen.o(.text.displayStart)
+    __arm_cp.1_0                             0x00001f98   Number         4  configscreen.o(.text.displayStart)
+    __arm_cp.1_3                             0x00001fb0   Number         4  configscreen.o(.text.displayStart)
+    [Anonymous Symbol]                       0x00001fc8   Section        0  display_i2c1.o(.text.display_i2c1_init)
+    [Anonymous Symbol]                       0x0000200c   Section        0  configscreen.o(.text.getSelection)
+    __arm_cp.4_0                             0x00002094   Number         4  configscreen.o(.text.getSelection)
+    __arm_cp.4_1                             0x00002098   Number         4  configscreen.o(.text.getSelection)
+    __arm_cp.4_2                             0x0000209c   Number         4  configscreen.o(.text.getSelection)
+    [Anonymous Symbol]                       0x000020a0   Section        0  bme280.o(.text.get_temperature)
+    __arm_cp.5_0                             0x00002104   Number         4  bme280.o(.text.get_temperature)
+    __arm_cp.5_1                             0x00002108   Number         4  bme280.o(.text.get_temperature)
+    [Anonymous Symbol]                       0x0000210c   Section        0  i2c1.o(.text.i2c1_init)
+    __arm_cp.0_0                             0x0000214c   Number         4  i2c1.o(.text.i2c1_init)
+    __arm_cp.0_1                             0x00002150   Number         4  i2c1.o(.text.i2c1_init)
+    __arm_cp.0_2                             0x00002154   Number         4  i2c1.o(.text.i2c1_init)
+    [Anonymous Symbol]                       0x00002158   Section        0  i2c1.o(.text.i2c1_read)
+    __arm_cp.1_0                             0x000024a4   Number         4  i2c1.o(.text.i2c1_read)
+    __arm_cp.1_1                             0x000024a8   Number         4  i2c1.o(.text.i2c1_read)
+    [Anonymous Symbol]                       0x000024ac   Section        0  i2c1.o(.text.i2c1_write)
+    __arm_cp.2_0                             0x00002720   Number         4  i2c1.o(.text.i2c1_write)
+    __arm_cp.2_1                             0x00002724   Number         4  i2c1.o(.text.i2c1_write)
+    [Anonymous Symbol]                       0x00002728   Section        0  display_i2c1.o(.text.i2c1_write_cmd)
+    __arm_cp.1_0                             0x00002964   Number         4  display_i2c1.o(.text.i2c1_write_cmd)
+    __arm_cp.1_1                             0x00002968   Number         4  display_i2c1.o(.text.i2c1_write_cmd)
+    [Anonymous Symbol]                       0x0000296c   Section        0  display_i2c1.o(.text.i2c1_write_data)
+    __arm_cp.2_0                             0x00002bac   Number         4  display_i2c1.o(.text.i2c1_write_data)
+    __arm_cp.2_1                             0x00002bb0   Number         4  display_i2c1.o(.text.i2c1_write_data)
+    [Anonymous Symbol]                       0x00002bb4   Section        0  main.o(.text.main)
+    __arm_cp.0_0                             0x00002cd0   Number         4  main.o(.text.main)
+    __arm_cp.0_8                             0x00002d40   Number         4  main.o(.text.main)
+    __arm_cp.0_9                             0x00002d44   Number         4  main.o(.text.main)
+    __arm_cp.0_13                            0x00002d5c   Number         4  main.o(.text.main)
+    __arm_cp.0_14                            0x00002d60   Number         4  main.o(.text.main)
+    [Anonymous Symbol]                       0x00002d64   Section        0  pit.o(.text.pit_init)
+    __arm_cp.0_0                             0x00002dbc   Number         4  pit.o(.text.pit_init)
+    __arm_cp.0_1                             0x00002dc0   Number         4  pit.o(.text.pit_init)
+    __arm_cp.0_2                             0x00002dc4   Number         4  pit.o(.text.pit_init)
+    __arm_cp.0_3                             0x00002dc8   Number         4  pit.o(.text.pit_init)
+    __arm_cp.0_4                             0x00002dcc   Number         4  pit.o(.text.pit_init)
+    __arm_cp.0_5                             0x00002dd0   Number         4  pit.o(.text.pit_init)
+    __arm_cp.0_6                             0x00002dd4   Number         4  pit.o(.text.pit_init)
+    [Anonymous Symbol]                       0x00002dd8   Section        0  queue.o(.text.q_dequeue)
+    [Anonymous Symbol]                       0x00002e18   Section        0  queue.o(.text.q_enqueue)
+    __arm_cp.4_0                             0x00002e58   Number         4  queue.o(.text.q_enqueue)
+    [Anonymous Symbol]                       0x00002e5c   Section        0  rg.o(.text.rg_init)
+    __arm_cp.0_0                             0x00002e94   Number         4  rg.o(.text.rg_init)
+    __arm_cp.0_1                             0x00002e98   Number         4  rg.o(.text.rg_init)
+    __arm_cp.0_2                             0x00002e9c   Number         4  rg.o(.text.rg_init)
+    __arm_cp.0_3                             0x00002ea0   Number         4  rg.o(.text.rg_init)
+    [Anonymous Symbol]                       0x00002ea4   Section        0  rg.o(.text.rg_onoff)
+    __arm_cp.2_0                             0x00002ebc   Number         4  rg.o(.text.rg_onoff)
+    [Anonymous Symbol]                       0x00002ec0   Section        0  ssd1306.o(.text.ssd1306_clearscreen)
+    [Anonymous Symbol]                       0x00002ed0   Section        0  ssd1306.o(.text.ssd1306_init)
+    __arm_cp.0_1                             0x00002eec   Number         4  ssd1306.o(.text.ssd1306_init)
+    [Anonymous Symbol]                       0x00002ef0   Section        0  ssd1306.o(.text.ssd1306_putchar)
+    __arm_cp.11_0                            0x0000328c   Number         4  ssd1306.o(.text.ssd1306_putchar)
+    __arm_cp.11_2                            0x00003290   Number         4  ssd1306.o(.text.ssd1306_putchar)
+    [Anonymous Symbol]                       0x00003294   Section        0  ssd1306.o(.text.ssd1306_putstring)
+    __arm_cp.12_0                            0x00003310   Number         4  ssd1306.o(.text.ssd1306_putstring)
+    [Anonymous Symbol]                       0x00003314   Section        0  ssd1306.o(.text.ssd1306_setfont)
+    __arm_cp.4_0                             0x0000331c   Number         4  ssd1306.o(.text.ssd1306_setfont)
+    [Anonymous Symbol]                       0x00003320   Section        0  ssd1306.o(.text.ssd1306_setorientation)
+    __arm_cp.5_0                             0x00003374   Number         4  ssd1306.o(.text.ssd1306_setorientation)
+    [Anonymous Symbol]                       0x00003378   Section        0  ssd1306.o(.text.ssd1306_update)
+    __arm_cp.3_0                             0x000033c8   Number         4  ssd1306.o(.text.ssd1306_update)
+    __arm_cp.3_1                             0x000033cc   Number         4  ssd1306.o(.text.ssd1306_update)
+    __arm_cp.3_2                             0x000033d0   Number         4  ssd1306.o(.text.ssd1306_update)
+    [Anonymous Symbol]                       0x000033d4   Section        0  switches.o(.text.sw_init)
+    __arm_cp.0_1                             0x00003424   Number         4  switches.o(.text.sw_init)
+    __arm_cp.0_2                             0x00003428   Number         4  switches.o(.text.sw_init)
+    __arm_cp.0_3                             0x0000342c   Number         4  switches.o(.text.sw_init)
+    __arm_cp.0_4                             0x00003430   Number         4  switches.o(.text.sw_init)
+    [Anonymous Symbol]                       0x00003434   Section        0  switches.o(.text.sw_pressed)
+    __arm_cp.1_0                             0x00003460   Number         4  switches.o(.text.sw_pressed)
+    __arm_cp.1_1                             0x00003464   Number         4  switches.o(.text.sw_pressed)
+    [Anonymous Symbol]                       0x00003484   Section        0  tpm1.o(.text.tpm1_init)
+    __arm_cp.0_0                             0x000034c0   Number         4  tpm1.o(.text.tpm1_init)
+    __arm_cp.0_1                             0x000034c4   Number         4  tpm1.o(.text.tpm1_init)
+    __arm_cp.0_2                             0x000034c8   Number         4  tpm1.o(.text.tpm1_init)
+    __arm_cp.0_3                             0x000034cc   Number         4  tpm1.o(.text.tpm1_init)
+    __arm_cp.0_4                             0x000034d0   Number         4  tpm1.o(.text.tpm1_init)
+    [Anonymous Symbol]                       0x000034d4   Section        0  uart0.o(.text.uart0_init)
+    __arm_cp.0_0                             0x00003554   Number         4  uart0.o(.text.uart0_init)
+    __arm_cp.0_1                             0x00003558   Number         4  uart0.o(.text.uart0_init)
+    __arm_cp.0_2                             0x0000355c   Number         4  uart0.o(.text.uart0_init)
+    __arm_cp.0_4                             0x00003560   Number         4  uart0.o(.text.uart0_init)
+    __arm_cp.0_5                             0x00003564   Number         4  uart0.o(.text.uart0_init)
+    __arm_cp.0_6                             0x00003568   Number         4  uart0.o(.text.uart0_init)
+    __arm_cp.0_8                             0x0000356c   Number         4  uart0.o(.text.uart0_init)
+    [Anonymous Symbol]                       0x00003570   Section        0  uart0.o(.text.uart0_send_string)
+    __arm_cp.2_0                             0x000035a8   Number         4  uart0.o(.text.uart0_send_string)
+    __arm_cp.2_1                             0x000035ac   Number         4  uart0.o(.text.uart0_send_string)
+    [Anonymous Symbol]                       0x000035b0   Section        0  configscreen.o(.text.updateDisplay)
+    __arm_cp.2_0                             0x000035f4   Number         4  configscreen.o(.text.updateDisplay)
+    i.__0sprintf                             0x0000362c   Section        0  printfa.o(i.__0sprintf)
+    i.__ARM_clz                              0x00003654   Section        0  depilogue.o(i.__ARM_clz)
+    i.__scatterload_copy                     0x00003682   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_zeroinit                 0x00003690   Section       14  handlers.o(i.__scatterload_zeroinit)
+    _fp_digits                               0x000036a1   Thumb Code   344  printfa.o(i._fp_digits)
+    i._fp_digits                             0x000036a0   Section        0  printfa.o(i._fp_digits)
+    _printf_core                             0x00003815   Thumb Code  1754  printfa.o(i._printf_core)
+    i._printf_core                           0x00003814   Section        0  printfa.o(i._printf_core)
+    _printf_post_padding                     0x00003f01   Thumb Code    32  printfa.o(i._printf_post_padding)
+    i._printf_post_padding                   0x00003f00   Section        0  printfa.o(i._printf_post_padding)
+    _printf_pre_padding                      0x00003f21   Thumb Code    44  printfa.o(i._printf_pre_padding)
+    i._printf_pre_padding                    0x00003f20   Section        0  printfa.o(i._printf_pre_padding)
+    _sputc                                   0x00003f4d   Thumb Code    10  printfa.o(i._sputc)
+    i._sputc                                 0x00003f4c   Section        0  printfa.o(i._sputc)
+    [Anonymous Symbol]                       0x00003f58   Section        0  configscreen.o(.rodata..Lswitch.table.getSelection)
+    [Anonymous Symbol]                       0x00003f64   Section        0  configscreen.o(.rodata..Lswitch.table.getSelection.18)
+    [Anonymous Symbol]                       0x00003f70   Section        0  configscreen.o(.rodata..Lswitch.table.getSelection.19)
+    config_reg                               0x00008a3e   Data           1  bme280.o(.rodata.config_reg)
+    [Anonymous Symbol]                       0x00008a3e   Section        0  bme280.o(.rodata.config_reg)
+    ctrl_meas_reg                            0x00008a3f   Data           1  bme280.o(.rodata.ctrl_meas_reg)
+    [Anonymous Symbol]                       0x00008a3f   Section        0  bme280.o(.rodata.ctrl_meas_reg)
+    hum_config_reg                           0x00008a40   Data           1  bme280.o(.rodata.hum_config_reg)
+    [Anonymous Symbol]                       0x00008a40   Section        0  bme280.o(.rodata.hum_config_reg)
+    ssd1306_init_commands                    0x00008a41   Data          29  ssd1306.o(.rodata.ssd1306_init_commands)
+    [Anonymous Symbol]                       0x00008a41   Section        0  ssd1306.o(.rodata.ssd1306_init_commands)
+    [Anonymous Symbol]                       0x00008a5e   Section        0  configscreen.o(.rodata.str1.1)
+    data_write                               0x1ffff000   Data         511  main.o(.data.data_write)
+    [Anonymous Symbol]                       0x1ffff000   Section        0  main.o(.data.data_write)
+    font                                     0x1ffff200   Data           4  ssd1306.o(.data.font)
+    [Anonymous Symbol]                       0x1ffff200   Section        0  ssd1306.o(.data.font)
+    [Anonymous Symbol]                       0x1ffff208   Section        0  pit.o(.bss..L_MergedGlobals)
+    PIT_IRQHandler.cnt                       0x1ffff20c   Data           4  pit.o(.bss..L_MergedGlobals)
+    dig_T1                                   0x1ffff210   Data           4  bme280.o(.bss..L_MergedGlobals)
+    [Anonymous Symbol]                       0x1ffff210   Section        0  bme280.o(.bss..L_MergedGlobals)
+    dig_T2                                   0x1ffff214   Data           4  bme280.o(.bss..L_MergedGlobals)
+    dig_T3                                   0x1ffff218   Data           4  bme280.o(.bss..L_MergedGlobals)
+    x                                        0x1ffff21c   Data           1  ssd1306.o(.bss..L_MergedGlobals)
+    [Anonymous Symbol]                       0x1ffff21c   Section        0  ssd1306.o(.bss..L_MergedGlobals)
+    y                                        0x1ffff21d   Data           1  ssd1306.o(.bss..L_MergedGlobals)
+    RxQ                                      0x1ffff220   Data         524  uart0.o(.bss.RxQ)
+    [Anonymous Symbol]                       0x1ffff220   Section        0  uart0.o(.bss.RxQ)
+    TxQ                                      0x1ffff42c   Data         524  uart0.o(.bss.TxQ)
+    [Anonymous Symbol]                       0x1ffff42c   Section        0  uart0.o(.bss.TxQ)
+    data_read                                0x1ffff638   Data         511  main.o(.bss.data_read)
+    [Anonymous Symbol]                       0x1ffff638   Section        0  main.o(.bss.data_read)
+    STACK                                    0x1ffffc38   Section     1024  startup_mkl25z4.o(STACK)
+
+    Global Symbols
+
+    Symbol Name                              Value     Ov Type        Size  Object(Section)
+
+    BuildAttributes$$THM_ISAv3M$S$PE$A:L22$X:L11$S22$IEEE1$IW$~IW$USESV6$~STKCKD$USESV7$~SHL$OTIME$ROPI$EBA8$MICROLIB$REQ8$PRES8$EABIv2 0x00000000   Number         0  anon$$obj.o ABSOLUTE
+    __Vectors                                0x00000000   Data           4  startup_mkl25z4.o(RESET)
+    _printf_a                                0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_c                                0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_charcount                        0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_d                                0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_e                                0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_f                                0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_flags                            0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_fp_dec                           0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_fp_hex                           0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_g                                0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_i                                0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_int_dec                          0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_l                                0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_lc                               0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_ll                               0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_lld                              0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_lli                              0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_llo                              0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_llu                              0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_llx                              0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_longlong_dec                     0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_longlong_hex                     0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_longlong_oct                     0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_ls                               0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_mbtowc                           0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_n                                0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_o                                0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_p                                0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_percent                          0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_pre_padding                      0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_return_value                     0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_s                                0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_sizespec                         0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_str                              0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_truncate_signed                  0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_truncate_unsigned                0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_u                                0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_wc                               0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_wctomb                           0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_widthprec                        0x00000000   Number         0  printfstubs.o ABSOLUTE
+    _printf_x                                0x00000000   Number         0  printfstubs.o ABSOLUTE
+    __cpp_initialize__aeabi_                  - Undefined Weak Reference
+    __cxa_finalize                            - Undefined Weak Reference
+    _clock_init                               - Undefined Weak Reference
+    _microlib_exit                            - Undefined Weak Reference
+    __Vectors_End                            0x000000c0   Data           0  startup_mkl25z4.o(RESET)
+    __Vectors_Size                           0x000000c0   Number         0  startup_mkl25z4.o ABSOLUTE
+    __main                                   0x000000c1   Thumb Code     0  entry.o(.ARM.Collect$$$$00000000)
+    _main_stk                                0x000000c1   Thumb Code     0  entry2.o(.ARM.Collect$$$$00000001)
+    _main_scatterload                        0x000000c5   Thumb Code     0  entry5.o(.ARM.Collect$$$$00000004)
+    __main_after_scatterload                 0x000000c9   Thumb Code     0  entry5.o(.ARM.Collect$$$$00000004)
+    _main_clock                              0x000000c9   Thumb Code     0  entry7b.o(.ARM.Collect$$$$00000008)
+    _main_cpp_init                           0x000000c9   Thumb Code     0  entry8b.o(.ARM.Collect$$$$0000000A)
+    _main_init                               0x000000c9   Thumb Code     0  entry9a.o(.ARM.Collect$$$$0000000B)
+    __rt_final_cpp                           0x000000d1   Thumb Code     0  entry10a.o(.ARM.Collect$$$$0000000D)
+    __rt_final_exit                          0x000000d1   Thumb Code     0  entry11a.o(.ARM.Collect$$$$0000000F)
+    Reset_Handler                            0x000000d5   Thumb Code    12  startup_mkl25z4.o(.text)
+    NMI_Handler                              0x000000e1   Thumb Code     2  startup_mkl25z4.o(.text)
+    HardFault_Handler                        0x000000e3   Thumb Code     2  startup_mkl25z4.o(.text)
+    SVC_Handler                              0x000000e5   Thumb Code     2  startup_mkl25z4.o(.text)
+    PendSV_Handler                           0x000000e7   Thumb Code     2  startup_mkl25z4.o(.text)
+    SysTick_Handler                          0x000000e9   Thumb Code     2  startup_mkl25z4.o(.text)
+    ADC0_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    CMP0_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    DAC0_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    DMA0_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    DMA1_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    DMA2_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    DMA3_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    DefaultISR                               0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    FTFA_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    I2C0_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    I2C1_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    LLWU_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    LPTMR0_IRQHandler                        0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    LVD_LVW_IRQHandler                       0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    MCG_IRQHandler                           0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    PORTA_IRQHandler                         0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    PORTD_IRQHandler                         0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    RTC_IRQHandler                           0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    RTC_Seconds_IRQHandler                   0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    Reserved20_IRQHandler                    0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    Reserved39_IRQHandler                    0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    Reserved45_IRQHandler                    0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    SPI0_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    SPI1_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    TPM0_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    TPM1_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    TPM2_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    TSI0_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    UART1_IRQHandler                         0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    UART2_IRQHandler                         0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    USB0_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    __aeabi_memset                           0x000000fd   Thumb Code    14  memseta.o(.text)
+    __aeabi_memset4                          0x000000fd   Thumb Code     0  memseta.o(.text)
+    __aeabi_memset8                          0x000000fd   Thumb Code     0  memseta.o(.text)
+    __aeabi_memclr                           0x0000010b   Thumb Code     4  memseta.o(.text)
+    __aeabi_memclr4                          0x0000010b   Thumb Code     0  memseta.o(.text)
+    __aeabi_memclr8                          0x0000010b   Thumb Code     0  memseta.o(.text)
+    _memset$wrapper                          0x0000010f   Thumb Code    18  memseta.o(.text)
+    __aeabi_i2d                              0x00000121   Thumb Code    34  dflti.o(.text)
+    __aeabi_uidiv                            0x00000149   Thumb Code     0  uidiv_div0.o(.text)
+    __aeabi_uidivmod                         0x00000149   Thumb Code    62  uidiv_div0.o(.text)
+    __aeabi_idiv                             0x00000189   Thumb Code     0  idiv_div0.o(.text)
+    __aeabi_idivmod$div0                     0x00000189   Thumb Code    74  idiv_div0.o(.text)
+    __aeabi_uldivmod                         0x000001d9   Thumb Code    96  uldiv.o(.text)
+    __I$use$fp                               0x00000239   Thumb Code     0  iusefp.o(.text)
+    _double_round                            0x00000239   Thumb Code    26  depilogue.o(.text)
+    _double_epilogue                         0x00000253   Thumb Code   164  depilogue.o(.text)
+    __aeabi_dmul                             0x000002f9   Thumb Code   202  dmul.o(.text)
+    __aeabi_cdrcmple                         0x000003c9   Thumb Code    38  cdrcmple.o(.text)
+    q_init                                   0x000003f1   Thumb Code    12  queue.o(.text.q_init)
+    __scatterload_null                       0x000003fd   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __aeabi_dadd                             0x00000411   Thumb Code   328  dadd.o(.text)
+    __aeabi_dsub                             0x00000559   Thumb Code    12  dadd.o(.text)
+    __aeabi_drsub                            0x00000565   Thumb Code    12  dadd.o(.text)
+    __aeabi_ddiv                             0x00000575   Thumb Code   234  ddiv.o(.text)
+    __aeabi_d2ulz                            0x00000665   Thumb Code    54  dfixul.o(.text)
+    __scatterload                            0x000006a5   Thumb Code    38  init.o(.text)
+    __scatterload_rt2                        0x000006a5   Thumb Code     0  init.o(.text)
+    __aeabi_llsl                             0x000006d5   Thumb Code    32  llshl.o(.text)
+    _ll_shift_l                              0x000006d5   Thumb Code     0  llshl.o(.text)
+    __aeabi_llsr                             0x000006f5   Thumb Code    34  llushr.o(.text)
+    _ll_ushift_r                             0x000006f5   Thumb Code     0  llushr.o(.text)
+    __aeabi_lasr                             0x00000717   Thumb Code    38  llsshr.o(.text)
+    _ll_sshift_r                             0x00000717   Thumb Code     0  llsshr.o(.text)
+    __decompress                             0x0000073d   Thumb Code     0  __dczerorl.o(.text)
+    __decompress0                            0x0000073d   Thumb Code    58  __dczerorl.o(.text)
+    EEPROM_init                              0x00000779   Thumb Code    84  eeprom.o(.text.EEPROM_init)
+    EEPROM_read_page                         0x000007e5   Thumb Code  1576  eeprom.o(.text.EEPROM_read_page)
+    EEPROM_write_page                        0x00000e11   Thumb Code  3428  eeprom.o(.text.EEPROM_write_page)
+    PIT_IRQHandler                           0x00001b7d   Thumb Code    68  pit.o(.text.PIT_IRQHandler)
+    SystemInit                               0x00001bc9   Thumb Code   268  system_mkl25z4.o(.text.SystemInit)
+    UART0_IRQHandler                         0x00001d01   Thumb Code    92  uart0.o(.text.UART0_IRQHandler)
+    bme280_init                              0x00001d6d   Thumb Code    48  bme280.o(.text.bme280_init)
+    configure_bme280                         0x00001d9d   Thumb Code   200  bme280.o(.text.configure_bme280)
+    delay_us                                 0x00001e75   Thumb Code    32  delay.o(.text.delay_us)
+    displayDistance                          0x00001e95   Thumb Code   128  configscreen.o(.text.displayDistance)
+    displayStart                             0x00001f51   Thumb Code    72  configscreen.o(.text.displayStart)
+    display_i2c1_init                        0x00001fc9   Thumb Code    68  display_i2c1.o(.text.display_i2c1_init)
+    getSelection                             0x0000200d   Thumb Code   136  configscreen.o(.text.getSelection)
+    get_temperature                          0x000020a1   Thumb Code   100  bme280.o(.text.get_temperature)
+    i2c1_init                                0x0000210d   Thumb Code    64  i2c1.o(.text.i2c1_init)
+    i2c1_read                                0x00002159   Thumb Code   844  i2c1.o(.text.i2c1_read)
+    i2c1_write                               0x000024ad   Thumb Code   628  i2c1.o(.text.i2c1_write)
+    i2c1_write_cmd                           0x00002729   Thumb Code   572  display_i2c1.o(.text.i2c1_write_cmd)
+    i2c1_write_data                          0x0000296d   Thumb Code   576  display_i2c1.o(.text.i2c1_write_data)
+    main                                     0x00002bb5   Thumb Code   284  main.o(.text.main)
+    pit_init                                 0x00002d65   Thumb Code    88  pit.o(.text.pit_init)
+    q_dequeue                                0x00002dd9   Thumb Code    64  queue.o(.text.q_dequeue)
+    q_enqueue                                0x00002e19   Thumb Code    64  queue.o(.text.q_enqueue)
+    rg_init                                  0x00002e5d   Thumb Code    56  rg.o(.text.rg_init)
+    rg_onoff                                 0x00002ea5   Thumb Code    24  rg.o(.text.rg_onoff)
+    ssd1306_clearscreen                      0x00002ec1   Thumb Code    16  ssd1306.o(.text.ssd1306_clearscreen)
+    ssd1306_init                             0x00002ed1   Thumb Code    28  ssd1306.o(.text.ssd1306_init)
+    ssd1306_putchar                          0x00002ef1   Thumb Code   924  ssd1306.o(.text.ssd1306_putchar)
+    ssd1306_putstring                        0x00003295   Thumb Code   124  ssd1306.o(.text.ssd1306_putstring)
+    ssd1306_setfont                          0x00003315   Thumb Code     8  ssd1306.o(.text.ssd1306_setfont)
+    ssd1306_setorientation                   0x00003321   Thumb Code    84  ssd1306.o(.text.ssd1306_setorientation)
+    ssd1306_update                           0x00003379   Thumb Code    80  ssd1306.o(.text.ssd1306_update)
+    sw_init                                  0x000033d5   Thumb Code    80  switches.o(.text.sw_init)
+    sw_pressed                               0x00003435   Thumb Code    44  switches.o(.text.sw_pressed)
+    tpm1_init                                0x00003485   Thumb Code    60  tpm1.o(.text.tpm1_init)
+    uart0_init                               0x000034d5   Thumb Code   128  uart0.o(.text.uart0_init)
+    uart0_send_string                        0x00003571   Thumb Code    56  uart0.o(.text.uart0_send_string)
+    updateDisplay                            0x000035b1   Thumb Code    68  configscreen.o(.text.updateDisplay)
+    __0sprintf                               0x0000362d   Thumb Code    36  printfa.o(i.__0sprintf)
+    __1sprintf                               0x0000362d   Thumb Code     0  printfa.o(i.__0sprintf)
+    __2sprintf                               0x0000362d   Thumb Code     0  printfa.o(i.__0sprintf)
+    __c89sprintf                             0x0000362d   Thumb Code     0  printfa.o(i.__0sprintf)
+    sprintf                                  0x0000362d   Thumb Code     0  printfa.o(i.__0sprintf)
+    __ARM_clz                                0x00003655   Thumb Code    46  depilogue.o(i.__ARM_clz)
+    __scatterload_copy                       0x00003683   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_zeroinit                   0x00003691   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    Dialog_plain_12                          0x00003f7c   Data        3793  fonts.o(.rodata.Dialog_plain_12)
+    Monospaced_bold_24                       0x00004e4d   Data       11967  fonts.o(.rodata.Monospaced_bold_24)
+    Monospaced_plain_10                      0x00007d0c   Data        3378  fonts.o(.rodata.Monospaced_plain_10)
+    Region$$Table$$Base                      0x00008a64   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x00008a84   Number         0  anon$$obj.o(Region$$Table)
+    toggleLED                                0x1ffff208   Data           1  pit.o(.bss..L_MergedGlobals)
+    ssd1306_framebuffer                      0x1ffff838   Data        1024  ssd1306.o(.bss.ssd1306_framebuffer)
+    __initial_sp                             0x20000038   Data           0  startup_mkl25z4.o(STACK)
+
+
+
+==============================================================================
+
+Memory Map of the image
+
+  Image Entry point : 0x000000c1
+
+  Load Region LR_IROM1 (Base: 0x00000000, Size: 0x00008c90, Max: 0x00020000, ABSOLUTE, COMPRESSED[0x00008aa8])
+
+    Execution Region ER_IROM1 (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x00008a84, Max: 0x00020000, ABSOLUTE)
+
+    Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x00000000   0x00000000   0x000000c0   Data   RO          284    RESET               startup_mkl25z4.o
+    0x000000c0   0x000000c0   0x00000000   Code   RO          307  * .ARM.Collect$$$$00000000  mc_p.l(entry.o)
+    0x000000c0   0x000000c0   0x00000004   Code   RO          587    .ARM.Collect$$$$00000001  mc_p.l(entry2.o)
+    0x000000c4   0x000000c4   0x00000004   Code   RO          590    .ARM.Collect$$$$00000004  mc_p.l(entry5.o)
+    0x000000c8   0x000000c8   0x00000000   Code   RO          592    .ARM.Collect$$$$00000008  mc_p.l(entry7b.o)
+    0x000000c8   0x000000c8   0x00000000   Code   RO          594    .ARM.Collect$$$$0000000A  mc_p.l(entry8b.o)
+    0x000000c8   0x000000c8   0x00000008   Code   RO          595    .ARM.Collect$$$$0000000B  mc_p.l(entry9a.o)
+    0x000000d0   0x000000d0   0x00000000   Code   RO          597    .ARM.Collect$$$$0000000D  mc_p.l(entry10a.o)
+    0x000000d0   0x000000d0   0x00000000   Code   RO          599    .ARM.Collect$$$$0000000F  mc_p.l(entry11a.o)
+    0x000000d0   0x000000d0   0x00000004   Code   RO          588    .ARM.Collect$$$$00002712  mc_p.l(entry2.o)
+    0x000000d4   0x000000d4   0x00000028   Code   RO          286    .text               startup_mkl25z4.o
+    0x000000fc   0x000000fc   0x00000024   Code   RO          320    .text               mc_p.l(memseta.o)
+    0x00000120   0x00000120   0x00000028   Code   RO          585    .text               mf_p.l(dflti.o)
+    0x00000148   0x00000148   0x0000003e   Code   RO          610    .text               mc_p.l(uidiv_div0.o)
+    0x00000186   0x00000186   0x00000002   PAD
+    0x00000188   0x00000188   0x00000050   Code   RO          612    .text               mc_p.l(idiv_div0.o)
+    0x000001d8   0x000001d8   0x00000060   Code   RO          616    .text               mc_p.l(uldiv.o)
+    0x00000238   0x00000238   0x00000000   Code   RO          618    .text               mc_p.l(iusefp.o)
+    0x00000238   0x00000238   0x000000be   Code   RO          619    .text               mf_p.l(depilogue.o)
+    0x000002f6   0x000002f6   0x00000002   PAD
+    0x000002f8   0x000002f8   0x000000d0   Code   RO          625    .text               mf_p.l(dmul.o)
+    0x000003c8   0x000003c8   0x00000028   Code   RO          631    .text               mf_p.l(cdrcmple.o)
+    0x000003f0   0x000003f0   0x0000000c   Code   RO           14    .text.q_init        queue.o
+    0x000003fc   0x000003fc   0x00000002   Code   RO          646    i.__scatterload_null  mc_p.l(handlers.o)
+    0x000003fe   0x000003fe   0x00000001   Data   RO          141    .rodata.RESET_COMMAND  bme280.o
+    0x000003ff   0x000003ff   0x00000001   Data   RO          142    .rodata.SLEEP_COMMAND  bme280.o
+    0x00000400   0x00000400   0x00000010   Code   RO          285    .ARM.__at_0x400     startup_mkl25z4.o
+    0x00000410   0x00000410   0x00000164   Code   RO          623    .text               mf_p.l(dadd.o)
+    0x00000574   0x00000574   0x000000f0   Code   RO          627    .text               mf_p.l(ddiv.o)
+    0x00000664   0x00000664   0x00000040   Code   RO          629    .text               mf_p.l(dfixul.o)
+    0x000006a4   0x000006a4   0x00000030   Code   RO          633    .text               mc_p.l(init.o)
+    0x000006d4   0x000006d4   0x00000020   Code   RO          636    .text               mc_p.l(llshl.o)
+    0x000006f4   0x000006f4   0x00000022   Code   RO          638    .text               mc_p.l(llushr.o)
+    0x00000716   0x00000716   0x00000026   Code   RO          640    .text               mc_p.l(llsshr.o)
+    0x0000073c   0x0000073c   0x0000003a   Code   RO          651    .text               mc_p.l(__dczerorl.o)
+    0x00000776   0x00000776   0x00000002   PAD
+    0x00000778   0x00000778   0x0000006c   Code   RO           78    .text.EEPROM_init   eeprom.o
+    0x000007e4   0x000007e4   0x0000062c   Code   RO           82    .text.EEPROM_read_page  eeprom.o
+    0x00000e10   0x00000e10   0x00000d6c   Code   RO           80    .text.EEPROM_write_page  eeprom.o
+    0x00001b7c   0x00001b7c   0x0000004c   Code   RO            4    .text.PIT_IRQHandler  pit.o
+    0x00001bc8   0x00001bc8   0x00000138   Code   RO          295    .text.SystemInit    system_mkl25z4.o
+    0x00001d00   0x00001d00   0x0000006c   Code   RO           56    .text.UART0_IRQHandler  uart0.o
+    0x00001d6c   0x00001d6c   0x00000030   Code   RO          129    .text.bme280_init   bme280.o
+    0x00001d9c   0x00001d9c   0x000000d8   Code   RO          131    .text.configure_bme280  bme280.o
+    0x00001e74   0x00001e74   0x00000020   Code   RO           92    .text.delay_us      delay.o
+    0x00001e94   0x00001e94   0x000000bc   Code   RO          188    .text.displayDistance  configscreen.o
+    0x00001f50   0x00001f50   0x00000078   Code   RO          180    .text.displayStart  configscreen.o
+    0x00001fc8   0x00001fc8   0x00000044   Code   RO          254    .text.display_i2c1_init  display_i2c1.o
+    0x0000200c   0x0000200c   0x00000094   Code   RO          186    .text.getSelection  configscreen.o
+    0x000020a0   0x000020a0   0x0000006c   Code   RO          139    .text.get_temperature  bme280.o
+    0x0000210c   0x0000210c   0x0000004c   Code   RO          155    .text.i2c1_init     i2c1.o
+    0x00002158   0x00002158   0x00000354   Code   RO          157    .text.i2c1_read     i2c1.o
+    0x000024ac   0x000024ac   0x0000027c   Code   RO          159    .text.i2c1_write    i2c1.o
+    0x00002728   0x00002728   0x00000244   Code   RO          256    .text.i2c1_write_cmd  display_i2c1.o
+    0x0000296c   0x0000296c   0x00000248   Code   RO          258    .text.i2c1_write_data  display_i2c1.o
+    0x00002bb4   0x00002bb4   0x000001b0   Code   RO           34    .text.main          main.o
+    0x00002d64   0x00002d64   0x00000074   Code   RO            2    .text.pit_init      pit.o
+    0x00002dd8   0x00002dd8   0x00000040   Code   RO           24    .text.q_dequeue     queue.o
+    0x00002e18   0x00002e18   0x00000044   Code   RO           22    .text.q_enqueue     queue.o
+    0x00002e5c   0x00002e5c   0x00000048   Code   RO          101    .text.rg_init       rg.o
+    0x00002ea4   0x00002ea4   0x0000001c   Code   RO          105    .text.rg_onoff      rg.o
+    0x00002ec0   0x00002ec0   0x00000010   Code   RO          224    .text.ssd1306_clearscreen  ssd1306.o
+    0x00002ed0   0x00002ed0   0x00000020   Code   RO          210    .text.ssd1306_init  ssd1306.o
+    0x00002ef0   0x00002ef0   0x000003a4   Code   RO          232    .text.ssd1306_putchar  ssd1306.o
+    0x00003294   0x00003294   0x00000080   Code   RO          234    .text.ssd1306_putstring  ssd1306.o
+    0x00003314   0x00003314   0x0000000c   Code   RO          218    .text.ssd1306_setfont  ssd1306.o
+    0x00003320   0x00003320   0x00000058   Code   RO          220    .text.ssd1306_setorientation  ssd1306.o
+    0x00003378   0x00003378   0x0000005c   Code   RO          216    .text.ssd1306_update  ssd1306.o
+    0x000033d4   0x000033d4   0x00000060   Code   RO          268    .text.sw_init       switches.o
+    0x00003434   0x00003434   0x00000050   Code   RO          270    .text.sw_pressed    switches.o
+    0x00003484   0x00003484   0x00000050   Code   RO           46    .text.tpm1_init     tpm1.o
+    0x000034d4   0x000034d4   0x0000009c   Code   RO           54    .text.uart0_init    uart0.o
+    0x00003570   0x00003570   0x00000040   Code   RO           58    .text.uart0_send_string  uart0.o
+    0x000035b0   0x000035b0   0x0000007c   Code   RO          182    .text.updateDisplay  configscreen.o
+    0x0000362c   0x0000362c   0x00000028   Code   RO          559    i.__0sprintf        mc_p.l(printfa.o)
+    0x00003654   0x00003654   0x0000002e   Code   RO          621    i.__ARM_clz         mf_p.l(depilogue.o)
+    0x00003682   0x00003682   0x0000000e   Code   RO          645    i.__scatterload_copy  mc_p.l(handlers.o)
+    0x00003690   0x00003690   0x0000000e   Code   RO          647    i.__scatterload_zeroinit  mc_p.l(handlers.o)
+    0x0000369e   0x0000369e   0x00000002   PAD
+    0x000036a0   0x000036a0   0x00000174   Code   RO          564    i._fp_digits        mc_p.l(printfa.o)
+    0x00003814   0x00003814   0x000006ec   Code   RO          565    i._printf_core      mc_p.l(printfa.o)
+    0x00003f00   0x00003f00   0x00000020   Code   RO          566    i._printf_post_padding  mc_p.l(printfa.o)
+    0x00003f20   0x00003f20   0x0000002c   Code   RO          567    i._printf_pre_padding  mc_p.l(printfa.o)
+    0x00003f4c   0x00003f4c   0x0000000a   Code   RO          569    i._sputc            mc_p.l(printfa.o)
+    0x00003f56   0x00003f56   0x00000002   PAD
+    0x00003f58   0x00003f58   0x0000000c   Data   RO          191    .rodata..Lswitch.table.getSelection  configscreen.o
+    0x00003f64   0x00003f64   0x0000000c   Data   RO          192    .rodata..Lswitch.table.getSelection.18  configscreen.o
+    0x00003f70   0x00003f70   0x0000000c   Data   RO          193    .rodata..Lswitch.table.getSelection.19  configscreen.o
+    0x00003f7c   0x00003f7c   0x00000ed1   Data   RO          203    .rodata.Dialog_plain_12  fonts.o
+    0x00004e4d   0x00004e4d   0x00002ebf   Data   RO          204    .rodata.Monospaced_bold_24  fonts.o
+    0x00007d0c   0x00007d0c   0x00000d32   Data   RO          202    .rodata.Monospaced_plain_10  fonts.o
+    0x00008a3e   0x00008a3e   0x00000001   Data   RO          144    .rodata.config_reg  bme280.o
+    0x00008a3f   0x00008a3f   0x00000001   Data   RO          145    .rodata.ctrl_meas_reg  bme280.o
+    0x00008a40   0x00008a40   0x00000001   Data   RO          143    .rodata.hum_config_reg  bme280.o
+    0x00008a41   0x00008a41   0x0000001d   Data   RO          243    .rodata.ssd1306_init_commands  ssd1306.o
+    0x00008a5e   0x00008a5e   0x00000004   Data   RO          190    .rodata.str1.1      configscreen.o
+    0x00008a62   0x00008a62   0x00000002   PAD
+    0x00008a64   0x00008a64   0x00000020   Data   RO          644    Region$$Table       anon$$obj.o
+
+
+    Execution Region RW_IRAM1 (Exec base: 0x1ffff000, Load base: 0x00008a88, Size: 0x00001038, Max: 0x00004000, ABSOLUTE, COMPRESSED[0x00000020])
+
+    Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x1ffff000   COMPRESSED   0x000001ff   Data   RW           37    .data.data_write    main.o
+    0x1ffff1ff   COMPRESSED   0x00000001   PAD
+    0x1ffff200   COMPRESSED   0x00000004   Data   RW          244    .data.font          ssd1306.o
+    0x1ffff204   COMPRESSED   0x00000004   PAD
+    0x1ffff208        -       0x00000008   Zero   RW            6    .bss..L_MergedGlobals  pit.o
+    0x1ffff210        -       0x0000000c   Zero   RW          146    .bss..L_MergedGlobals  bme280.o
+    0x1ffff21c        -       0x00000002   Zero   RW          245    .bss..L_MergedGlobals  ssd1306.o
+    0x1ffff21e   COMPRESSED   0x00000002   PAD
+    0x1ffff220        -       0x0000020c   Zero   RW           67    .bss.RxQ            uart0.o
+    0x1ffff42c        -       0x0000020c   Zero   RW           66    .bss.TxQ            uart0.o
+    0x1ffff638        -       0x000001ff   Zero   RW           36    .bss.data_read      main.o
+    0x1ffff837   COMPRESSED   0x00000001   PAD
+    0x1ffff838        -       0x00000400   Zero   RW          242    .bss.ssd1306_framebuffer  ssd1306.o
+    0x1ffffc38        -       0x00000400   Zero   RW          282    STACK               startup_mkl25z4.o
+

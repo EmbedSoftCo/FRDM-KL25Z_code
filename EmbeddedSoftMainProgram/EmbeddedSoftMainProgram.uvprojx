@@ -49,7 +49,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>TimersLab</OutputName>
+          <OutputName>EmbeddedSoftMainProgram</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -340,7 +340,7 @@
               <MiscControls>-Wno-gnu-binary-literal -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-declaration-after-statement -Wno-unused-function -Wno-unsafe-buffer-usage</MiscControls>
               <Define>CLOCK_SETUP=1</Define>
               <Undefine></Undefine>
-              <IncludePath>.\rg;.\pit;.\queue;.\tpm1;.\uart0;.\EEPROM;.\delay;.\i2c0;.\bme280;.\i2c1</IncludePath>
+              <IncludePath>.\rg;.\pit;.\queue;.\tpm1;.\uart0;.\EEPROM;.\delay;.\i2c0;.\bme280;.\i2c1;.\ssd1306;.\switches</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -538,6 +538,76 @@
               <FileName>i2c1.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\i2c1\i2c1.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ssd1306</GroupName>
+          <Files>
+            <File>
+              <FileName>bitmaps.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ssd1306\bitmaps.c</FilePath>
+            </File>
+            <File>
+              <FileName>bitmaps.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ssd1306\bitmaps.h</FilePath>
+            </File>
+            <File>
+              <FileName>configScreen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ssd1306\configScreen.c</FilePath>
+            </File>
+            <File>
+              <FileName>configScreen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ssd1306\configScreen.h</FilePath>
+            </File>
+            <File>
+              <FileName>fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ssd1306\fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>fonts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ssd1306\fonts.h</FilePath>
+            </File>
+            <File>
+              <FileName>ssd1306.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ssd1306\ssd1306.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssd1306.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ssd1306\ssd1306.h</FilePath>
+            </File>
+            <File>
+              <FileName>display_i2c1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ssd1306\display_i2c1.c</FilePath>
+            </File>
+            <File>
+              <FileName>display_i2c1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ssd1306\display_i2c1.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>switches</GroupName>
+          <Files>
+            <File>
+              <FileName>switches.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\switches\switches.c</FilePath>
+            </File>
+            <File>
+              <FileName>switches.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\switches\switches.h</FilePath>
             </File>
           </Files>
         </Group>
