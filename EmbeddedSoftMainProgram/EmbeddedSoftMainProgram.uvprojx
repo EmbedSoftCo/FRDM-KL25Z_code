@@ -340,7 +340,7 @@
               <MiscControls>-Wno-gnu-binary-literal -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-declaration-after-statement -Wno-unused-function -Wno-unsafe-buffer-usage</MiscControls>
               <Define>CLOCK_SETUP=1</Define>
               <Undefine></Undefine>
-              <IncludePath>.\rg;.\pit;.\queue;.\tpm1;.\uart0;.\EEPROM;.\delay</IncludePath>
+              <IncludePath>.\rg;.\pit;.\queue;.\tpm1;.\uart0;.\EEPROM;.\delay;.\i2c0;.\bme280;.\i2c1</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -493,6 +493,51 @@
               <FileName>rg.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\rg\rg.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>i2c0</GroupName>
+          <Files>
+            <File>
+              <FileName>i2c0.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\i2c0\i2c0.h</FilePath>
+            </File>
+            <File>
+              <FileName>i2c0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\i2c0\i2c0.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>bme280</GroupName>
+          <Files>
+            <File>
+              <FileName>bme280.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\bme280\bme280.c</FilePath>
+            </File>
+            <File>
+              <FileName>bme280.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\bme280\bme280.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>i2c1</GroupName>
+          <Files>
+            <File>
+              <FileName>i2c1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\i2c1\i2c1.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\i2c1\i2c1.h</FilePath>
             </File>
           </Files>
         </Group>
