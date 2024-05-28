@@ -32,6 +32,7 @@
 #include "pit.h"
 
 volatile bool toggleLED;
+volatile bool logFlag;
 
 /*!
  * \brief Initialises the Periodic Interrupt Timer (PIT)
@@ -48,11 +49,16 @@ void pit_init(void)
 	// Initialize PITO to generate an event every 100ms
 	PIT->CHANNEL[0].LDVAL = PIT_LDVAL_TSV(24e6/10-1);
 	
+	// Initialize PIT1 to generate an event every 1 minute
+	PIT->CHANNEL[1].LDVAL = PIT_LDVAL_TSV(1440e6-1);
+	
 	// No chaining
 	PIT->CHANNEL[0].TCTRL &= ~PIT_TCTRL_CHN_MASK; 
+	PIT->CHANNEL[1].TCTRL &= ~PIT_TCTRL_CHN_MASK; 
 	
 	// Generate interrupts
 	PIT->CHANNEL[0].TCTRL |= PIT_TCTRL_TIE_MASK;
+	PIT->CHANNEL[1].TCTRL |= PIT_TCTRL_TIE_MASK;
 	
 	// Enable interrupts
 	NVIC_SetPriority(PIT_IRQn, 1);
@@ -61,6 +67,7 @@ void pit_init(void)
 	
 	// Enable counter
 	PIT->CHANNEL[0].TCTRL |= PIT_TCTRL_TEN_MASK;
+	PIT->CHANNEL[1].TCTRL |= PIT_TCTRL_TEN_MASK;
 }
 
 void PIT_IRQHandler(void)
@@ -70,6 +77,7 @@ void PIT_IRQHandler(void)
 		// Clear pending IRQ
 		NVIC_ClearPendingIRQ(PIT_IRQn);
 		
+		// PIT0 is for LED
 		if(PIT->CHANNEL[0].TFLG & PIT_TFLG_TIF_MASK)
 		{
 			//Clear flag
@@ -84,12 +92,15 @@ void PIT_IRQHandler(void)
 			else
 			{
 				toggleLED = false;
-			}
-		}
-		
+			}		
+		}			
+
+		// PIT1 used for logging
 		if(PIT->CHANNEL[1].TFLG & PIT_TFLG_TIF_MASK)
 		{
+			// Clear flag
 			PIT->CHANNEL[1].TFLG |= PIT_TFLG_TIF_MASK;
+			logFlag = true;
 		}
 		
 }
