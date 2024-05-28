@@ -34,11 +34,19 @@
 
 /* ==================== CALIBRATION VALUES ==================== */
 
-	static int32_t dig_T1 = 0x000000;	///< Temperature compensation value
-  static int32_t dig_T2 = 0x000000; ///< Temperature compensation value
-  static int32_t dig_T3 = 0x000000; ///< Temperature compensation value
+	static uint16_t dig_T1 = 0x000000;	///< Temperature compensation value
+  static int16_t dig_T2	 = 0x000000;	///< Temperature compensation value
+  static int16_t dig_T3  = 0x000000;	///< Temperature compensation value
 	
-	static uint32_t t_fine = 0x0000; /// For the calucation
+	static uint8_t dig_H1 = 0x00; 			///< humidity compensation value
+  static int16_t dig_H2 = 0x0000; 		///< humidity compensation value
+  static uint8_t dig_H3 = 0x00; 			///< humidity compensation value
+  static int16_t dig_H4 = 0x0000; 		///< humidity compensation value
+  static int16_t dig_H5 = 0x0000; 		///< humidity compensation value
+  static uint8_t dig_H6 = 0x00;  			///< humidity compensation value
+	
+	static uint32_t t_fine = 0x0000; 		/// For the calucation
+	
 /**********************************************************
  *                                                        *
  * @brief Initialise the I2C and checks for BME280        *
@@ -78,6 +86,14 @@ bool bme280_init(void)
     return true;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**********************************************************
+ *                                                   			*
+ * @brief Reset BM280, so it will recalibrate the sensor  *
+ * @return True on successful reset and calibration,	 	  *
+ *         False when failed                         			*
+ *																												*
+ **********************************************************/
 bool reset_bme280(void)
 {
 	uint8_t rw_i2c_succes = 0x00;
@@ -88,12 +104,21 @@ bool reset_bme280(void)
 			return false;
 	}
 	
+	// Timeout from I2C1 library
+	// to prevent a infinite loop
+	uint32_t TIMEOUT = I2C_TIMEOUT;
 	while(read_calibration_status()) // read F3
-	{}
+	{
+		if(--TIMEOUT == 0)
+    {
+			return false; // Calibration failed
+    }
+	}
 		
-	return true;
+	return true; // Reset and calibration succes
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /*****************************************************
  *                                                   *
  * @brief Sets the default configuration for BME280  *
@@ -151,6 +176,7 @@ bool configure_bme280(void)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /**************************************************************
  *                                                            *
  * @brief Read calibration register on BME280                 *
@@ -167,6 +193,7 @@ bool read_calibration_status(void)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /*************************************************
  *                                               *
  * @brief Read calibration registers on BME280   *
@@ -175,14 +202,30 @@ bool read_calibration_status(void)
 bool get_calibration(void)
 {
 	uint8_t i2c_read_succes = false;
+	
+	// Arrays for temporary storage of calibration values
 	uint8_t dig_t1_local[2];
 	uint8_t dig_t2_local[2];
 	uint8_t dig_t3_local[2];
+	
+	uint8_t dig_h1_local[1];
+	uint8_t dig_h2_local[2]; 
+	uint8_t dig_h3_local[1];
+	uint8_t dig_h4_local[2];
+	uint8_t dig_h5_local[3];
+	uint8_t	dig_h6_local[2];
 	
 	// Read the data from BME 280
 	i2c_read_succes = i2c1_read(deviceAdress, DIG_T1_ADDR, dig_t1_local, 2);
 	i2c_read_succes = i2c1_read(deviceAdress, DIG_T2_ADDR, dig_t2_local, 2);
 	i2c_read_succes = i2c1_read(deviceAdress, DIG_T3_ADDR, dig_t3_local, 2);
+	
+	i2c_read_succes = i2c1_read(deviceAdress, DIG_H1_ADDR, dig_h1_local, 1);
+	i2c_read_succes = i2c1_read(deviceAdress, DIG_H2_ADDR, dig_h2_local, 2);
+	i2c_read_succes = i2c1_read(deviceAdress, DIG_H3_ADDR, dig_h3_local, 1);
+	i2c_read_succes = i2c1_read(deviceAdress, DIG_H4_ADDR, dig_h4_local, 2);
+	i2c_read_succes = i2c1_read(deviceAdress, DIG_H5_ADDR, dig_h5_local, 2);
+	i2c_read_succes = i2c1_read(deviceAdress, DIG_H6_ADDR, dig_h6_local, 1);
 	
 	if(i2c_read_succes != I2C_RW_SUCCES) 
 	{	
@@ -190,29 +233,44 @@ bool get_calibration(void)
 	}
 	
 	// Store BME 280  data in the calibration
-	dig_T1 = ((dig_t1_local[1] << 8) + (dig_t1_local[0] << 0));
-	dig_T2 = ((dig_t2_local[1] << 8) + (dig_t2_local[0] << 0));
-	dig_T3 = ((dig_t3_local[1] << 8) + (dig_t3_local[0] << 0));
+	dig_T1 = ((dig_t1_local[1] << 8) | (dig_t1_local[0] << 0));
+	dig_T2 = ((dig_t2_local[1] << 8) | (dig_t2_local[0] << 0));
+	dig_T3 = ((dig_t3_local[1] << 8) | (dig_t3_local[0] << 0));
+	
+	dig_H1 = dig_h1_local[0];	
+  dig_H2 = ((dig_h2_local[1] << 8) | (dig_h2_local[0] << 0));	
+  dig_H3 = dig_h3_local[0];	
+  dig_H4 = ((dig_h4_local[0] << 4) | (dig_h4_local[1] & 0xF));
+  dig_H5 = ((dig_h5_local[1] << 4) | (dig_h5_local[0] >> 4));	
+  dig_H6 = dig_h6_local[0]; 
 	
 	return true; // Read and save calibration data is successful
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-int32_t get_temperature(void)
+/*************************************************
+ *                                               *
+ * @brief Read temperature registers on BME280   *
+ * @returns returns the temperature in 4 digits, *
+ *					so "5123" is 51.23 degC							 *
+ *                                               *
+ *************************************************/
+uint32_t get_temperature(void)
 {
 	bool i2c_read_succes = false;
 	uint8_t temperature[3];
+	
 	int32_t var1 	=  0x0000;
 	int32_t var2 	=  0x0000;
 	int32_t adc_T =  0x0000;
 	int32_t T 		=  0x0000;
 	
-	i2c1_write(deviceAdress, CTRL_MEAS_ADDR, &ctrl_meas_reg, 1);
+	i2c1_write(deviceAdress, CTRL_MEAS_ADDR, &ctrl_meas_reg, 1); // start the sampling
 	
 	i2c_read_succes = i2c1_read(deviceAdress, TEMP_ADDR, temperature, 3);
 	if(i2c_read_succes != I2C_RW_SUCCES)
     { 
-        return 0x00;
+        return 0x00; // Read failed
     }
 		
 		// Store temperature array in one 32 bits register
@@ -229,3 +287,45 @@ int32_t get_temperature(void)
 		
 		return T; // returns temperature: output value "5123" is 51.23 degC
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/***************************************************************************************
+ *                                                																		 *
+ * @brief Read humidity registers on BME280 	    																		 *
+ * @returns returns the humidity in Q22.10 format (22 integer and 10 fractional bits). *
+ *					output is "47445" represents 47445/1024 = 46.333 %RH										   *
+ *                                             																			   *
+ ***************************************************************************************/
+uint32_t get_humidity(void)
+{
+	bool i2c_read_succes = false;
+	uint8_t humidity[2];
+	
+	int32_t v_x1_u32r = 0x0000;
+	int32_t adc_H = 0x0000;
+	
+	i2c1_write(deviceAdress, CTRL_MEAS_ADDR, &ctrl_meas_reg, 1); // start the sampling
+	
+	i2c_read_succes = i2c1_read(deviceAdress, TEMP_ADDR, humidity, 2);
+	if(i2c_read_succes != I2C_RW_SUCCES)
+    { 
+        return 0x00; // Read failed
+    }
+		
+		// Store humidity array in one 32 bits register
+		adc_H = ((humidity[0] << 8) | (humidity[1] << 0));
+		
+		// Formula from datasheet 6.2.3 (page 23 and 24)
+		v_x1_u32r = (t_fine - ((int32_t)76800));
+		v_x1_u32r = (((((adc_H << 14) - (((int32_t)dig_H4) << 20) - (((int32_t)dig_H5) * v_x1_u32r)) +
+								((int32_t)16384)) >> 15) * (((((((v_x1_u32r * ((int32_t)dig_H6)) >> 10) * (((v_x1_u32r *
+								((int32_t)dig_H3)) >> 11) + ((int32_t)32768))) >> 10) + ((int32_t)2097152)) *
+								((int32_t)dig_H2) + 8192) >> 14));
+		
+		v_x1_u32r = (v_x1_u32r - (((((v_x1_u32r >> 15) * (v_x1_u32r >> 15)) >> 7) * ((int32_t)dig_H1)) >> 4));
+		v_x1_u32r = (v_x1_u32r < 0 ? 0 : v_x1_u32r);
+		v_x1_u32r = (v_x1_u32r > 419430400 ? 419430400 : v_x1_u32r);
+	
+		return (uint32_t)(((double)(v_x1_u32r >> 12)/1024)*100); // Returns humidity: output value "47445" is 47445/1024 = 46.333 %RH
+}
+// End of BME280.c

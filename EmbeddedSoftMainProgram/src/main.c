@@ -8,6 +8,7 @@
 #include "uart0.h"
 #include "bme280.h"
 #include "configScreen.h"
+#include "gps.h"
 
 static uint8_t data_write[511] = {1,2,3,4,5,6,7,8,
                                   0,0,0,0,0,0,0,0,
@@ -52,7 +53,6 @@ static uint8_t data_write[511] = {1,2,3,4,5,6,7,8,
                                   };
 static uint8_t data_read[511] = {0};
 
-
 /*!
  * \brief Main application
  */
@@ -64,6 +64,8 @@ int main(void)
 		uint8_t page = 0x0; 									// Page 0 = 0x0 	// Page 7 = E00	
 		int32_t temp = 0x0000;
 		char sTemp[32];
+		int32_t hum = 0x0000;
+		char sHum[32];
 		bool state = false;
 	
 		delay_us(1000000UL); //Start up
@@ -87,6 +89,9 @@ int main(void)
 		uart0_send_string("Init Display\n");
 		displayStart();
 		
+		uart0_send_string("Init GPS\n");
+		gps_init();
+		
 		uart0_send_string("code Initialised!\r\n");
 		
 		EEPROM_write_page(block, sector, page, data_write, sizeof(data_write));
@@ -98,6 +103,8 @@ int main(void)
 		{
 			green = true;
 		}
+		
+		gps_newData();
 				
     while(1)
     {
@@ -107,14 +114,17 @@ int main(void)
 				temp = get_temperature();
 				sprintf(sTemp, "%d.%d\r\n", (temp/100),(temp - ((temp/100)*100)));
 				uart0_send_string(sTemp);
+				hum = get_humidity();
+				sprintf(sHum, "%d.%d\r\n", (hum/100),(hum - ((hum/100)*100)));
+				uart0_send_string(sTemp);
 				delay_us(5);
-				displayDistance("?", "london", sTemp);
+				displayDistance("?", "london", sTemp, sHum);
 			}
 			else if (sw_pressed(KEY_LEFT) == 1 && sw_pressed(KEY_RIGHT) == 1)
 			{
 				state = true;
 			}
 		
-			rg_onoff(toggleLED,green);
+			rg_onoff(toggleLED, green);
     }
 }

@@ -40,11 +40,15 @@
 #define SENSOR_ADRESS 0x76
 
 	/*
+	 * More informatation see "Table 19", page 26 in the datasheet
+	 *
 	 * bit 2,1,0	osrs_h[3]	= 001  //oversampling (x1)
 	 */
 #define OSRS_H 0b001
 
 	/*
+	 * More informatation see "Table 26", page 28 in the datasheet
+	 *
 	 * bit 7,6,5	t_sb[3] 		 = 110 	// 10.0ms 
 	 * bit 4,3,2	filter[3] 	 = 000  // No filter  
 	 * bit 0			spi3w_en[0]  =   0 	// No SPI
@@ -54,6 +58,8 @@
 #define SPI3W_EN	0b0
 
 	/*
+	 * More informatation see "Table 22", page 27 in the datasheet
+	 *
 	 * osrs_t[3] = 001  temperature control register // oversampling (x1)
 	 * osrs_P[3] = 001  pressure control register 	 // oversampling (x1)
 	 * mode[2]   =  11 mode select chip							 // Normal mode
@@ -86,7 +92,8 @@ bool configure_bme280(void);
 bool read_calibration_status(void);
 
 bool get_calibration(void);
-int32_t get_temperature(void);
+uint32_t get_temperature(void);
+uint32_t get_humidity(void);
 
 /* ==================== SETUP REGISTERS ==================== */
 
@@ -144,4 +151,11 @@ int32_t get_temperature(void);
 	 static const uint8_t DIG_H2			= 0xE1; // To 0xE2
 	 static const uint8_t DIG_H3			= 0xE3;
 
+	 static const uint8_t DIG_H1_ADDR	= 0xA1;
+	 static const uint8_t DIG_H2_ADDR	= 0xE1; // To 0xE2
+	 static const uint8_t DIG_H3_ADDR	= 0xE3;
+	 static const uint8_t DIG_H4_ADDR	= 0xE4; // To 0xE5
+	 static const uint8_t DIG_H5_ADDR	= 0xE5; // To 0xE6
+	 static const uint8_t DIG_H6_ADDR	= 0xE7;  
+	 
 #endif // BME280_H_

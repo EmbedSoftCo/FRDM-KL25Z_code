@@ -34,7 +34,6 @@
 
 #include "display_i2c1.h"
 #include "fonts.h"
-#include "bitmaps.h"
 
 /// \name Definitions for SSD1306
 /// \{

@@ -340,7 +340,7 @@
               <MiscControls>-Wno-gnu-binary-literal -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-declaration-after-statement -Wno-unused-function -Wno-unsafe-buffer-usage</MiscControls>
               <Define>CLOCK_SETUP=1</Define>
               <Undefine></Undefine>
-              <IncludePath>.\rg;.\pit;.\queue;.\tpm1;.\uart0;.\EEPROM;.\delay;.\i2c0;.\bme280;.\i2c1;.\ssd1306;.\switches</IncludePath>
+              <IncludePath>.\rg;.\pit;.\queue;.\tpm1;.\uart0;.\EEPROM;.\delay;.\i2c0;.\bme280;.\i2c1;.\ssd1306;.\switches;.\gps</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -545,16 +545,6 @@
           <GroupName>ssd1306</GroupName>
           <Files>
             <File>
-              <FileName>bitmaps.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\ssd1306\bitmaps.c</FilePath>
-            </File>
-            <File>
-              <FileName>bitmaps.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\ssd1306\bitmaps.h</FilePath>
-            </File>
-            <File>
               <FileName>configScreen.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ssd1306\configScreen.c</FilePath>
@@ -608,6 +598,31 @@
               <FileName>switches.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\switches\switches.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>gps</GroupName>
+          <Files>
+            <File>
+              <FileName>gps.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\gps\gps.h</FilePath>
+            </File>
+            <File>
+              <FileName>gps.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\gps\gps.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\gps\uart2.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\gps\uart2.h</FilePath>
             </File>
           </Files>
         </Group>

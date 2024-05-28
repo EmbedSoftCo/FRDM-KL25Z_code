@@ -46,9 +46,8 @@ void displayStart(void){
 		ssd1306_init();
 		ssd1306_setorientation(1);   
     ssd1306_clearscreen();
-    ssd1306_setfont(Monospaced_bold_24);
-    ssd1306_putstring(0,0,"Reverse");
-		ssd1306_putstring(0,24,"Geocache");
+    ssd1306_setfont(Dialog_plain_12);
+    ssd1306_putstring(0,0,"Reverse Geocache");
     ssd1306_setfont(Monospaced_plain_10);
 		ssd1306_putstring(10,50,"Program starting"); 
 		ssd1306_update();		
@@ -61,18 +60,21 @@ void displayStart(void){
  * 
  * \todo This funciton still using the constant information. It could be global variable(string).
  */
-void displayDistance(const char *distance, const char *location, const char *temp) {
+void displayDistance(const char *distance, const char *location, const char *temp, const char *hum) {
 		ssd1306_clearscreen();	
 		ssd1306_setfont(Dialog_plain_12);
 		ssd1306_putstring(0,0,"Distance: ");
 		ssd1306_putstring(0,12,"Time: ");
 		ssd1306_putstring(0,24,"Location:");
 		ssd1306_putstring(0,36,"Temp: ");
+		ssd1306_putstring(0,48,"Hum: ");
 		ssd1306_putstring(60,0, distance);
-		ssd1306_putstring(35,12,"00:01");
+		ssd1306_putstring(60,12,"00:01");
 		ssd1306_putstring(60,24,location);
-		ssd1306_putstring(40,36, temp);
-		ssd1306_putstring(80,36," C");
+		ssd1306_putstring(60,36, temp);
+		ssd1306_putstring(100,36," C");
+		ssd1306_putstring(60,48, hum);
+		ssd1306_putstring(105,48," %");
 		ssd1306_update();
 }
 
