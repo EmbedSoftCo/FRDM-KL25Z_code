@@ -114,6 +114,7 @@ int main(void)
     }
 }
 
+<<<<<<< HEAD
 void state0(void)
 {
 	//SETUP SCREEN -> Show with mode it needs to go in. (Admin or User)
@@ -212,6 +213,8 @@ void state6(void)
 	}
 }
 
+=======
+>>>>>>> 1d8e6dcf872eabacc57861e6ac5182cfaf06268d
 void logInfo(void)
 {
 	uint32_t logTemp32 = 0x00000;
@@ -229,6 +232,7 @@ void logInfo(void)
 	logHum32 = get_humidity();			// Get humidity reading
 	
 	// Split uint32_t temp & hum to 4 bytes
+<<<<<<< HEAD
     logTemp8[0] = (uint8_t)(logTemp32 >> 24);
     logTemp8[1] = (uint8_t)(logTemp32 >> 16);
     logTemp8[2] = (uint8_t)(logTemp32 >> 8);
@@ -238,6 +242,17 @@ void logInfo(void)
     logHum8[1] = (uint8_t)(logHum32 >> 16);
     logHum8[2] = (uint8_t)(logHum32 >> 8);
     logHum8[3] = (uint8_t)(logHum32 >> 0);
+=======
+    logTemp8[0] = (logTemp32 >> 24);
+    logTemp8[1] = (logTemp32 >> 16);
+    logTemp8[2] = (logTemp32 >> 8);
+    logTemp8[3] = (logTemp32 >> 0);
+	
+	  logHum8[0] = (logHum32 >> 24);
+    logHum8[1] = (logHum32 >> 16);
+    logHum8[2] = (logHum32 >> 8);
+    logHum8[3] = (logHum32 >> 0);
+>>>>>>> 1d8e6dcf872eabacc57861e6ac5182cfaf06268d
 	
 	//ToDo GPS data
 	
@@ -259,6 +274,7 @@ void logInfo(void)
 	
 	// Reset  the log flag
 	logFlag = false;
+<<<<<<< HEAD
 }
 
 
@@ -295,3 +311,6 @@ void logInfo(void)
 //			{
 //				state = true;
 //			}
+=======
+}
+>>>>>>> 1d8e6dcf872eabacc57861e6ac5182cfaf06268d
