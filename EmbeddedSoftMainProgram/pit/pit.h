@@ -36,6 +36,7 @@
 #include <stdbool.h>
 
 extern volatile bool toggleLED;
+extern volatile bool logFlag;
 
 void pit_init(void);
 
