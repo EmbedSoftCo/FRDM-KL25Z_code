@@ -5,11 +5,8 @@
 #include "delay.h"
 #include "switches.h"
 
-void setSelect(int line);
 void displayStart(void);
 void displayDistance(const char *distance, const char *location, const char *temp, const char *hum);
-void displayPuzzle(const char *aPuzzle, const char *aAnswer_1, const char *aAnswer_2, const char *aAnswer_3);
-int getSelection(void);
-
+bool displayPuzzle(const char *aPuzzle, const char *aAnswer_1, const char *aAnswer_2, const char *aAnswer_3, const int *goodAnswer);
 
 #endif // CONFIG_SCREEN_H

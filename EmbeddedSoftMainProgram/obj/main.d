@@ -10,4 +10,8 @@
   C:\Keil_v5\ARM\ARMCLANG\include\stdbool.h rg\rg.h tpm1\tpm1.h \
   EEPROM\EEPROM.h delay\delay.h uart0\uart0.h queue\queue.h \
   bme280\bme280.h ssd1306\configScreen.h ssd1306\ssd1306.h \
-  ssd1306\display_i2c1.h ssd1306\fonts.h switches\switches.h gps\gps.h
+  ssd1306\display_i2c1.h ssd1306\fonts.h switches\switches.h gps\gps.h \
+  gps\uart2.h C:\Keil_v5\ARM\ARMCLANG\include\string.h \
+  C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h \
+  C:\Keil_v5\ARM\ARMCLANG\include\time.h \
+  C:\Keil_v5\ARM\ARMCLANG\include\math.h

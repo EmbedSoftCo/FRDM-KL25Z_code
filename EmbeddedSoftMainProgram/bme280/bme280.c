@@ -233,15 +233,15 @@ bool get_calibration(void)
 	}
 	
 	// Store BME 280  data in the calibration
-	dig_T1 = ((dig_t1_local[1] << 8) | (dig_t1_local[0] << 0));
-	dig_T2 = ((dig_t2_local[1] << 8) | (dig_t2_local[0] << 0));
-	dig_T3 = ((dig_t3_local[1] << 8) | (dig_t3_local[0] << 0));
+	dig_T1 = (int16_t)((dig_t1_local[1] << 8) | (dig_t1_local[0] << 0));
+	dig_T2 = (int16_t)((dig_t2_local[1] << 8) | (dig_t2_local[0] << 0));
+	dig_T3 = (int16_t)((dig_t3_local[1] << 8) | (dig_t3_local[0] << 0));
 	
 	dig_H1 = dig_h1_local[0];	
-  dig_H2 = ((dig_h2_local[1] << 8) | (dig_h2_local[0] << 0));	
+  dig_H2 = (int16_t)((dig_h2_local[1] << 8) | (dig_h2_local[0] << 0));	
   dig_H3 = dig_h3_local[0];	
-  dig_H4 = ((dig_h4_local[0] << 4) | (dig_h4_local[1] & 0xF));
-  dig_H5 = ((dig_h5_local[1] << 4) | (dig_h5_local[0] >> 4));	
+  dig_H4 = (int16_t)((dig_h4_local[0] << 4) | (dig_h4_local[1] & 0xF));
+  dig_H5 = (int16_t)((dig_h5_local[1] << 4) | (dig_h5_local[0] >> 4));	
   dig_H6 = dig_h6_local[0]; 
 	
 	return true; // Read and save calibration data is successful

@@ -34,6 +34,75 @@ void setSelect(int line){
 }
 
 /*!
+ * \brief Get the selection from user
+ *
+ * This function can be user after functione displayPuzzle to get the user selction input and display the slection arrow.
+ * Continue this function by chosing one of the choice.
+ * 
+ * \return the selected line. Could be 1, 2, 3.
+ */
+int getSelection(void){
+	int selection = 0;
+	int select = 1;
+		
+	while(selection == 0){
+		
+		if(sw_pressed(KEY_UP)){
+			select--;
+		}
+		if(sw_pressed(KEY_DOWN)){
+			select++;
+		}
+		
+		if(select > 3){
+			select = 1;
+		}else if(select < 1){
+			select = 3;
+		}
+		
+		setSelect(select);
+		
+		if(sw_pressed(KEY_CENTER)){
+			
+		switch(select){
+			case 1:
+				selection = 1;
+				break;
+			case 2:
+				selection = 2;
+				break;
+			case 3:
+				selection = 3;
+				break;
+		}
+	}
+	}
+	
+	ssd1306_clearscreen();
+	ssd1306_update();
+	
+	return selection;
+}
+
+void displayCorrect(void)
+{
+		ssd1306_clearscreen();
+    ssd1306_setfont(Dialog_plain_12);
+    ssd1306_putstring(0,0,"Correct!");
+		ssd1306_update();	
+		delay_us(1000000);
+}
+	
+void displayWrong(void)
+{
+		ssd1306_clearscreen();
+    ssd1306_setfont(Dialog_plain_12);
+    ssd1306_putstring(0,0,"Wrong!");
+		ssd1306_update();	
+		delay_us(1000000);
+}
+	
+/*!
  * \brief Show starting display
  *
  * Use this funciton to start the game.
@@ -88,11 +157,13 @@ void displayDistance(const char *distance, const char *location, const char *tem
  * \param[in]		3. Second answer
  * \param[in]		4. Third answer
  *
- * \todo The display can only fit 21 characters per line.
- *			 The parameter aPuzzle have to be fixed to display only 21 per line.
+* \return bool: true is correct answer and false is incorrect answer.
  */
-void displayPuzzle(const char *aPuzzle, const char *aAnswer_1, const char *aAnswer_2, const char *aAnswer_3){
-		
+bool displayPuzzle(const char *aPuzzle, const char *aAnswer_1, const char *aAnswer_2, const char *aAnswer_3, const int *goodAnswer){
+			
+		bool result = false;
+		int answer;
+	
 		ssd1306_clearscreen();
 		ssd1306_setfont(Monospaced_plain_10);
 		ssd1306_putstring(0,0,aPuzzle);
@@ -100,55 +171,20 @@ void displayPuzzle(const char *aPuzzle, const char *aAnswer_1, const char *aAnsw
 		ssd1306_putstring(10,36,aAnswer_2);
 		ssd1306_putstring(10,48,aAnswer_3);    			
     ssd1306_update();
+	
+		answer = getSelection();
+		
+		if(answer == *goodAnswer)
+		{
+			result = true;
+			displayCorrect();
+		}
+		else
+		{
+			result = false;
+			displayWrong();
+		}
+	
+		return result;
 }
 
-/*!
- * \brief Get the selection from user
- *
- * This function can be user after functione displayPuzzle to get the user selction input and display the slection arrow.
- * Continue this function by chosing one of the choice.
- * 
- * \return the selected line. Could be 1, 2, 3.
- */
-int getSelection(void){
-	int selection = 0;
-	int select = 1;
-		
-	while(selection == 0){
-		
-		if(sw_pressed(KEY_UP)){
-			select--;
-		}
-		if(sw_pressed(KEY_DOWN)){
-			select++;
-		}
-		
-		if(select > 3){
-			select = 1;
-		}else if(select < 1){
-			select = 3;
-		}
-		
-		setSelect(select);
-		
-		if(sw_pressed(KEY_CENTER)){
-			
-		switch(select){
-			case 1:
-				selection = 1;
-				break;
-			case 2:
-				selection = 2;
-				break;
-			case 3:
-				selection = 3;
-				break;
-		}
-	}
-	}
-	
-	ssd1306_clearscreen();
-	ssd1306_update();
-	
-	return selection;
-}
