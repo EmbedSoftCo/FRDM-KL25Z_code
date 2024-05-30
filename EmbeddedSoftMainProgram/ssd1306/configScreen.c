@@ -34,75 +34,6 @@ void setSelect(int line){
 }
 
 /*!
- * \brief Show starting display
- *
- * Use this funciton to start the game.
- * This functions ask user to click on one of the buttons to continue the program.
- * 
- */
-void displayStart(void){
-		
-		sw_init();
-		ssd1306_init();
-		ssd1306_setorientation(1);   
-    ssd1306_clearscreen();
-    ssd1306_setfont(Dialog_plain_12);
-    ssd1306_putstring(0,0,"Reverse Geocache");
-    ssd1306_setfont(Monospaced_plain_10);
-		ssd1306_putstring(10,50,"Program starting"); 
-		ssd1306_update();		
-}
-
-/*!
- * \brief Display the information.
- *
- * This function display the distance to the location and played time and a completed locations and the temperature.
- * 
- * \todo This funciton still using the constant information. It could be global variable(string).
- */
-void displayDistance(const char *distance, const char *location, const char *temp, const char *hum) {
-		ssd1306_clearscreen();	
-		ssd1306_setfont(Dialog_plain_12);
-		ssd1306_putstring(0,0,"Distance: ");
-		ssd1306_putstring(0,12,"Time: ");
-		ssd1306_putstring(0,24,"Location:");
-		ssd1306_putstring(0,36,"Temp: ");
-		ssd1306_putstring(0,48,"Hum: ");
-		ssd1306_putstring(60,0, distance);
-		ssd1306_putstring(60,12,"00:01");
-		ssd1306_putstring(60,24,location);
-		ssd1306_putstring(60,36, temp);
-		ssd1306_putstring(100,36," C");
-		ssd1306_putstring(60,48, hum);
-		ssd1306_putstring(105,48," %");
-		ssd1306_update();
-}
-
-/*!
- * \brief Display quetion and answers
- *
- * This function display the quetion and answers when the user are at the certain location.
- * 
- * \param[in] 	1. Quetion
- * \param[in]		2. First answer
- * \param[in]		3. Second answer
- * \param[in]		4. Third answer
- *
- * \todo The display can only fit 21 characters per line.
- *			 The parameter aPuzzle have to be fixed to display only 21 per line.
- */
-void displayPuzzle(const char *aPuzzle, const char *aAnswer_1, const char *aAnswer_2, const char *aAnswer_3){
-		
-		ssd1306_clearscreen();
-		ssd1306_setfont(Monospaced_plain_10);
-		ssd1306_putstring(0,0,aPuzzle);
-    ssd1306_putstring(10,24,aAnswer_1); 
-		ssd1306_putstring(10,36,aAnswer_2);
-		ssd1306_putstring(10,48,aAnswer_3);    			
-    ssd1306_update();
-}
-
-/*!
  * \brief Get the selection from user
  *
  * This function can be user after functione displayPuzzle to get the user selction input and display the slection arrow.
@@ -110,7 +41,7 @@ void displayPuzzle(const char *aPuzzle, const char *aAnswer_1, const char *aAnsw
  * 
  * \return the selected line. Could be 1, 2, 3.
  */
-int getSelection(void){
+int getSelection(int amountAnswers){
 	int selection = 0;
 	int select = 1;
 		
@@ -123,10 +54,10 @@ int getSelection(void){
 			select++;
 		}
 		
-		if(select > 3){
+		if(select > amountAnswers){
 			select = 1;
 		}else if(select < 1){
-			select = 3;
+			select = amountAnswers;
 		}
 		
 		setSelect(select);
@@ -152,3 +83,141 @@ int getSelection(void){
 	
 	return selection;
 }
+
+/*!
+ * \brief Initialize the display
+ *
+ * 
+ * 
+ */
+void displayInit(void)
+{	
+		sw_init();
+		ssd1306_init();
+		ssd1306_setorientation(1);   
+    ssd1306_clearscreen();
+    ssd1306_setfont(Dialog_plain_12);
+		ssd1306_putstring(0,0,"Welkom");
+    ssd1306_setfont(Monospaced_plain_10);
+		ssd1306_putstring(10,24, "Starting..."); 
+		ssd1306_update();
+}
+
+/*!
+ * \brief Show starting display
+ *
+ * Use this funciton to select the microcontroller mode: admin or user.
+ * This function ask user to click on one of the buttons to continue the program.
+ * 
+ * \return Bool of with mode is selected
+ */
+bool displayStart(void)
+{	
+		int answer = false;
+		bool result = false;
+    ssd1306_clearscreen();
+    ssd1306_setfont(Dialog_plain_12);
+		ssd1306_putstring(0,0,"Select user:");
+    ssd1306_setfont(Monospaced_plain_10);
+		ssd1306_putstring(10,24, "Admin"); 
+		ssd1306_putstring(10,36, "User");
+		ssd1306_update();
+	
+		answer = getSelection(2);
+		if(answer == 1)
+		{
+			result = false;
+		}
+		else if(answer == 2)
+		{
+			result = true;
+		}
+		return result;
+}
+
+/*!
+ * \brief Display the information.
+ *
+ * This function display the distance to the location and played time and a completed locations and the temperature.
+ * 
+ * \todo This funciton still using the constant information. It could be global variable(string).
+ */
+void displayDistance(const char *distance, const char *location, const char *temp, const char *hum) 
+{
+		ssd1306_clearscreen();	
+		ssd1306_setfont(Dialog_plain_12);
+		ssd1306_putstring(0,0,"Distance: ");
+		ssd1306_putstring(0,12,"Time: ");
+		ssd1306_putstring(0,24,"Location:");
+		ssd1306_putstring(0,36,"Temp: ");
+		ssd1306_putstring(0,48,"Hum: ");
+		ssd1306_putstring(60,0, distance);
+		ssd1306_putstring(60,12,"00:01");
+		ssd1306_putstring(60,24,location);
+		ssd1306_putstring(60,36, temp);
+		ssd1306_putstring(100,36," C");
+		ssd1306_putstring(60,48, hum);
+		ssd1306_putstring(105,48," %");
+		ssd1306_update();
+}
+
+/*!
+ * \brief Display question and answers
+ *
+ * This function display the quetion and answers when the user are at the certain location.
+ * 
+ * \param[in] 	1. Question
+ * \param[in]		2. First answer
+ * \param[in]		3. Second answer
+ * \param[in]		4. Third answer
+ *
+* \return bool: true is correct answer and false is incorrect answer.
+ */
+bool displayPuzzle(const char *aPuzzle, const char *aAnswer_1, const char *aAnswer_2, const char *aAnswer_3, const int *goodAnswer){
+			
+		bool result = false;
+		int answer;
+	
+		ssd1306_clearscreen();
+		ssd1306_setfont(Monospaced_plain_10);
+		ssd1306_putstring(0,0,aPuzzle);
+    ssd1306_putstring(10,24,aAnswer_1); 
+		ssd1306_putstring(10,36,aAnswer_2);
+		ssd1306_putstring(10,48,aAnswer_3);    			
+    ssd1306_update();
+	
+		answer = getSelection(3);
+		
+		if(answer == *goodAnswer)
+		{
+			result = true;
+			displayShowText("Good Answer!");
+			delay_us(1000000);
+		}
+		else
+		{
+			result = false;
+			displayShowText("Wrong Answer");
+			delay_us(1000000);
+		}
+	
+		return result;
+}
+
+/*!
+ * \brief Display show text
+ *
+ * This function display the inserted text in the function
+ * 
+* \param[in] 	text: string of the text that will be displayed.
+ *
+* \return nothing
+ */
+void displayShowText(const char *text)
+{
+		ssd1306_clearscreen();
+    ssd1306_setfont(Dialog_plain_12);
+    ssd1306_putstring(0,0,text);
+		ssd1306_update();	
+}
+

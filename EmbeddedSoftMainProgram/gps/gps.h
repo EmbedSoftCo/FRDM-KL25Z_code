@@ -3,6 +3,16 @@
 
 #include <MKL25Z4.h>
 #include "queue.h"
+#include "uart2.h"
+#include "uart0.h"
+
+#include <stdint.h>
+#include <string.h>
+#include <stdlib.h>
+#include <time.h>
+#include <stdio.h>
+#include <math.h>
+
 
 enum StateGps {NO_FIX = '0', FIX = '1', GUESSING = '6'};
 

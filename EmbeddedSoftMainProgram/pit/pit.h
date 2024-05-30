@@ -35,8 +35,9 @@
 #include <MKL25Z4.h>
 #include <stdbool.h>
 
-extern volatile bool toggleLED;
+extern volatile bool displayFlag;
 extern volatile bool logFlag;
+extern volatile bool gpsFlag;
 
 void pit_init(void);
 

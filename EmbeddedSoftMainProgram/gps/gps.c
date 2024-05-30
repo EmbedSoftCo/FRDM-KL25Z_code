@@ -1,24 +1,6 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//          Include
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-#include <stdint.h>
-#include <string.h>
-#include <stdlib.h>
-#include <time.h>
-#include <stdio.h>
-#include <math.h>
-
 #include "gps.h"
-#include "uart2.h"
-#include "queue.h"
-#include "uart0.h"
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//          local vars / typedefs
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+//local vars / typedefs
 #define MESSAGE_SIZE 80
 #define START_ID 2
 
@@ -26,7 +8,7 @@
 
 #define EARTH_RADIUS 6371000 // Earth's radius in meters
 
-#define PI_2 (float) 1.5707963267
+#define PI (double)3.14159265359
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //          local vars / typedefs
@@ -49,7 +31,6 @@ static queue_t GPS_RxQ;
 
 int strToInt(uint8_t * str);
 float strToFloat(uint8_t * str);
-float deg2rad(float deg);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //          global function
@@ -76,9 +57,9 @@ bool gps_newData(void) {
 
     static struct tm date;
 
-    bool newData = false;
-
-
+		bool checkGGA = false;
+		bool checkZDA = false;
+	
    while (1) {
         message[index] = uart2_receive_poll();
 				uart0_put_char(message[index]);
@@ -139,8 +120,8 @@ bool gps_newData(void) {
                         } else {
                             gpsData.accuracy = -1;
                         }
-                        newData = true;
                     }
+										checkGGA = true;
                     break;
                 case ZDA: //In this message utc time is stored. Below we convert it to a unix timestamp
                     if (contentCount == 1) { //Hour, minute, second
@@ -162,7 +143,11 @@ bool gps_newData(void) {
                             gpsData.utc = tempUtc;
                         }
                     }
-										return 0;
+										checkZDA = true;
+										if(checkGGA == true || checkZDA == true)
+										{
+											return 0;
+										}
                     
 
             }
@@ -173,7 +158,6 @@ bool gps_newData(void) {
             index++;
         }
     }
-    return newData;
 }
 
 dataGps_t gps_getData(void) {
@@ -182,27 +166,27 @@ dataGps_t gps_getData(void) {
 
 
 uint16_t gps_calculateDistance(point_t point1, point_t point2){
-    // Convert the fixed point representation back to floating point
-    float lat1_f = (float) (point1.lat / 1000000.0);
-    float lon1_f = (float) (point1.lon / 1000000.0);
-    float lat2_f = (float) (point2.lat / 1000000.0);
-    float lon2_f = (float) (point2.lon / 1000000.0);
 
-    // Convert latitude and longitude from degrees to radians
-    float lat1_rad = deg2rad(lat1_f);
-    float lon1_rad = deg2rad(lon1_f);
-    float lat2_rad = deg2rad(lat2_f);
-    float lon2_rad = deg2rad(lon2_f);
+    const double R = 6371.0; // Earth radius in kilometers
 
-    // Haversine formula
-    float dlon = lon2_rad - lon1_rad;
-    float dlat = lat2_rad - lat1_rad;
+    const double P = PI / 180.0; // Conversion factor
 
-    float a = powf( sinf(dlat / 2), 2) + cosf(lat1_rad) * cosf(lat2_rad) * powf(sinf(dlon / 2), 2);
-    float c = 2 * atan2f(sqrtf(a), sqrtf(1 - a));
+	  double lat1 = (double) (point1.lat / 100000.0);
 
-    // Calculate the distance in meters
-    return (uint16_t) (EARTH_RADIUS * c);
+    double lon1 = (double) (point1.lon / 100000.0);
+
+    double lat2 = (double) (point2.lat / 100000.0);
+
+    double lon2 = (double) (point2.lon / 100000.0);
+ 
+    double a = 0.5 - cos((lat2 - lat1) * P) / 2 +
+
+               cos(lat1 * P) * cos(lat2 * P) *
+
+               (1 - cos((lon2 - lon1) * P)) / 2;
+ 
+    return (uint16_t)(2000 * R * asin(sqrt(a)));
+ 
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -221,8 +205,4 @@ float strToFloat(uint8_t * str){
         return 3;
     }
     return strtof((char *) str, NULL);
-}
-
-float deg2rad(float deg) {
-    return deg * PI_2;
 }
