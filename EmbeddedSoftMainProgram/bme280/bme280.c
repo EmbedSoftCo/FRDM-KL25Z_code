@@ -326,6 +326,6 @@ uint32_t get_humidity(void)
 		v_x1_u32r = (v_x1_u32r < 0 ? 0 : v_x1_u32r);
 		v_x1_u32r = (v_x1_u32r > 419430400 ? 419430400 : v_x1_u32r);
 	
-		return (uint32_t)(((double)(v_x1_u32r >> 12)/1024)*100); // Returns humidity: output value "47445" is 47445/1024 = 46.333 %RH
+		return (uint32_t)(((float)(v_x1_u32r >> 12)/1024)*100); // Returns humidity: output value "47445" is 47445/1024 = 46.333 %RH
 }
 // End of BME280.c
