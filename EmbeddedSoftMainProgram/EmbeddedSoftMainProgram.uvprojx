@@ -340,7 +340,7 @@
               <MiscControls>-Wno-gnu-binary-literal -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-declaration-after-statement -Wno-unused-function -Wno-unsafe-buffer-usage</MiscControls>
               <Define>CLOCK_SETUP=1</Define>
               <Undefine></Undefine>
-              <IncludePath>.\rg;.\pit;.\queue;.\tpm1;.\uart0;.\EEPROM;.\delay;.\i2c0;.\bme280;.\i2c1;.\ssd1306;.\switches;.\gps</IncludePath>
+              <IncludePath>.\rg;.\pit;.\queue;.\tpm1;.\uart0;.\EEPROM;.\delay;.\i2c0;.\bme280;.\i2c1;.\ssd1306;.\switches;.\gps;.\logging</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

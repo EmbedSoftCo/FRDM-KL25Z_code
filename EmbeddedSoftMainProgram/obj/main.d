@@ -10,4 +10,5 @@
   C:\Software\Keil_v5\ARM\ARMCLANG\include\stdbool.h rg\rg.h tpm1\tpm1.h \
   uart0\uart0.h queue\queue.h ssd1306\configScreen.h ssd1306\ssd1306.h \
   ssd1306\display_i2c1.h ssd1306\fonts.h delay\delay.h \
-  switches\switches.h gps\gps.h EEPROM\EEPROM.h bme280\bme280.h
+  switches\switches.h gps\gps.h EEPROM\EEPROM.h bme280\bme280.h \
+  logging\logging.h

@@ -17,6 +17,7 @@
 ".\obj\switches.o"
 ".\obj\gps.o"
 ".\obj\uart2.o"
+".\obj\logging.o"
 ".\obj\startup_mkl25z4.o"
 ".\obj\system_mkl25z4.o"
 --library_type=microlib --strict --scatter ".\obj\EmbeddedSoftMainProgram.sct"

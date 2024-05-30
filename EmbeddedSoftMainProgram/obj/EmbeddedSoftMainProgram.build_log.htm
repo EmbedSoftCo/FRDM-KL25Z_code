@@ -26,79 +26,19 @@ Project File Date:  05/30/2024
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.21', folder: 'C:\Software\Keil_v5\ARM\ARMCLANG\Bin'
-Rebuild target 'EmbeddedSoftMainProgram'
-compiling queue.c...
-compiling delay.c...
-compiling rg.c...
-compiling uart0.c...
-compiling pit.c...
-compiling tpm1.c...
-src/main.c(130): warning: no newline at end of file [-Wnewline-eof]
-  130 | }
-      |  ^
-1 warning generated.
-compiling main.c...
-compiling fonts.c...
-compiling configScreen.c...
-bme280/bme280.c(236): warning: implicit conversion loses integer precision: 'int' to 'uint16_t' (aka 'unsigned short') [-Wimplicit-int-conversion]
-  236 |         dig_T1 = ((dig_t1_local[1] << 8) | (dig_t1_local[0] << 0));
-      |                ~  ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
-bme280/bme280.c(237): warning: implicit conversion loses integer precision: 'int' to 'int16_t' (aka 'short') [-Wimplicit-int-conversion]
-  237 |         dig_T2 = ((dig_t2_local[1] << 8) | (dig_t2_local[0] << 0));
-      |                ~  ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
-bme280/bme280.c(238): warning: implicit conversion loses integer precision: 'int' to 'int16_t' (aka 'short') [-Wimplicit-int-conversion]
-  238 |         dig_T3 = ((dig_t3_local[1] << 8) | (dig_t3_local[0] << 0));
-      |                ~  ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
-bme280/bme280.c(241): warning: implicit conversion loses integer precision: 'int' to 'int16_t' (aka 'short') [-Wimplicit-int-conversion]
-  241 |   dig_H2 = ((dig_h2_local[1] << 8) | (dig_h2_local[0] << 0));   
-      |          ~  ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
-bme280/bme280.c(243): warning: implicit conversion loses integer precision: 'int' to 'int16_t' (aka 'short') [-Wimplicit-int-conversion]
-  243 |   dig_H4 = ((dig_h4_local[0] << 4) | (dig_h4_local[1] & 0xF));
-      |          ~  ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
-bme280/bme280.c(244): warning: implicit conversion loses integer precision: 'int' to 'int16_t' (aka 'short') [-Wimplicit-int-conversion]
-  244 |   dig_H5 = ((dig_h5_local[1] << 4) | (dig_h5_local[0] >> 4));   
-      |          ~  ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
-6 warnings generated.
-compiling bme280.c...
-compiling EEPROM.c...
-compiling i2c0.c...
-compiling i2c1.c...
-compiling display_i2c1.c...
-compiling ssd1306.c...
-compiling switches.c...
-gps/gps.c(12): warning: In file included from...
-gps/gps.h(14): warning: padding size of 'struct DataGps' with 2 bytes to alignment boundary [-Wpadded]
-   14 | typedef struct DataGps {
-      |                ^
-gps/gps.c(176): warning: 'return' will never be executed [-Wunreachable-code-return]
-  176 |     return newData;
-      |            ^~~~~~~
+Build target 'EmbeddedSoftMainProgram'
+logging/logging.c(47): warning: unused variable 'block' [-Wunused-variable]
+   47 |   uint8_t block = 0x0;  // Block 0 = 0x0        // Block 15 = 0xF
+      |           ^~~~~
+logging/logging.c(48): warning: unused variable 'sector' [-Wunused-variable]
+   48 |   uint8_t sector = 0x0; // Sector 0 = 0x0 // Sector 15 = 0xF
+      |           ^~~~~~
 2 warnings generated.
-compiling gps.c...
-compiling uart2.c...
-logging/logging.c(32): error: incompatible pointer to integer conversion initializing 'uint32_t' (aka 'unsigned int') with an expression of type 'uint8_t *' (aka 'unsigned char *') [-Wint-conversion]
-   32 |                                                                                                 .temperature    = logTemp8,
-      |                                                                                                                   ^~~~~~~~
-logging/logging.c(33): error: incompatible pointer to integer conversion initializing 'uint32_t' (aka 'unsigned int') with an expression of type 'uint8_t *' (aka 'unsigned char *') [-Wint-conversion]
-   33 |                                                                                                 .humidity               = logHum8
-      |                                                                                                                           ^~~~~~~
-logging/logging.c(18): warning: unused variable 'block' [-Wunused-variable]
-   18 |         uint8_t block = 0x0;            // Block 0 = 0x0        // Block 15 = 0xF
-      |                 ^~~~~
-logging/logging.c(19): warning: unused variable 'sector' [-Wunused-variable]
-   19 |         uint8_t sector = 0x0;           // Sector 0 = 0x0 // Sector 15 = 0xF
-      |                 ^~~~~~
-logging/logging.c(20): warning: unused variable 'page' [-Wunused-variable]
-   20 |         uint8_t page = 0x0;             // Page 0 = 0x0         // Page 7 = E00 
-      |                 ^~~~
-logging/logging.c(30): warning: unused variable 'ld' [-Wunused-variable]
-   30 |         struct LogData ld = {   .lattitude              = 0000,
-      |                        ^~
-4 warnings and 2 errors generated.
 compiling logging.c...
-compiling system_MKL25Z4.c...
-assembling startup_MKL25Z4.s...
-".\obj\EmbeddedSoftMainProgram.axf" - 2 Error(s), 13 Warning(s).
+compiling ssd1306.c...
+linking...
+Program Size: Code=7342 RO-data=7430 RW-data=4 ZI-data=4180  
+".\obj\EmbeddedSoftMainProgram.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -125,11 +65,10 @@ Package Vendor: Keil
    * Component: ARM::CMSIS:CORE@5.6.0
 
    * Component: Keil::Device:Startup@2.5.0
+      Source file:   Device/Source/ARM/startup_MKL25Z4.s
       Include file:  Device/Source/system_MKL25Z4.h
       Source file:   Device/Source/system_MKL25Z4.c
-      Source file:   Device/Source/ARM/startup_MKL25Z4.s
-Target not created.
-Build Time Elapsed:  00:00:04
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

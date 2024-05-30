@@ -8,7 +8,7 @@
 #define RECORDS_OFFSET (1)
 
 extern volatile bool logFlag;
-static struct LogData PageBuffer[32] = {0};
+static volatile struct LogData PageBuffer[32] = {0};
 static uint32_t numOfRecords = 0;
 static void logInfo(void);
 extern uint8_t finishedRoute;
@@ -21,11 +21,11 @@ void PerodicLogging(void) {
 
   uint32_t logTemp32 = get_temperature(); // Get temperature reading
   uint32_t logHum32 = get_humidity();     // Get humidity reading
-  dataGps_t gpsdat = gps_getData();
+  //dataGps_t gpsdat = gps_getData();
   // GET GPS DATA HERE
 
-  struct LogData tmpbuf = {.lattitude = gpsdat.loc.lat,  // TODO: actual data
-                           .longtitude = gpsdat.loc.lon, // TODO: actual data
+  struct LogData tmpbuf = {.lattitude = 0xAAAAAAAA,//gpsdat.loc.lat,  // TODO: actual data
+                           .longtitude = 0xAAAAAAAA,//gpsdat.loc.lon, // TODO: actual data
                            .temperature = logTemp32,
                            .humidity = logHum32};
 
@@ -49,7 +49,7 @@ void logInfo(void) {
 
   /* ================ Read data ================ */
 
-  struct MetaData md = {.countOfRecords = numOfRecords};
+  struct MetaData md = {.countOfRecords = numOfRecords-RECORDS_OFFSET};
 
   PageBuffer[0] = *(struct LogData *)&md; //* ( long * ) &
 
