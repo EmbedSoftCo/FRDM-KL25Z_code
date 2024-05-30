@@ -21,11 +21,10 @@ void PerodicLogging(void) {
 
   uint32_t logTemp32 = get_temperature(); // Get temperature reading
   uint32_t logHum32 = get_humidity();     // Get humidity reading
-  //dataGps_t gpsdat = gps_getData();
-  // GET GPS DATA HERE
+  dataGps_t gpsData = gps_getData();			// Get GPS location
 
-  struct LogData tmpbuf = {.lattitude = 0xAAAAAAAA,//gpsdat.loc.lat,  // TODO: actual data
-                           .longtitude = 0xAAAAAAAA,//gpsdat.loc.lon, // TODO: actual data
+  struct LogData tmpbuf = {.lattitude = gpsData.loc.lat,  
+                           .longtitude = gpsData.loc.lon, 
                            .temperature = logTemp32,
                            .humidity = logHum32};
 
@@ -64,7 +63,8 @@ void logInfo(void) {
    *		page 1 - 7 = gamedata
    */
   // Page 0 is config
-  // EEPROM_write_page(block, sector, page, data_write, sizeof(data_write));
+	
+   EEPROM_write_page(block, sector, page, (uint8_t*)PageBuffer, sizeof(PageBuffer));
 
   // Reset  the log flag
   logFlag = false;

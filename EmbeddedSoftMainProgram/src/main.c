@@ -25,6 +25,8 @@ static bool varState4 = false; // SHOW VICTORY SCREEN -> open box once and wait
 static bool varState5 = false; // SHOW GAME OVER SCREEN	-> Back to start screen
 static bool varState6 = false; // SHOW ADMIN SCREEN -> UART0
 
+uint8_t finishedRoute;  // Set to 1 if game has been finisched. remaining data will be written
+
 void state0(void);
 void state1(void);
 void state2(void);
