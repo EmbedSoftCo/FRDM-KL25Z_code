@@ -4,68 +4,81 @@
 #include "pit.h"
 #include "rg.h"
 #include "tpm1.h"
-#include "uart0.h"
-#include "configScreen.h"
-#include "gps.h"
 #include "EEPROM.h"
-#include "bme280.h"
-#include "logging.h"
 
-uint8_t finishedRoute;
+static uint8_t data_write[511] = {1,2,3,4,5,6,7,8,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,8,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+                                  0,0,0,0,0,0,0,0,
+																	0,0,0,0,0,0,0,0,
+																	0,0,0,0,0,0,0,0,
+																	0,0,0,0,0,0,0,0,
+																	0,0,0,0,0,0,0,0,
+																	0,0,0,0,0,0,0,0,
+																	0,0,0,0,0,0,0,0,
+																	1,2,3,4,5,6,7,8,
+                                  };
+static uint8_t data_read[511] = {0};
+
 
 /*!
  * \brief Main application
  */
 int main(void)
 {
-		//Variables
-		int32_t temp = 0x0000;
-		int32_t hum = 0x0000;	
-	
-		char sTemp[32];
-		char sHum[32];
-		bool state = false;
-		bool green = false;
-	
-		delay_us(1000000UL); //Start up
-		uart0_init();
-		
-		uart0_send_string("Init RG leds\n");
-		rg_init();
-		
-    uart0_send_string("Init PIT\n");
-		pit_init();
+    rg_init();
+    pit_init();
+    tpm1_init();
     
-		uart0_send_string("Init TPM1\n");
-		tpm1_init();  
-		
-		uart0_send_string("Init EEPROM\n");
 		EEPROM_init();
     
-		uart0_send_string("Init BME 280\n");
-		bme280_init();
 		
-		uart0_send_string("Init Display\n");
-		displayStart();
+		uint8_t block = 0x0; 									// Block 0 = 0x0 	// Block 15 = 0xF
+		uint8_t sector = 0x0;									// Sector 0 = 0x0 // Sector 15 = 0xF
+		uint8_t page = 0x0; 									// Page 0 = 0x0 	// Page 7 = E00	
 		
-		uart0_send_string("Init GPS\n");
-		gps_init();
 		
-		uart0_send_string("code Initialised!\r\n");
-				
-		//gps_newData();
-				
+		EEPROM_write_page(block, sector, page, data_write, sizeof(data_write));
+		
+		EEPROM_read_page(block, sector, page, data_read, sizeof(data_read));
+		
+		bool green = false;
+		if(data_read[4] == data_write[4])
+		{
+			green = true;
+		}
+	
     while(1)
     {
-		//	if(logFlag)
-			//{ 
-				PerodicLogging();
-				
-				green = !green; // toggle green led
-				
-				rg_onoff(toggleLED, green);
-		//	}
-			
-
+			rg_onoff(toggleLED,green);
     }
 }
