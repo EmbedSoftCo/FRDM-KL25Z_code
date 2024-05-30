@@ -8,6 +8,6 @@
   RTE\Device\MKL25Z128xxx4\system_MKL25Z4.h \
   C:\Software\Keil_v5\ARM\ARMCLANG\include\stdio.h pit\pit.h \
   C:\Software\Keil_v5\ARM\ARMCLANG\include\stdbool.h rg\rg.h tpm1\tpm1.h \
-  EEPROM\EEPROM.h delay\delay.h uart0\uart0.h queue\queue.h \
-  bme280\bme280.h ssd1306\configScreen.h ssd1306\ssd1306.h \
-  ssd1306\display_i2c1.h ssd1306\fonts.h switches\switches.h gps\gps.h
+  uart0\uart0.h queue\queue.h ssd1306\configScreen.h ssd1306\ssd1306.h \
+  ssd1306\display_i2c1.h ssd1306\fonts.h delay\delay.h \
+  switches\switches.h gps\gps.h EEPROM\EEPROM.h bme280\bme280.h

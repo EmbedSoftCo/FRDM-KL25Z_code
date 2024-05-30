@@ -1,6 +1,8 @@
 #ifndef LOGGING_H
 #define LOGGING_H
+
 #include <stdint.h>
+#include <stdbool.h>
 
 struct __attribute__((packed)) LogData {
   uint32_t lattitude;
