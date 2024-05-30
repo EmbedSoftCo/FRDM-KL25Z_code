@@ -33,6 +33,7 @@
 
 volatile bool displayFlag;
 volatile bool logFlag;
+volatile bool gpsFlag;
 
 /*!
  * \brief Initialises the Periodic Interrupt Timer (PIT)
@@ -46,8 +47,8 @@ void pit_init(void)
 	PIT->MCR &= ~PIT_MCR_MDIS_MASK;
 	PIT->MCR |= PIT_MCR_FRZ_MASK;
 	
-	// Initialize PITO to generate an event every 10 seconds
-	PIT->CHANNEL[0].LDVAL = PIT_LDVAL_TSV(24e6*10-1);
+	// Initialize PITO to generate an event every 1 seconds
+	PIT->CHANNEL[0].LDVAL = PIT_LDVAL_TSV(24e6-1);
 	
 	// Initialize PIT1 to generate an event every 1 minute
 	PIT->CHANNEL[1].LDVAL = PIT_LDVAL_TSV(1440e6-1);
@@ -72,6 +73,8 @@ void pit_init(void)
 
 void PIT_IRQHandler(void)
 {		
+		static uint16_t cnt = 0;
+	
 		// Clear pending IRQ
 		NVIC_ClearPendingIRQ(PIT_IRQn);
 		
@@ -80,7 +83,13 @@ void PIT_IRQHandler(void)
 		{
 			//Clear flag
 			PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK;
-			displayFlag = true;
+			cnt++;
+			gpsFlag = true; //update every second
+			if(cnt == 9)
+			{
+				cnt = 0;
+				displayFlag = true; //update every 10 seconds
+			}
 		}			
 
 		// PIT1 used for logging

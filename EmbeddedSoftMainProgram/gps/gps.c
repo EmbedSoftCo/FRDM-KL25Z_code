@@ -57,7 +57,9 @@ bool gps_newData(void) {
 
     static struct tm date;
 
-
+		bool checkGGA = false;
+		bool checkZDA = false;
+	
    while (1) {
         message[index] = uart2_receive_poll();
 				uart0_put_char(message[index]);
@@ -119,6 +121,7 @@ bool gps_newData(void) {
                             gpsData.accuracy = -1;
                         }
                     }
+										checkGGA = true;
                     break;
                 case ZDA: //In this message utc time is stored. Below we convert it to a unix timestamp
                     if (contentCount == 1) { //Hour, minute, second
@@ -140,7 +143,11 @@ bool gps_newData(void) {
                             gpsData.utc = tempUtc;
                         }
                     }
-										return 0;
+										checkZDA = true;
+										if(checkGGA == true || checkZDA == true)
+										{
+											return 0;
+										}
                     
 
             }

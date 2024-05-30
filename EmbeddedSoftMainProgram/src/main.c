@@ -68,7 +68,7 @@ static uint8_t data_write[511] = {1,2,3,4,5,6,7,8,
 																	0,0,0,0,0,0,0,0,
 																	1,2,3,4,5,6,7,8,
                                   };
-static uint8_t data_read[511] = {0};
+//static uint8_t data_read[511] = {0};
 
 /*!
  * \brief Main application
@@ -77,30 +77,21 @@ int main(void)
 {
 		
 		delay_us(1000000UL); //Start up
+		
+		//Init microcontroller settings
 		uart0_init();
-		
-		uart0_send_string("Init RG leds\n");
 		rg_init();
-		
-    uart0_send_string("Init PIT\n");
 		pit_init();
-    
-		uart0_send_string("Init TPM1\n");
 		tpm1_init();  
 		
-		uart0_send_string("Init EEPROM\n");
+		//Init hardware components
 		EEPROM_init();
-    
-		uart0_send_string("Init BME 280\n");
 		bme280_init();
-		
-		uart0_send_string("Init Display\n");
-		displayStart();
-		
-		uart0_send_string("Init GPS\n");
+		displayInit();
 		gps_init();
-		
-		uart0_send_string("code Initialised!\r\n");
+	
+		//Wait for starting to show welcome screen
+		delay_us(2000000);
 						
     while(1)
     {
@@ -114,203 +105,154 @@ int main(void)
     }
 }
 
-<<<<<<< HEAD
-void state0(void)
+void state0(void) //SETUP SCREEN -> Show with mode it needs to go in. (Admin or User)
 {
-	//SETUP SCREEN -> Show with mode it needs to go in. (Admin or User)
 	while(varState0 == true)
 	{
-		if(sw_pressed(KEY_LEFT))
+		bool answer;
+		answer = displayStart();
+		
+		if(answer)
 		{
-			uart0_send_string("0\n");
+			displayShowText("user");
 			varState1 = true;
+			varState0 = false;
+		}
+		else
+		{
+			displayShowText("admin");
+			varState6 = true;
 			varState0 = false;
 		}
 	}
 }
 
-void state1(void)
+
+void state1(void) //USER state -> WAIT FOR FIX SCREEN and wait for pressing start
 {
-	//USER state -> WAIT FOR FIX SCREEN and wait for pressing start
+	bool runOnce = true;
+	dataGps_t data;
 	while(varState1 == true)
 	{
-		if(sw_pressed(KEY_LEFT))
+		if(gpsFlag)
 		{
-			uart0_send_string("1\n");
+			gpsFlag = false;
+			data = gps_getData();
+		}
+		
+		if(runOnce == true)
+		{
+			runOnce = false;
+			displayShowText("Waiting for Satelites");
+		}
+		
+		if(data.state == FIX)
+		{
+			displayShowText("Press center button to start the game!");
+		}
+		
+		if(sw_pressed(KEY_CENTER) && data.state == FIX)
+		{
 			varState2 = true;
 			varState1 = false;
+			delay_us(5000);
 		}
 	}
 }
 	
-void state2(void)
+
+void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is set 													-> TODO: CHANGE CENTER BUTTON FOR CORRECT LOCATION + ADD MORE LOCATIONS
 {
-	//SHOW DISTANCE SCREEN -> update screen every 10 seconds
+	int32_t temp = 0x0000;
+	char sTemp[32];
+	int32_t hum = 0x0000;
+	char sHum[32];
 	while(varState2 == true)
 	{
-		if(sw_pressed(KEY_LEFT))
+		if(displayFlag)
 		{
-			uart0_send_string("2\n");
+				displayFlag = false;
+				temp = get_temperature();
+				sprintf(sTemp, "%d.%d\r\n", (temp/100),(temp - ((temp/100)*100)));
+				uart0_send_string(sTemp);
+				hum = get_humidity();
+				sprintf(sHum, "%d.%d\r\n", (hum/100),(hum - ((hum/100)*100)));
+				uart0_send_string(sTemp);
+				delay_us(5);
+				displayDistance("?", "london", sTemp, sHum);
+		}
+		
+		if(sw_pressed(KEY_CENTER))
+		{
 			varState3 = true;
 			varState2 = false;
+			delay_us(5000);
 		}
 	}
 }
 
-void state3(void)
+
+void state3(void) //SHOW QUESTION SCREEN -> show question and let user choose answer 												-> TODO: CHANGE PUZZLE QUESTION AND ANSWERS + ADD MORE LOCATIONS
 {
-	//SHOW QUESTION SCREEN -> show question and let user choose answer
 	while(varState3 == true)
 	{
-		if(sw_pressed(KEY_LEFT))
+		int goodAnswer = 2;
+		bool answer = false;
+		answer = displayPuzzle("Smulhoek?","Nee","Ja","Misschien",&goodAnswer);
+		if(answer == true)
 		{
-			uart0_send_string("3\n");
 			varState4 = true;
 			varState3 = false;
 		}
 	}
 }
 
-void state4(void)
+
+void state4(void) //SHOW VICTORY SCREEN -> open box once and wait for confirm button to go to start screen 	-> TODO: ALL
 {
-	//SHOW VICTORY SCREEN -> open box once and wait for confirm button to go to start screen
+	
 	while(varState4 == true)
 	{
-		if(sw_pressed(KEY_LEFT))
+		if(gpsFlag)
 		{
-			uart0_send_string("4\n");
+			gpsFlag = false;
+			displayShowText("4");
 			varState5 = true;
 			varState4 = false;
 		}
 	}
 }
 
-void state5(void)
+
+void state5(void)	//SHOW GAME OVER SCREEN	-> Back to start screen 																					-> TODO: ALL
 {
-	//SHOW GAME OVER SCREEN	-> Back to start screen
 	while(varState5 == true)
 	{
-		if(sw_pressed(KEY_LEFT))
+		if(gpsFlag)
 		{
-			uart0_send_string("5\n");
-			varState6 = true;
+			gpsFlag = false;
+			displayShowText("5");
+			varState0 = true;
 			varState5 = false;
 		}
 	}
 }
 
-void state6(void)
+
+void state6(void) //SHOW ADMIN SCREEN -> UART0 																															-> TODO: ADD UART FUNCTIONS
 {
-	//SHOW ADMIN SCREEN -> UART0 
+	bool runOnce = true;
 	while(varState6 == true)
 	{
-		if(sw_pressed(KEY_LEFT))
+		if(runOnce == true)
 		{
-			uart0_send_string("6\n");
-			varState0 = true;
-			varState6 = false;
+			displayShowText("ADMIN MODE");
 		}
+		if(uart0_num_rx_chars_available() > 0)
+		{
+			uart0_get_char();
+		}
+		rg_onoff(true,false);
 	}
 }
 
-=======
->>>>>>> 1d8e6dcf872eabacc57861e6ac5182cfaf06268d
-void logInfo(void)
-{
-	uint32_t logTemp32 = 0x00000;
-	uint32_t logHum32 = 0x00000;
-	
-	uint8_t logTemp8[4];
-	uint8_t logHum8[4];
-	
-	uint8_t block = 0x0; 		// Block 0 = 0x0 	// Block 15 = 0xF
-	uint8_t sector = 0x0;		// Sector 0 = 0x0 // Sector 15 = 0xF
-	uint8_t page = 0x0; 		// Page 0 = 0x0 	// Page 7 = E00	
-	
-/* ================ Read data ================ */	
-	logTemp32 = get_temperature();	// Get temperature reading
-	logHum32 = get_humidity();			// Get humidity reading
-	
-	// Split uint32_t temp & hum to 4 bytes
-<<<<<<< HEAD
-    logTemp8[0] = (uint8_t)(logTemp32 >> 24);
-    logTemp8[1] = (uint8_t)(logTemp32 >> 16);
-    logTemp8[2] = (uint8_t)(logTemp32 >> 8);
-    logTemp8[3] = (uint8_t)(logTemp32 >> 0);
-	
-	  logHum8[0] = (uint8_t)(logHum32 >> 24);
-    logHum8[1] = (uint8_t)(logHum32 >> 16);
-    logHum8[2] = (uint8_t)(logHum32 >> 8);
-    logHum8[3] = (uint8_t)(logHum32 >> 0);
-=======
-    logTemp8[0] = (logTemp32 >> 24);
-    logTemp8[1] = (logTemp32 >> 16);
-    logTemp8[2] = (logTemp32 >> 8);
-    logTemp8[3] = (logTemp32 >> 0);
-	
-	  logHum8[0] = (logHum32 >> 24);
-    logHum8[1] = (logHum32 >> 16);
-    logHum8[2] = (logHum32 >> 8);
-    logHum8[3] = (logHum32 >> 0);
->>>>>>> 1d8e6dcf872eabacc57861e6ac5182cfaf06268d
-	
-	//ToDo GPS data
-	
-	//ToDo prepare data for EEPROM
-	//data_write[] = 
-	
-/* ================ Write data to EEPROM ================ */		
-	/*
-	 * usage configuration of EEPROM
-	 * 
-	 * block 0
-	 * sector 0
-	 * page 0 - 7
-	 *		page 0    = configuration data
-	 *		page 1 - 7 = gamedata
-	*/
-	// Page 0 is config
-	EEPROM_write_page(block, sector, page, data_write, sizeof(data_write));
-	
-	// Reset  the log flag
-	logFlag = false;
-<<<<<<< HEAD
-}
-
-
-
-
-
-
-
-// BEFORE WHILE LOOP CONCEPT
-//		//Variables
-//		uint8_t block = 0x0; 									// Block 0 = 0x0 	// Block 15 = 0xF
-//		uint8_t sector = 0x0;									// Sector 0 = 0x0 // Sector 15 = 0xF
-//		uint8_t page = 0x0; 									// Page 0 = 0x0 	// Page 7 = E00	
-//		int32_t temp = 0x0000;
-//		char sTemp[32];
-//		int32_t hum = 0x0000;
-//		char sHum[32];
-//		bool state = false;
-
-// WHILE MAIN LOOP CONCEPT
-//			if(sw_pressed(KEY_LEFT) == 0 && state == true)
-//			{
-//				state = false;
-//				temp = get_temperature();
-//				sprintf(sTemp, "%d.%d\r\n", (temp/100),(temp - ((temp/100)*100)));
-//				uart0_send_string(sTemp);
-//				hum = get_humidity();
-//				sprintf(sHum, "%d.%d\r\n", (hum/100),(hum - ((hum/100)*100)));
-//				uart0_send_string(sTemp);
-//				delay_us(5);
-//				displayDistance("?", "london", sTemp, sHum);
-//			}
-//			else if (sw_pressed(KEY_LEFT) == 1 && sw_pressed(KEY_RIGHT) == 1)
-//			{
-//				state = true;
-//			}
-=======
-}
->>>>>>> 1d8e6dcf872eabacc57861e6ac5182cfaf06268d

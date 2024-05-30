@@ -41,7 +41,7 @@ void setSelect(int line){
  * 
  * \return the selected line. Could be 1, 2, 3.
  */
-int getSelection(void){
+int getSelection(int amountAnswers){
 	int selection = 0;
 	int select = 1;
 		
@@ -54,10 +54,10 @@ int getSelection(void){
 			select++;
 		}
 		
-		if(select > 3){
+		if(select > amountAnswers){
 			select = 1;
 		}else if(select < 1){
-			select = 3;
+			select = amountAnswers;
 		}
 		
 		setSelect(select);
@@ -84,42 +84,55 @@ int getSelection(void){
 	return selection;
 }
 
-void displayCorrect(void)
-{
-		ssd1306_clearscreen();
-    ssd1306_setfont(Dialog_plain_12);
-    ssd1306_putstring(0,0,"Correct!");
-		ssd1306_update();	
-		delay_us(1000000);
-}
-	
-void displayWrong(void)
-{
-		ssd1306_clearscreen();
-    ssd1306_setfont(Dialog_plain_12);
-    ssd1306_putstring(0,0,"Wrong!");
-		ssd1306_update();	
-		delay_us(1000000);
-}
-	
 /*!
- * \brief Show starting display
+ * \brief Initialize the display
  *
- * Use this funciton to start the game.
- * This functions ask user to click on one of the buttons to continue the program.
+ * 
  * 
  */
-void displayStart(void){
-		
+void displayInit(void)
+{	
 		sw_init();
 		ssd1306_init();
 		ssd1306_setorientation(1);   
     ssd1306_clearscreen();
     ssd1306_setfont(Dialog_plain_12);
-    ssd1306_putstring(0,0,"Reverse Geocache");
+		ssd1306_putstring(0,0,"Welkom");
     ssd1306_setfont(Monospaced_plain_10);
-		ssd1306_putstring(10,50,"Program starting"); 
-		ssd1306_update();		
+		ssd1306_putstring(10,24, "Starting..."); 
+		ssd1306_update();
+}
+
+/*!
+ * \brief Show starting display
+ *
+ * Use this funciton to select the microcontroller mode: admin or user.
+ * This function ask user to click on one of the buttons to continue the program.
+ * 
+ * \return Bool of with mode is selected
+ */
+bool displayStart(void)
+{	
+		int answer = false;
+		bool result = false;
+    ssd1306_clearscreen();
+    ssd1306_setfont(Dialog_plain_12);
+		ssd1306_putstring(0,0,"Select user:");
+    ssd1306_setfont(Monospaced_plain_10);
+		ssd1306_putstring(10,24, "Admin"); 
+		ssd1306_putstring(10,36, "User");
+		ssd1306_update();
+	
+		answer = getSelection(2);
+		if(answer == 1)
+		{
+			result = false;
+		}
+		else if(answer == 2)
+		{
+			result = true;
+		}
+		return result;
 }
 
 /*!
@@ -129,7 +142,8 @@ void displayStart(void){
  * 
  * \todo This funciton still using the constant information. It could be global variable(string).
  */
-void displayDistance(const char *distance, const char *location, const char *temp, const char *hum) {
+void displayDistance(const char *distance, const char *location, const char *temp, const char *hum) 
+{
 		ssd1306_clearscreen();	
 		ssd1306_setfont(Dialog_plain_12);
 		ssd1306_putstring(0,0,"Distance: ");
@@ -148,11 +162,11 @@ void displayDistance(const char *distance, const char *location, const char *tem
 }
 
 /*!
- * \brief Display quetion and answers
+ * \brief Display question and answers
  *
  * This function display the quetion and answers when the user are at the certain location.
  * 
- * \param[in] 	1. Quetion
+ * \param[in] 	1. Question
  * \param[in]		2. First answer
  * \param[in]		3. Second answer
  * \param[in]		4. Third answer
@@ -172,19 +186,38 @@ bool displayPuzzle(const char *aPuzzle, const char *aAnswer_1, const char *aAnsw
 		ssd1306_putstring(10,48,aAnswer_3);    			
     ssd1306_update();
 	
-		answer = getSelection();
+		answer = getSelection(3);
 		
 		if(answer == *goodAnswer)
 		{
 			result = true;
-			displayCorrect();
+			displayShowText("Good Answer!");
+			delay_us(1000000);
 		}
 		else
 		{
 			result = false;
-			displayWrong();
+			displayShowText("Wrong Answer");
+			delay_us(1000000);
 		}
 	
 		return result;
+}
+
+/*!
+ * \brief Display show text
+ *
+ * This function display the inserted text in the function
+ * 
+* \param[in] 	text: string of the text that will be displayed.
+ *
+* \return nothing
+ */
+void displayShowText(const char *text)
+{
+		ssd1306_clearscreen();
+    ssd1306_setfont(Dialog_plain_12);
+    ssd1306_putstring(0,0,text);
+		ssd1306_update();	
 }
 

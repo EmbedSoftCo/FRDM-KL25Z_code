@@ -37,6 +37,7 @@
 
 extern volatile bool displayFlag;
 extern volatile bool logFlag;
+extern volatile bool gpsFlag;
 
 void pit_init(void);
 
