@@ -120,8 +120,9 @@ bool gps_newData(void) {
                         } else {
                             gpsData.accuracy = -1;
                         }
+												checkGGA = true;
                     }
-										checkGGA = true;
+										
                     break;
                 case ZDA: //In this message utc time is stored. Below we convert it to a unix timestamp
                     if (contentCount == 1) { //Hour, minute, second
@@ -142,8 +143,8 @@ bool gps_newData(void) {
                         if (tempUtc != (uint32_t) -1) { //check if the conversion is successful
                             gpsData.utc = tempUtc;
                         }
+												checkZDA = true;
                     }
-										checkZDA = true;
 										if(checkGGA == true || checkZDA == true)
 										{
 											return 0;

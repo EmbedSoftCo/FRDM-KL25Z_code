@@ -630,14 +630,14 @@
           <GroupName>logging</GroupName>
           <Files>
             <File>
-              <FileName>logging.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\logging\logging.h</FilePath>
-            </File>
-            <File>
               <FileName>logging.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\logging\logging.c</FilePath>
+            </File>
+            <File>
+              <FileName>logging.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\logging\logging.h</FilePath>
             </File>
           </Files>
         </Group>
