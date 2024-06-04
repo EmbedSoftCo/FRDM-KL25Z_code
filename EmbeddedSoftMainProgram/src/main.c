@@ -71,6 +71,8 @@ static uint8_t data_write[511] = {1,2,3,4,5,6,7,8,
                                   };
 //static uint8_t data_read[511] = {0};
 
+static gameConfig_t gameConfig;
+																																		
 /*!
  * \brief Main application
  */
@@ -90,7 +92,12 @@ int main(void)
 		bme280_init();
 		displayInit();
 		gps_init();
-	
+		
+		//Default settings of the game
+		gameConfig.location[1].lat = 6312330;
+		gameConfig.location[1].lon = 52049643;
+		gameConfig.amountLocations = 1;
+		
 		//Wait for starting to show welcome screen
 		delay_us(2000000);
 						
@@ -141,72 +148,77 @@ void state1(void) //USER state -> WAIT FOR FIX SCREEN and wait for pressing star
 			displayShowText("Waiting for Satelites");
 		}
 		
-		if(gpsFlag)
+		if(gpsFlag || data.state == 0)
 		{
 			gpsFlag = false;
 			gps_newData();
 			data = gps_getData();
-			char sPrint[32];
-			sprintf(sPrint, "%d", data.state);
-			uart0_send_string(sPrint);
 		}
 		
 		if(data.state == FIX || data.state == GUESSING)
 		{
 			displayShowText("Press center button to start the game!");
-		}
-		
-		if(sw_pressed(KEY_CENTER) && (data.state == FIX|| data.state == GUESSING))
-		{
-			varState2 = true;
-			varState1 = false;
-			displayShowText("Ready?!");
-			delay_us(500000);
-			displayShowText("Set!");
-			delay_us(500000);
-			displayShowText("GO!");
-			delay_us(250000);
+			while(!sw_pressed(KEY_CENTER))
+			{
+				if(sw_pressed(KEY_CENTER))
+				{
+					varState2 = true;
+					varState1 = false;
+					displayShowText("Ready?!");
+					delay_us(500000);
+					displayShowText("Set!");
+					delay_us(500000);
+					displayShowText("GO!");
+					delay_us(250000);
+					break;
+				}
+			}
 		}
 	}
 }
 	
 
-void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is set 													-> TODO: CHANGE CENTER BUTTON FOR CORRECT LOCATION + ADD MORE LOCATIONS
+void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is set 													-> TODO: ADD MORE LOCATIONS
 {
 	int32_t temp = 0x0000;
 	char sTemp[32];
 	int32_t hum = 0x0000;
 	char sHum[32];
-	point_t smulhoek;
-	smulhoek.lat = 5198774;
-	smulhoek.lon = 594229;
 	dataGps_t data;
-	char sDistance[32];
+	char sDistance[64];
+	double distance = 99;
+	displayFlag = true;
 	while(varState2 == true)
 	{
+		if(gpsFlag)
+		{
+			gpsFlag = false;
+			gps_newData();
+			data = gps_getData();
+		}
 		if(displayFlag)
 		{
-				gps_newData();
-				data = gps_getData();
-				displayFlag = false;
-				temp = get_temperature();
-				sprintf(sTemp, "%d.%d\r\n", (temp/100),(temp - ((temp/100)*100)));
-				hum = get_humidity();
-				sprintf(sHum, "%d.%d\r\n", (hum/100),(hum - ((hum/100)*100)));
-				sprintf(sDistance, "%d", gps_calculateDistance(smulhoek, data.loc));
-				delay_us(5);
-				displayDistance(sDistance, "london", sTemp, sHum);
+			displayFlag = false;
+			temp = get_temperature();
+			sprintf(sTemp, "%d.%d\r\n", (temp/100),(temp - ((temp/100)*100)));
+			hum = get_humidity();
+			sprintf(sHum, "%d.%d\r\n", (hum/100),(hum - ((hum/100)*100)));
+			distance = gps_calculateDistance(gameConfig.location[1], data.loc);
+			sprintf(sDistance, "%.2lf", distance);
+			delay_us(5);
+			uart0_send_string(sDistance);
+			uart0_send_string("\n");
+			displayDistance(sDistance, "london", sTemp, sHum);
 		}
-		
-		if(sw_pressed(KEY_CENTER))
+		if(distance <= MAXRADIUS)
 		{
 			varState3 = true;
 			varState2 = false;
+			displayShowText("Location found!");
 			delay_us(5000);
 		}
 	}
 }
-
 
 void state3(void) //SHOW QUESTION SCREEN -> show question and let user choose answer 												-> TODO: CHANGE PUZZLE QUESTION AND ANSWERS + ADD MORE LOCATIONS
 {
@@ -220,19 +232,21 @@ void state3(void) //SHOW QUESTION SCREEN -> show question and let user choose an
 			varState4 = true;
 			varState3 = false;
 		}
+		else
+		{
+			varState5 = true;
+			varState3 = false;
+		}
 	}
 }
 
-
-void state4(void) //SHOW VICTORY SCREEN -> open box once and wait for confirm button to go to start screen 	-> TODO: ALL
+void state4(void) //SHOW VICTORY SCREEN -> open box once and wait for confirm button to go to start screen 	-> TODO: BOX OPENING
 {
-	
+	displayShowText("YOU WON, press center button to continu");
 	while(varState4 == true)
 	{
-		if(gpsFlag)
+		if(sw_pressed(KEY_CENTER))
 		{
-			gpsFlag = false;
-			displayShowText("4");
 			varState5 = true;
 			varState4 = false;
 		}
@@ -240,14 +254,13 @@ void state4(void) //SHOW VICTORY SCREEN -> open box once and wait for confirm bu
 }
 
 
-void state5(void)	//SHOW GAME OVER SCREEN	-> Back to start screen 																					-> TODO: ALL
+void state5(void)	//SHOW GAME OVER SCREEN	-> Back to start screen
 {
+	displayShowText("GAME OVER, press center button to continu");
 	while(varState5 == true)
 	{
-		if(gpsFlag)
+		if(sw_pressed(KEY_CENTER))
 		{
-			gpsFlag = false;
-			displayShowText("5");
 			varState0 = true;
 			varState5 = false;
 		}

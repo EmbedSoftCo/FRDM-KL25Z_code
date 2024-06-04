@@ -8,7 +8,7 @@
 
 #define EARTH_RADIUS 6371000 // Earth's radius in meters
 
-#define PI (double)3.14159265359
+#define PI (double)3.14159265358979323846
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //          local vars / typedefs
@@ -42,11 +42,6 @@ void gps_init(void) {
     uart2_init();
 }
 
-void gps_getBuffer(queue_t **pointer) {
-    *pointer = &GPS_RxQ;
-}
-
-
 bool gps_newData(void) {
     static uint8_t message[MESSAGE_SIZE];
     static uint32_t index;
@@ -62,7 +57,6 @@ bool gps_newData(void) {
 	
    while (1) {
         message[index] = uart2_receive_poll();
-				uart0_put_char(message[index]);
         if (message[index] == '$') {
             index = 0;
             messageType = UNKNOWN;
@@ -89,9 +83,9 @@ bool gps_newData(void) {
                     break;
                 case GGA:
                     if (contentCount == 2) { //Longitude/Latitude
-                        tempLoc = (int32_t) ((strToFloat(message+2) * 100000) / 60); //from minutes to degrees
+                        tempLoc = (int32_t) ((strToFloat(message+2) * 1000000) / 60); //from minutes to degrees
 
-                        tempLoc += (strToInt(message)/100) * 100000; //fixed point number
+                        tempLoc += (strToInt(message)/100) * 1000000; //fixed point number
 
                     } else if (contentCount == 3) { //North/South
                         if (message[0] == 'S') {
@@ -100,9 +94,9 @@ bool gps_newData(void) {
                             gpsData.loc.lon = tempLoc;
                         }
                     } else if (contentCount == 4) {
-                        tempLoc = (int32_t) ((strToFloat(message+3) * 100000) / 60); //from minutes to degrees
+                        tempLoc = (int32_t) ((strToFloat(message+3) * 1000000) / 60); //from minutes to degrees
 
-                        tempLoc += (strToInt(message) / 100) * 100000; //fixed point number
+                        tempLoc += (strToInt(message) / 100) * 1000000; //fixed point number
 
                     } else if (contentCount == 5) { //West/East
                         if (message[0] == 'W') {
@@ -149,7 +143,7 @@ bool gps_newData(void) {
 										{
 											return 0;
 										}
-                    
+                    break;
 
             }
             index = 0;
@@ -166,29 +160,27 @@ dataGps_t gps_getData(void) {
 }
 
 
-uint16_t gps_calculateDistance(point_t point1, point_t point2){
+// Function to convert degrees to radians
+double toRadians(double degree) {
+    return degree * (PI / 180.0);
+}
 
-    const double R = 6371.0; // Earth radius in kilometers
-
+double gps_calculateDistance(point_t point1, point_t point2) {
+	
+		const double R = 6371.0; // Earth radius in kilometers
     const double P = PI / 180.0; // Conversion factor
-
-	  double lat1 = (double) (point1.lat / 100000.0);
-
-    double lon1 = (double) (point1.lon / 100000.0);
-
-    double lat2 = (double) (point2.lat / 100000.0);
-
-    double lon2 = (double) (point2.lon / 100000.0);
+	  double lat1 = (double) (point1.lat / 1000000.0);
+    double lon1 = (double) (point1.lon / 1000000.0);
+    double lat2 = (double) (point2.lat / 1000000.0);
+    double lon2 = (double) (point2.lon / 1000000.0);
  
     double a = 0.5 - cos((lat2 - lat1) * P) / 2 +
-
                cos(lat1 * P) * cos(lat2 * P) *
-
                (1 - cos((lon2 - lon1) * P)) / 2;
  
-    return (uint16_t)(2000 * R * asin(sqrt(a)));
- 
+    return (double)(2000 * R * asin(sqrt(a)));
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //          local function

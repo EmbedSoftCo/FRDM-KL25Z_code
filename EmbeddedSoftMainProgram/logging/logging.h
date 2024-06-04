@@ -17,6 +17,8 @@ struct /*__attribute__((packed))*/ MetaData {
   uint64_t pad64;
 };
 
+static uint8_t finishedRoute;
+
 void PerodicLogging(void);
 
 #endif // LOGGING_H
