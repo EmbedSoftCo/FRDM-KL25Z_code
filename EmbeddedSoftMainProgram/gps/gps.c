@@ -1,59 +1,52 @@
 #include "gps.h"
 
-//local vars / typedefs
+//Defines
 #define MESSAGE_SIZE 80
 #define START_ID 2
-
 #define GPS_ACCURACY 2
-
 #define EARTH_RADIUS 6371000 // Earth's radius in meters
-
 #define PI (double)3.14159265358979323846
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//          local vars / typedefs
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 enum MessageType {
     GGA, ZDA, NOT_RELEVANT, UNKNOWN
 };
 
+//Variables
 static dataGps_t gpsData;
-
 static uint8_t MessageTypeStr[2][4] = {"GGA", "ZDA"};
 
-static queue_t GPS_RxQ;
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//          local prototypes
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+//Prototypes
 int strToInt(uint8_t * str);
 float strToFloat(uint8_t * str);
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//          global function
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+/*!
+ * \brief Initialize GPS
+ *
+ * This function initializes the uart with the GPS module is connected
+ *
+ * \return nothing
+ */
 void gps_init(void) {
-    q_init(&GPS_RxQ);
     uart2_init();
 }
 
-bool gps_newData(void) {
+/*!
+ * \brief GPS get new data
+ *
+ * This function reads the data from the uart (GPS). The new data will be stored in gpsData.
+ *
+ * \return bool: always false. To break out the function when all needed data.
+ */
+dataGps_t gps_newData(void) {
     static uint8_t message[MESSAGE_SIZE];
     static uint32_t index;
     static enum MessageType messageType = UNKNOWN;
     static uint8_t contentCount = 0;
-
     static int32_t tempLoc = 0;
-
     static struct tm date;
-
-		bool checkGGA = false;
-		bool checkZDA = false;
+	
+		static bool checkGGA = false;
+		static bool checkZDA = false;
 	
    while (1) {
         message[index] = uart2_receive_poll();
@@ -127,7 +120,7 @@ bool gps_newData(void) {
                     } else if (contentCount == 2) { //Day of the month
                         date.tm_mday = (uint8_t) strToInt(message);
 
-                    } else if (contentCount == 3) {    //Month
+                    } else if (contentCount == 3) { //Month
                         date.tm_mon = (uint8_t) strToInt(message) - 1;
 
                     } else if (contentCount == 4) { //Year
@@ -141,7 +134,7 @@ bool gps_newData(void) {
                     }
 										if(checkGGA == true || checkZDA == true)
 										{
-											return 0;
+											return gpsData;
 										}
                     break;
 
@@ -155,16 +148,27 @@ bool gps_newData(void) {
     }
 }
 
+/*!
+ * \brief Get GPS data
+ *
+ * This function returns the GPS data.
+ *
+ * \return gpsData
+ */
 dataGps_t gps_getData(void) {
     return gpsData;
 }
 
-
-// Function to convert degrees to radians
-double toRadians(double degree) {
-    return degree * (PI / 180.0);
-}
-
+/*!
+ * \brief calculateDistance
+ *
+ * This function calculates the distance between point 1 and point 2. 
+ *
+ * \param[in] 	point 1: for this application we use point 1 as the goal location
+ * \param[in] 	point 2: for this application we use point 2 as the current location of GPS
+ *
+ * \return double: the distance between point 1 and point 2 in meters.
+ */
 double gps_calculateDistance(point_t point1, point_t point2) {
 	
 		const double R = 6371.0; // Earth radius in kilometers
@@ -181,10 +185,25 @@ double gps_calculateDistance(point_t point1, point_t point2) {
     return (double)(2000 * R * asin(sqrt(a)));
 }
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//          local function
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+dateTime_t convert_unix_timestamp(time_t unix_timestamp) {
+    volatile struct tm *dt;
+    volatile dateTime_t result;
+    
+    // Convert the Unix timestamp to a struct tm
+    dt = localtime(&unix_timestamp);
+    
+    // Extract the components
+    result.year = dt->tm_year + 1900;
+    result.month = dt->tm_mon + 1;
+    result.day = dt->tm_mday;
+    result.hour = dt->tm_hour;
+    result.minute = dt->tm_min;
+    result.second = dt->tm_sec;
+    
+    // Format the date and time into a string
+		sprintf(*result.formatted_time, "%d:%d:%d", result.hour, result.minute, result.second);
+    return result;
+}
 
 int strToInt(uint8_t * str){
     if (str[0] == '-'){

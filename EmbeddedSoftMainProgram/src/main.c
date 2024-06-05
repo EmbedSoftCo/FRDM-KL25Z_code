@@ -28,50 +28,13 @@ void state4(void);
 void state5(void);
 void state6(void);
 
-static uint8_t data_write[511] = {1,2,3,4,5,6,7,8,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,8,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-                                  0,0,0,0,0,0,0,0,
-																	0,0,0,0,0,0,0,0,
-																	0,0,0,0,0,0,0,0,
-																	0,0,0,0,0,0,0,0,
-																	0,0,0,0,0,0,0,0,
-																	0,0,0,0,0,0,0,0,
-																	0,0,0,0,0,0,0,0,
-																	1,2,3,4,5,6,7,8,
-                                  };
-//static uint8_t data_read[511] = {0};
+volatile static dataGps_t data;
+volatile static	double distance = 99;
+//volatile static dateTime_t date;
+volatile static gameLocation_t location[4];
+static int amountLocations;
+static int counter;
 
-static gameConfig_t gameConfig;
 																																		
 /*!
  * \brief Main application
@@ -94,10 +57,28 @@ int main(void)
 		gps_init();
 		
 		//Default settings of the game
-		gameConfig.location[1].lat = 6312330;
-		gameConfig.location[1].lon = 52049643;
-		gameConfig.amountLocations = 1;
+	
+		//location 1
+		location[1].location.lat = 6312330;
+		location[1].location.lon = 52049643;
+		*location[1].question = "Smulhoek?";
+		*location[1].answer[1] = "Ja";
+		*location[1].answer[2] = "Nee";
+		*location[1].answer[3] = "Misschien";
+		location[1].goodAnswer = 1;
 		
+		//location 2
+		location[2].location.lat = 6312330;
+		location[2].location.lon = 52049643;
+		*location[2].question = "Testvraag 2?";
+		*location[2].answer[1] = "Ja";
+		*location[2].answer[2] = "Nee";
+		*location[2].answer[3] = "Misschien";
+		location[2].goodAnswer = 1;
+		
+		amountLocations = 1;
+		counter = 1;
+	
 		//Wait for starting to show welcome screen
 		delay_us(2000000);
 						
@@ -139,7 +120,6 @@ void state0(void) //SETUP SCREEN -> Show with mode it needs to go in. (Admin or 
 void state1(void) //USER state -> WAIT FOR FIX SCREEN and wait for pressing start
 {
 	bool runOnce = true;
-	dataGps_t data;
 	while(varState1 == true)
 	{
 		if(runOnce == true)
@@ -151,8 +131,7 @@ void state1(void) //USER state -> WAIT FOR FIX SCREEN and wait for pressing star
 		if(gpsFlag || data.state == 0)
 		{
 			gpsFlag = false;
-			gps_newData();
-			data = gps_getData();
+			data = gps_newData();
 		}
 		
 		if(data.state == FIX || data.state == GUESSING)
@@ -178,23 +157,21 @@ void state1(void) //USER state -> WAIT FOR FIX SCREEN and wait for pressing star
 }
 	
 
-void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is set 													-> TODO: ADD MORE LOCATIONS
+void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is set
 {
 	int32_t temp = 0x0000;
-	char sTemp[32];
+	char sTemp[10];
 	int32_t hum = 0x0000;
-	char sHum[32];
-	dataGps_t data;
+	char sHum[10];
 	char sDistance[64];
-	double distance = 99;
 	displayFlag = true;
 	while(varState2 == true)
 	{
 		if(gpsFlag)
 		{
 			gpsFlag = false;
-			gps_newData();
-			data = gps_getData();
+			data = gps_newData();
+			distance = gps_calculateDistance(location[counter].location, data.loc);
 		}
 		if(displayFlag)
 		{
@@ -203,12 +180,12 @@ void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is se
 			sprintf(sTemp, "%d.%d\r\n", (temp/100),(temp - ((temp/100)*100)));
 			hum = get_humidity();
 			sprintf(sHum, "%d.%d\r\n", (hum/100),(hum - ((hum/100)*100)));
-			distance = gps_calculateDistance(gameConfig.location[1], data.loc);
 			sprintf(sDistance, "%.2lf", distance);
+			//date = convert_unix_timestamp(data.utc);
 			delay_us(5);
 			uart0_send_string(sDistance);
 			uart0_send_string("\n");
-			displayDistance(sDistance, "london", sTemp, sHum);
+			displayDistance(sDistance, "Tijd om te lopen", sTemp, sHum);
 		}
 		if(distance <= MAXRADIUS)
 		{
@@ -220,17 +197,23 @@ void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is se
 	}
 }
 
-void state3(void) //SHOW QUESTION SCREEN -> show question and let user choose answer 												-> TODO: CHANGE PUZZLE QUESTION AND ANSWERS + ADD MORE LOCATIONS
+void state3(void) //SHOW QUESTION SCREEN -> show question and let user choose answer
 {
 	while(varState3 == true)
 	{
-		int goodAnswer = 2;
 		bool answer = false;
-		answer = displayPuzzle("Smulhoek?","Nee","Ja","Misschien",&goodAnswer);
+		answer = displayPuzzle(*location[counter].question,*location[counter].answer[1],*location[counter].answer[2],*location[counter].answer[3],&location[counter].goodAnswer);
 		if(answer == true)
 		{
-			varState4 = true;
-			varState3 = false;
+			if(counter >= amountLocations)
+			{
+				varState4 = true;
+				varState3 = false;
+			}
+			else
+			{
+				counter++;
+			}
 		}
 		else
 		{
@@ -247,7 +230,7 @@ void state4(void) //SHOW VICTORY SCREEN -> open box once and wait for confirm bu
 	{
 		if(sw_pressed(KEY_CENTER))
 		{
-			varState5 = true;
+			varState0 = true;
 			varState4 = false;
 		}
 	}
