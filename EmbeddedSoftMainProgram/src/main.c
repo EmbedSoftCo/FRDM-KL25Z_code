@@ -71,6 +71,8 @@ static uint8_t data_write[511] = {1,2,3,4,5,6,7,8,
                                   };
 //static uint8_t data_read[511] = {0};
 
+uint8_t finishedRoute;																	
+																	
 /*!
  * \brief Main application
  */
@@ -91,9 +93,21 @@ int main(void)
 		displayInit();
 		gps_init();
 	
+	//PerodicLogging();
+	//PerodicLogging();
+	
+	//finishedRoute = 1;
+	
+//	PerodicLogging();
+
+	sendlogToUART();
+	delay_us(2000000);
+	
+	return 0;
+		
 		//Wait for starting to show welcome screen
-		delay_us(2000000);
-						
+		//delay_us(2000000);
+	/*					
     while(1)
     {
 			state0();
@@ -168,6 +182,7 @@ void state1(void) //USER state -> WAIT FOR FIX SCREEN and wait for pressing star
 			delay_us(250000);
 		}
 	}
+	*/
 }
 	
 

@@ -15,9 +15,9 @@ extern uint8_t finishedRoute;
 static uint8_t page = 0x0; // Page 0 = 0x0 	// Page 7 = E00
 
 static uint8_t readData[512];
-static char preparedData[512];
+static char preparedData[1500];
 
-static void logInfo(void);
+void logInfo(void);
 static void readPage(uint8_t page);
 static void convert_page_to_String(uint8_t* data);
 
@@ -26,15 +26,15 @@ static void convert_page_to_String(uint8_t* data);
  ********************************************/
 void PerodicLogging(void) {
 
-  uint32_t logTemp32 = get_temperature(); // Get temperature reading
-  uint32_t logHum32 = get_humidity();     // Get humidity reading
-  dataGps_t gpsData = gps_getData();			// Get GPS location
+ // uint32_t logTemp32 = get_temperature(); // Get temperature reading
+ // uint32_t logHum32 = get_humidity();     // Get humidity reading
+ // dataGps_t gpsData = gps_getData();			// Get GPS location
 
 	// Fill tmpbuf with GPS location, temperature and humidity
-  struct LogData tmpbuf = {.lattitude = gpsData.loc.lat,  
-                           .longtitude = gpsData.loc.lon, 
-                           .temperature = logTemp32,
-                           .humidity = logHum32};
+  struct LogData tmpbuf = {.lattitude = 1,//gpsData.loc.lat,  
+                           .longtitude = 10,//gpsData.loc.lon, 
+                           .temperature = 20,//logTemp32,
+                           .humidity = 30};//logHum32};
 
 // Fill PageBuffer array with new data											 
   PageBuffer[numOfRecords + RECORDS_OFFSET] = tmpbuf;
@@ -88,16 +88,6 @@ void readPage(uint8_t page)
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*******************************************************
- * @brief Convert uint8_t array to an String,          *
- *				This will be used for sending data over UART *
- *******************************************************/
-void convert_page_to_String(uint8_t* data)
-{
-	sprintf(preparedData, "%d\r\n", data);
-}
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 /****************************************************************************
  *@brief Read the EEPROM and send the data over de UART0 Bus in JSON format *
  ****************************************************************************/
@@ -118,8 +108,14 @@ void sendlogToUART(void)
 		
 		// read and convert EEPROM data to String and send it over UART
 		readPage(pages);
-		convert_page_to_String(readData);
-		uart0_send_string(preparedData);
+		
+		// Convert uint8_t to string
+		// Send it over de UART0 bus
+		for (uint16_t i = 0; i < sizeof(readData); i++)
+		{
+			sprintf(preparedData, "%u", readData[i]);
+			uart0_send_string(preparedData);
+		}
 		
 		// Close JSON object
 		uart0_send_string("}"); 

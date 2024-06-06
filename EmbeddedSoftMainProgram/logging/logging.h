@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <string.h>
 
 struct /*__attribute__((packed))*/ LogData {
   uint32_t lattitude;
@@ -18,5 +19,6 @@ struct /*__attribute__((packed))*/ MetaData {
 };
 
 void PerodicLogging(void);
+void sendlogToUART(void);
 
 #endif // LOGGING_H
