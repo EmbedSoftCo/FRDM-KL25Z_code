@@ -29,7 +29,6 @@ typedef struct DateTime{
     int hour;
     int minute;
     int second;
-    char *formatted_time[30];
 } dateTime_t;
 
 typedef struct DataGps {
@@ -47,18 +46,11 @@ typedef struct GameLocation {
 } gameLocation_t;
 
 
-
+//Function prototypes
 void gps_init(void);
-
-//checks if there is any new data
 dataGps_t gps_newData(void);
-
-//returns dataGps_t struct with info
 dataGps_t gps_getData(void);
-
-//calculates the distance between 2 points and gives back the distance in meters
 double gps_calculateDistance(point_t point1, point_t point2);
-
-dateTime_t convert_unix_timestamp(time_t unix_timestamp);
+dateTime_t convert_unix_timestamp(uint32_t unix_timestamp);
 
 #endif

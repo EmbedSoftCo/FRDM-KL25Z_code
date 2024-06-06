@@ -10,6 +10,7 @@
 #include "bme280.h"
 #include "configScreen.h"
 #include "gps.h"
+#include "solenoid.h"
 
 //State variables
 static bool varState0 = true;		//SETUP SCREEN -> Show with mode it needs to go in. (Admin or User)
@@ -17,8 +18,7 @@ static bool varState1 = false;	//USER state -> WAIT FOR FIX SCREEN and wait for 
 static bool varState2 = false;	//SHOW DISTANCE SCREEN -> update screen every 10 seconds
 static bool varState3 = false;	//SHOW QUESTION SCREEN -> show question and let user choose answer
 static bool varState4 = false;	//SHOW VICTORY SCREEN -> open box once and wait for confirm button to go to start screen
-static bool varState5 = false;	//SHOW GAME OVER SCREEN	-> Back to start screen
-static bool varState6 = false;	//SHOW ADMIN SCREEN -> UART0 
+static bool varState5 = false;	//SHOW ADMIN SCREEN -> UART0 
 
 void state0(void);
 void state1(void);
@@ -26,12 +26,18 @@ void state2(void);
 void state3(void);
 void state4(void);
 void state5(void);
-void state6(void);
 
-volatile static dataGps_t data;
-volatile static	double distance = 99;
-//volatile static dateTime_t date;
-volatile static gameLocation_t location[4];
+static dataGps_t data;
+static int32_t temp = 0x0000;
+static char sTemp[10];
+static int32_t hum = 0x0000;
+static char sHum[10];
+static char sDistance[32];
+static char sTime[32];\
+static dateTime_t timestamp;
+
+static double distance = 99;
+static gameLocation_t location[4];
 static int amountLocations;
 static int counter;
 
@@ -48,7 +54,8 @@ int main(void)
 		uart0_init();
 		rg_init();
 		pit_init();
-		tpm1_init();  
+		tpm1_init();
+		solenoid_init();
 		
 		//Init hardware components
 		EEPROM_init();
@@ -59,8 +66,8 @@ int main(void)
 		//Default settings of the game
 	
 		//location 1
-		location[1].location.lat = 6312330;
-		location[1].location.lon = 52049643;
+		location[1].location.lat = 5948933; 
+		location[1].location.lon = 51989406;
 		*location[1].question = "Smulhoek?";
 		*location[1].answer[1] = "Ja";
 		*location[1].answer[2] = "Nee";
@@ -68,15 +75,24 @@ int main(void)
 		location[1].goodAnswer = 1;
 		
 		//location 2
-		location[2].location.lat = 6312330;
-		location[2].location.lon = 52049643;
+		location[2].location.lat = 5950352;
+		location[2].location.lon = 51988188;
 		*location[2].question = "Testvraag 2?";
 		*location[2].answer[1] = "Ja";
 		*location[2].answer[2] = "Nee";
 		*location[2].answer[3] = "Misschien";
 		location[2].goodAnswer = 1;
 		
-		amountLocations = 1;
+		//location 3
+		location[3].location.lat = 5947739; 
+		location[3].location.lon = 51988807;
+		*location[3].question = "Testvraag 3?";
+		*location[3].answer[1] = "Ja";
+		*location[3].answer[2] = "Nee";
+		*location[3].answer[3] = "Misschien";
+		location[3].goodAnswer = 1;
+		
+		amountLocations = 3;
 		counter = 1;
 	
 		//Wait for starting to show welcome screen
@@ -90,7 +106,6 @@ int main(void)
 			state3();
 			state4();
 			state5();
-			state6();
     }
 }
 
@@ -110,7 +125,7 @@ void state0(void) //SETUP SCREEN -> Show with mode it needs to go in. (Admin or 
 		else
 		{
 			displayShowText("admin");
-			varState6 = true;
+			varState5 = true;
 			varState0 = false;
 		}
 	}
@@ -137,20 +152,16 @@ void state1(void) //USER state -> WAIT FOR FIX SCREEN and wait for pressing star
 		if(data.state == FIX || data.state == GUESSING)
 		{
 			displayShowText("Press center button to start the game!");
-			while(!sw_pressed(KEY_CENTER))
+			if(sw_pressed(KEY_CENTER))
 			{
-				if(sw_pressed(KEY_CENTER))
-				{
-					varState2 = true;
-					varState1 = false;
-					displayShowText("Ready?!");
-					delay_us(500000);
-					displayShowText("Set!");
-					delay_us(500000);
-					displayShowText("GO!");
-					delay_us(250000);
-					break;
-				}
+				varState2 = true;
+				varState1 = false;
+				displayShowText("Ready?!");
+				delay_us(500000);
+				displayShowText("Set!");
+				delay_us(500000);
+				displayShowText("GO!");
+				delay_us(250000);
 			}
 		}
 	}
@@ -159,12 +170,8 @@ void state1(void) //USER state -> WAIT FOR FIX SCREEN and wait for pressing star
 
 void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is set
 {
-	int32_t temp = 0x0000;
-	char sTemp[10];
-	int32_t hum = 0x0000;
-	char sHum[10];
-	char sDistance[64];
 	displayFlag = true;
+	distance = 99;
 	while(varState2 == true)
 	{
 		if(gpsFlag)
@@ -172,6 +179,21 @@ void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is se
 			gpsFlag = false;
 			data = gps_newData();
 			distance = gps_calculateDistance(location[counter].location, data.loc);
+			sprintf(sDistance, "%.2lf", distance);
+			delay_us(20);
+			timestamp = convert_unix_timestamp(data.utc);
+			if(timestamp.hour < 5 || timestamp.minute < 0 || timestamp.second < 0 || timestamp.year > 2024)
+			{
+				// do nothing
+			}
+			else
+			{
+				sprintf(sTime, "%d:%d:%d", timestamp.hour, timestamp.minute, timestamp.second);
+			}
+			uart0_send_string(sDistance);
+			uart0_put_char('\n');
+			uart0_send_string(sTime);
+			uart0_send_string("\n");
 		}
 		if(displayFlag)
 		{
@@ -180,12 +202,8 @@ void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is se
 			sprintf(sTemp, "%d.%d\r\n", (temp/100),(temp - ((temp/100)*100)));
 			hum = get_humidity();
 			sprintf(sHum, "%d.%d\r\n", (hum/100),(hum - ((hum/100)*100)));
-			sprintf(sDistance, "%.2lf", distance);
-			//date = convert_unix_timestamp(data.utc);
 			delay_us(5);
-			uart0_send_string(sDistance);
-			uart0_send_string("\n");
-			displayDistance(sDistance, "Tijd om te lopen", sTemp, sHum);
+			displayDistance(sDistance, sTime, sTemp, sHum);
 		}
 		if(distance <= MAXRADIUS)
 		{
@@ -209,27 +227,40 @@ void state3(void) //SHOW QUESTION SCREEN -> show question and let user choose an
 			{
 				varState4 = true;
 				varState3 = false;
+				return;
 			}
 			else
 			{
 				counter++;
+				varState2 = true;
+				varState3 = false;
+				return;
 			}
 		}
 		else
 		{
-			varState5 = true;
-			varState3 = false;
+			if(counter >= 2)
+			{
+				counter--;
+			}
+				varState2 = true;
+				varState3 = false;
+				return;
 		}
 	}
 }
 
 void state4(void) //SHOW VICTORY SCREEN -> open box once and wait for confirm button to go to start screen 	-> TODO: BOX OPENING
 {
-	displayShowText("YOU WON, press center button to continu");
+	displayShowText("YOU WON, press center button to continue");
+	
+	solenoid_trigger();
+	
 	while(varState4 == true)
 	{
 		if(sw_pressed(KEY_CENTER))
 		{
+			counter = 1;
 			varState0 = true;
 			varState4 = false;
 		}
@@ -237,24 +268,10 @@ void state4(void) //SHOW VICTORY SCREEN -> open box once and wait for confirm bu
 }
 
 
-void state5(void)	//SHOW GAME OVER SCREEN	-> Back to start screen
-{
-	displayShowText("GAME OVER, press center button to continu");
-	while(varState5 == true)
-	{
-		if(sw_pressed(KEY_CENTER))
-		{
-			varState0 = true;
-			varState5 = false;
-		}
-	}
-}
-
-
-void state6(void) //SHOW ADMIN SCREEN -> UART0 																															-> TODO: ADD UART FUNCTIONS
+void state5(void) //SHOW ADMIN SCREEN -> UART0 																															-> TODO: ADD UART FUNCTIONS
 {
 	bool runOnce = true;
-	while(varState6 == true)
+	while(varState5 == true)
 	{
 		if(runOnce == true)
 		{

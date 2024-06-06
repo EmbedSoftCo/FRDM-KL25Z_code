@@ -173,7 +173,7 @@ void displayDistance(const char *distance, const char *time, const char *temp, c
  *
 * \return bool: true is correct answer and false is incorrect answer.
  */
-bool displayPuzzle(const char *aPuzzle, const char *aAnswer_1, const char *aAnswer_2, const char *aAnswer_3, const int *goodAnswer){
+bool displayPuzzle(const char *aPuzzle, const char *aAnswer_1, const char *aAnswer_2, const char *aAnswer_3, volatile int *goodAnswer){
 			
 		bool result = false;
 		int answer;

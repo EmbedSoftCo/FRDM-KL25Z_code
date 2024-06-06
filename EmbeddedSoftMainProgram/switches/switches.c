@@ -45,8 +45,8 @@ volatile bool sw_clicked_flag_4 = false;
 void sw_init(void)
 {
 	// Enables clocks to PORTs
-		//SIM->SCGC5 |= SIM_SCGC5_PORTD_MASK;
-		SIM->SCGC5 |= SIM_SCGC5_PORTC_MASK;
+	//SIM->SCGC5 |= SIM_SCGC5_PORTD_MASK;
+	SIM->SCGC5 |= SIM_SCGC5_PORTC_MASK;
 	// Configure the pin as follows:
 	// - IRQC[3:0] = 1010 : Interrupt on falling edge
 	// - MUX[2:0] = 001 : Alternative 1 (GPIO)

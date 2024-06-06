@@ -1,4 +1,5 @@
 #include "gps.h"
+#include <time.h>
 
 //Defines
 #define MESSAGE_SIZE 80
@@ -12,7 +13,7 @@ enum MessageType {
 };
 
 //Variables
-static dataGps_t gpsData;
+volatile static dataGps_t gpsData;
 static uint8_t MessageTypeStr[2][4] = {"GGA", "ZDA"};
 
 //Prototypes
@@ -45,11 +46,12 @@ dataGps_t gps_newData(void) {
     static int32_t tempLoc = 0;
     static struct tm date;
 	
-		static bool checkGGA = false;
-		static bool checkZDA = false;
+		bool checkGGA = false;
+		bool checkZDA = false;
 	
    while (1) {
         message[index] = uart2_receive_poll();
+				//uart0_put_char(message[index]);
         if (message[index] == '$') {
             index = 0;
             messageType = UNKNOWN;
@@ -57,7 +59,6 @@ dataGps_t gps_newData(void) {
 
         } else if (message[index] == ',' || message[index] == '*') {
             message[index] = 0;
-
             switch (messageType) {
                 case NOT_RELEVANT:
                     break;
@@ -132,12 +133,11 @@ dataGps_t gps_newData(void) {
                         }
 												checkZDA = true;
                     }
-										if(checkGGA == true || checkZDA == true)
+										if(checkGGA == true && checkZDA == true)
 										{
 											return gpsData;
 										}
                     break;
-
             }
             index = 0;
             contentCount++;
@@ -185,23 +185,36 @@ double gps_calculateDistance(point_t point1, point_t point2) {
     return (double)(2000 * R * asin(sqrt(a)));
 }
 
-dateTime_t convert_unix_timestamp(time_t unix_timestamp) {
-    volatile struct tm *dt;
-    volatile dateTime_t result;
-    
-    // Convert the Unix timestamp to a struct tm
-    dt = localtime(&unix_timestamp);
-    
+/*!
+ * \brief convert unix timestamp
+ *
+ * This function converts the unix timestamp back to local date and time 
+ *
+ * \param[in] 	unix_timestamp: the unix value who has to be converted
+ *
+ * \return dateTime_t: Returns the local time and date.
+ */
+dateTime_t convert_unix_timestamp(uint32_t unix_timestamp) {
+    struct tm *dt;
+    dateTime_t result;
+		if(unix_timestamp > 1717668169)
+		{
+			// Convert the Unix timestamp to a struct tm
+			dt = localtime(&unix_timestamp);
+		}
+		else
+		{
+			const uint32_t time = 1;
+			dt = localtime(&time);
+		}
     // Extract the components
     result.year = dt->tm_year + 1900;
     result.month = dt->tm_mon + 1;
     result.day = dt->tm_mday;
-    result.hour = dt->tm_hour;
+    result.hour = dt->tm_hour +2; //Set to CET summertime
     result.minute = dt->tm_min;
     result.second = dt->tm_sec;
     
-    // Format the date and time into a string
-		sprintf(*result.formatted_time, "%d:%d:%d", result.hour, result.minute, result.second);
     return result;
 }
 
