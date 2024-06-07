@@ -26,15 +26,15 @@ static void convert_page_to_String(uint8_t* data);
  ********************************************/
 void PerodicLogging(void) {
 
-  uint32_t logTemp32 = get_temperature(); // Get temperature reading
-  uint32_t logHum32 = get_humidity();     // Get humidity reading
-  dataGps_t gpsData = gps_getData();			// Get GPS location
+  //uint32_t logTemp32 = get_temperature(); // Get temperature reading
+  //uint32_t logHum32 = get_humidity();     // Get humidity reading
+  //dataGps_t gpsData = gps_getData();			// Get GPS location
 
 	// Fill tmpbuf with GPS location, temperature and humidity
-  struct LogData tmpbuf = {.lattitude = gpsData.loc.lat,  
-                           .longtitude = gpsData.loc.lon, 
-                           .temperature = logTemp32,
-                           .humidity = logHum32};
+  struct LogData tmpbuf = {.lattitude = 0x01, //gpsData.loc.lat,  
+                           .longtitude = 0x0A,//gpsData.loc.lon, 
+                           .temperature = 0x14,//logTemp32,
+                           .humidity = 0x1e};//logHum32};
 
 // Fill PageBuffer array with new data											 
   PageBuffer[numOfRecords + RECORDS_OFFSET] = tmpbuf;
@@ -105,6 +105,12 @@ void sendlogToUART(void)
 		// Go to next page
 		pages++;
 		
+		if(pages > 8)
+		{
+			uart0_send_string("PAGEBREAK\n");
+			break;
+		}
+		
 		// Save numOfRecords data in writtenPages
 		writtenPages =  PageBuffer[0].lattitude;
 			
@@ -125,7 +131,5 @@ void sendlogToUART(void)
 		// Send last ASCII character (DEL)
 	   while(!(UART0->S1 & UART_S1_TDRE_MASK)){}
 	   UART0->D = 0x7f;
-			 
-		//uart0_put_char(0x7f);
 	}
 }
