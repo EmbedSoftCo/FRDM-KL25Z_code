@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <string.h>
 
 struct /*__attribute__((packed))*/ LogData {
   uint32_t lattitude;
@@ -17,8 +18,7 @@ struct /*__attribute__((packed))*/ MetaData {
   uint64_t pad64;
 };
 
-static uint8_t finishedRoute;
-
-void PerodicLogging(void);
+void periodicLogging(void);
+void sendlogToUART(void);
 
 #endif // LOGGING_H

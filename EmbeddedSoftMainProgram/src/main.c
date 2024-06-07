@@ -11,6 +11,7 @@
 #include "configScreen.h"
 #include "gps.h"
 #include "solenoid.h"
+#include "logging.h"
 
 //State variables
 static bool varState0 = true;		//SETUP SCREEN -> Show with mode it needs to go in. (Admin or User)
@@ -35,11 +36,15 @@ static char sHum[10];
 static char sDistance[32];
 static char sTime[32];\
 static dateTime_t timestamp;
+static uint8_t uartInput[512];
+static unsigned int i = 0;
 
 static double distance = 99;
 static gameLocation_t location[4];
 static int amountLocations;
 static int counter;
+
+uint8_t finishedRoute;
 
 																																		
 /*!
@@ -212,6 +217,11 @@ void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is se
 			displayShowText("Location found!");
 			delay_us(5000);
 		}
+		if(logFlag ==	true)
+		{
+			logFlag = false;
+			periodicLogging();
+		}
 	}
 }
 
@@ -252,12 +262,17 @@ void state3(void) //SHOW QUESTION SCREEN -> show question and let user choose an
 
 void state4(void) //SHOW VICTORY SCREEN -> open box once and wait for confirm button to go to start screen 	-> TODO: BOX OPENING
 {
-	displayShowText("YOU WON, press center button to continue");
-	
-	solenoid_trigger();
-	
+	bool runOnce = true;
 	while(varState4 == true)
 	{
+		if(runOnce == true)
+		{
+			runOnce = false;
+			displayShowText("YOU WON, press center button to continue");
+			solenoid_trigger();
+			periodicLogging();
+			finishedRoute = true;
+		}
 		if(sw_pressed(KEY_CENTER))
 		{
 			counter = 1;
@@ -279,9 +294,19 @@ void state5(void) //SHOW ADMIN SCREEN -> UART0 																															->
 		}
 		if(uart0_num_rx_chars_available() > 0)
 		{
-			uart0_get_char();
+			if(i < 512)
+			{
+				uartInput[i] = uart0_get_char();
+				uart0_put_char(uartInput[i]);
+				i++;
+			}
+		}
+		if(i >= sizeof(uartInput))
+		{
+			EEPROM_write_page(0,0,0, uartInput,sizeof(uartInput));
+			memset(uartInput,0,sizeof(uartInput));
+			i = 0;
 		}
 		rg_onoff(true,false);
 	}
 }
-
