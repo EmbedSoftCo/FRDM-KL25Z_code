@@ -37,7 +37,7 @@
  * This functions initializes the solenoid on the geocache.
  *
  */
-void leds_init(void)
+void solenoid_init(void)
 {
 	// Enable clock
 	SIM->SCGC5 |= SIM_SCGC5_PORTB_MASK;
