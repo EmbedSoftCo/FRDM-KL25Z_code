@@ -12,10 +12,10 @@ static volatile struct LogData PageBuffer[32] = {0};
 static uint32_t numOfRecords = 0;
 
 extern uint8_t finishedRoute;
-static uint8_t page = 0x0; // Page 0 = 0x0 	// Page 7 = E00
+static uint8_t page = 0x1; // Page 0 = 0x0 	// Page 7 = E00
 
 static uint8_t readData[512];
-static char preparedData[1500];
+static char preparedData[512];
 
 void logInfo(void);
 static void readPage(uint8_t page);
@@ -26,9 +26,9 @@ static void convert_page_to_String(uint8_t* data);
  ********************************************/
 void PerodicLogging(void) {
 
- // uint32_t logTemp32 = get_temperature(); // Get temperature reading
- // uint32_t logHum32 = get_humidity();     // Get humidity reading
- // dataGps_t gpsData = gps_getData();			// Get GPS location
+  //uint32_t logTemp32 = get_temperature(); // Get temperature reading
+  //uint32_t logHum32 = get_humidity();     // Get humidity reading
+  //dataGps_t gpsData = gps_getData();			// Get GPS location
 
 	// Fill tmpbuf with GPS location, temperature and humidity
   struct LogData tmpbuf = {.lattitude = 1,//gpsData.loc.lat,  
@@ -84,7 +84,7 @@ void readPage(uint8_t page)
 	uint8_t block = 0x0;
   uint8_t sector = 0x0;
 	
-	EEPROM_read_page(block, sector, page, readData, sizeof(readData));
+	EEPROM_read_page(block, sector, page, (uint8_t*)PageBuffer, sizeof(readData));
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -96,45 +96,36 @@ void sendlogToUART(void)
 	bool finalPage = false;
 	uint8_t pages = 0;
 	uint32_t writtenPages = 0;
-	
-	// start JSON UART
-	uart0_send_string("[");
-	
-	// Parse data over UART in JSON format
-	while(!finalPage)
+
+	while(!finalPage)	
 	{
-		// Open JSON object
-		uart0_send_string("{");
-		
-		// read and convert EEPROM data to String and send it over UART
+		// Read EEPROM page
 		readPage(pages);
 		
-		// Convert uint8_t to string
-		// Send it over de UART0 bus
-		for (uint16_t i = 0; i < sizeof(readData); i++)
-		{
-			sprintf(preparedData, "%u", readData[i]);
-			uart0_send_string(preparedData);
-		}
+		// Go to next page
+		pages++;
 		
-		// Close JSON object
-		uart0_send_string("}"); 
-		
-		// Get the metadata and save it in writtenPages 
-		writtenPages = ((readData[0] << 24) | (readData[1] << 16) | (readData[2] << 8) | (readData[3] << 0));
-		
-		if(writtenPages == 0)
-		{
-			finalPage = true;
-		}
-		else
-		{
-			pages++; // Go to next page in EEPROM
+		// Save numOfRecords data in writtenPages
+		writtenPages =  PageBuffer[0].lattitude;
 			
-			uart0_send_string(","); // Prepare next JSON object
-		}
-	}
+		//Check if 
+		if(writtenPages == 0) 
+		{	
+			finalPage = true;
+			break;
+		}		
+		
+	// Send EEPROM Page
+		for(uint16_t iter=0; iter<=512;iter++)
+		{
+			while(!(UART0->S1 & UART_S1_TDRE_MASK)){}
+			UART0->D = ((uint8_t*)PageBuffer)[iter];
+		}		
 	
-	// END JSON UART
-	uart0_send_string("]");
+		// Send last ASCII character (DEL)
+	   while(!(UART0->S1 & UART_S1_TDRE_MASK)){}
+	   UART0->D = 0x7f;
+			 
+		//uart0_put_char(0x7f);
+	}
 }
