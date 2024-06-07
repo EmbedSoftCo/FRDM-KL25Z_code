@@ -26,15 +26,15 @@ static void convert_page_to_String(uint8_t* data);
  ********************************************/
 void PerodicLogging(void) {
 
-  //uint32_t logTemp32 = get_temperature(); // Get temperature reading
-  //uint32_t logHum32 = get_humidity();     // Get humidity reading
-  //dataGps_t gpsData = gps_getData();			// Get GPS location
+  uint32_t logTemp32 = get_temperature(); // Get temperature reading
+  uint32_t logHum32 = get_humidity();     // Get humidity reading
+  dataGps_t gpsData = gps_getData();			// Get GPS location
 
 	// Fill tmpbuf with GPS location, temperature and humidity
-  struct LogData tmpbuf = {.lattitude = 1,//gpsData.loc.lat,  
-                           .longtitude = 10,//gpsData.loc.lon, 
-                           .temperature = 20,//logTemp32,
-                           .humidity = 30};//logHum32};
+  struct LogData tmpbuf = {.lattitude = gpsData.loc.lat,  
+                           .longtitude = gpsData.loc.lon, 
+                           .temperature = logTemp32,
+                           .humidity = logHum32};
 
 // Fill PageBuffer array with new data											 
   PageBuffer[numOfRecords + RECORDS_OFFSET] = tmpbuf;
