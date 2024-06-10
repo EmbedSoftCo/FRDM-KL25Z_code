@@ -3,7 +3,6 @@
 
 #include "pit.h"
 #include "logging.h"
-#include "rg.h"
 #include "tpm1.h"
 #include "EEPROM.h"
 #include "uart0.h"
@@ -21,6 +20,7 @@ static bool varState3 = false;	//SHOW QUESTION SCREEN -> show question and let u
 static bool varState4 = false;	//SHOW VICTORY SCREEN -> open box once and wait for confirm button to go to start screen
 static bool varState5 = false;	//SHOW ADMIN SCREEN -> UART0 
 
+//Prototypes
 void state0(void);
 void state1(void);
 void state2(void);
@@ -28,6 +28,7 @@ void state3(void);
 void state4(void);
 void state5(void);
 
+//Local variabels
 static dataGps_t data;
 static int32_t temp = 0x0000;
 static char sTemp[10];
@@ -37,14 +38,11 @@ static char sDistance[32];
 static char sTime[32];\
 static dateTime_t timestamp;
 static uint8_t uartInput[512];
-static unsigned int i = 0;
-
+static uint16_t i = 0;
 static double distance = 99;
 static gameLocation_t location[4];
-static int amountLocations;
-static int counter;
-
-uint8_t finishedRoute;
+static uint8_t amountLocations;
+static uint8_t counter;
 
 																																		
 /*!
@@ -57,7 +55,6 @@ int main(void)
 		
 		//Init microcontroller settings
 		uart0_init();
-		rg_init();
 		pit_init();
 		tpm1_init();
 		solenoid_init();
@@ -73,7 +70,7 @@ int main(void)
 		//location 1
 		location[1].location.lat = 5948933; 
 		location[1].location.lon = 51989406;
-		*location[1].question = "Smulhoek?";
+		*location[1].question = "Welkom heb je er zin in?";
 		*location[1].answer[1] = "Ja";
 		*location[1].answer[2] = "Nee";
 		*location[1].answer[3] = "Misschien";
@@ -82,20 +79,20 @@ int main(void)
 		//location 2
 		location[2].location.lat = 5950352;
 		location[2].location.lon = 51988188;
-		*location[2].question = "Testvraag 2?";
-		*location[2].answer[1] = "Ja";
-		*location[2].answer[2] = "Nee";
-		*location[2].answer[3] = "Misschien";
-		location[2].goodAnswer = 1;
+		*location[2].question = "Welk gebouw staan we bij?";
+		*location[2].answer[1] = "29";
+		*location[2].answer[2] = "31";
+		*location[2].answer[3] = "26";
+		location[2].goodAnswer = 3;
 		
 		//location 3
 		location[3].location.lat = 5947739; 
 		location[3].location.lon = 51988807;
-		*location[3].question = "Testvraag 3?";
-		*location[3].answer[1] = "Ja";
-		*location[3].answer[2] = "Nee";
-		*location[3].answer[3] = "Misschien";
-		location[3].goodAnswer = 1;
+		*location[3].question = "Hoeveel paaltjes staan er?";
+		*location[3].answer[1] = "3";
+		*location[3].answer[2] = "6";
+		*location[3].answer[3] = "9";
+		location[3].goodAnswer = 2;
 		
 		amountLocations = 3;
 		counter = 1;
@@ -123,13 +120,13 @@ void state0(void) //SETUP SCREEN -> Show with mode it needs to go in. (Admin or 
 		
 		if(answer)
 		{
-			displayShowText("user");
+			displayShowText("User mode", "");
 			varState1 = true;
 			varState0 = false;
 		}
 		else
 		{
-			displayShowText("admin");
+			displayShowText("Admin mode", "");
 			varState5 = true;
 			varState0 = false;
 		}
@@ -145,7 +142,7 @@ void state1(void) //USER state -> WAIT FOR FIX SCREEN and wait for pressing star
 		if(runOnce == true)
 		{
 			runOnce = false;
-			displayShowText("Waiting for Satelites");
+			displayShowText("Waiting for Satelites", "Don't hide ;)");
 		}
 		
 		if(gpsFlag || data.state == 0)
@@ -156,16 +153,16 @@ void state1(void) //USER state -> WAIT FOR FIX SCREEN and wait for pressing star
 		
 		if(data.state == FIX || data.state == GUESSING)
 		{
-			displayShowText("Press center button to start the game!");
+			displayShowText("Press to start!" , "Press center button.");
 			if(sw_pressed(KEY_CENTER))
 			{
 				varState2 = true;
 				varState1 = false;
-				displayShowText("Ready?!");
+				displayShowText("Ready?!", "");
 				delay_us(500000);
-				displayShowText("Set!");
+				displayShowText("Set!", "");
 				delay_us(500000);
-				displayShowText("GO!");
+				displayShowText("GO!", "");
 				delay_us(250000);
 			}
 		}
@@ -176,6 +173,7 @@ void state1(void) //USER state -> WAIT FOR FIX SCREEN and wait for pressing star
 void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is set
 {
 	displayFlag = true;
+	logFlag = true;
 	distance = 99;
 	while(varState2 == true)
 	{
@@ -187,7 +185,7 @@ void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is se
 			sprintf(sDistance, "%.2lf", distance);
 			delay_us(20);
 			timestamp = convert_unix_timestamp(data.utc);
-			if(timestamp.hour < 5 || timestamp.minute < 0 || timestamp.second < 0 || timestamp.year > 2024)
+			if(timestamp.hour < 5 || timestamp.year < 2024)
 			{
 				// do nothing
 			}
@@ -195,10 +193,6 @@ void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is se
 			{
 				sprintf(sTime, "%d:%d:%d", timestamp.hour, timestamp.minute, timestamp.second);
 			}
-			uart0_send_string(sDistance);
-			uart0_put_char('\n');
-			uart0_send_string(sTime);
-			uart0_send_string("\n");
 		}
 		if(displayFlag)
 		{
@@ -214,7 +208,7 @@ void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is se
 		{
 			varState3 = true;
 			varState2 = false;
-			displayShowText("Location found!");
+			displayShowText("Location found!", "");
 			delay_us(5000);
 		}
 		if(logFlag ==	true)
@@ -268,10 +262,9 @@ void state4(void) //SHOW VICTORY SCREEN -> open box once and wait for confirm bu
 		if(runOnce == true)
 		{
 			runOnce = false;
-			displayShowText("YOU WON, press center button to continue");
+			displayShowText("YOU WON", "press center button to continue");
 			solenoid_trigger();
 			periodicLogging();
-			finishedRoute = true;
 		}
 		if(sw_pressed(KEY_CENTER))
 		{
@@ -286,27 +279,52 @@ void state4(void) //SHOW VICTORY SCREEN -> open box once and wait for confirm bu
 void state5(void) //SHOW ADMIN SCREEN -> UART0 																															-> TODO: ADD UART FUNCTIONS
 {
 	bool runOnce = true;
+	bool getState = false;
 	while(varState5 == true)
 	{
 		if(runOnce == true)
 		{
-			displayShowText("ADMIN MODE");
+			displayShowText("ADMIN MODE", "");
+		}
+		if(sw_pressed(KEY_DOWN))
+		{
+			solenoid_trigger();
 		}
 		if(uart0_num_rx_chars_available() > 0)
 		{
-			if(i < 512)
-			{
-				uartInput[i] = uart0_get_char();
-				uart0_put_char(uartInput[i]);
-				i++;
-			}
+			uartInput[i] = uart0_get_char();
+			i++;
 		}
-		if(i >= sizeof(uartInput))
+		if(i > 5 && uartInput[0] == 'g' && uartInput[1] == 'e' && uartInput[2] == 't' && uartInput[3] == 'L' && uartInput[4] == 'o'&& uartInput[5] == 'g')
 		{
-			EEPROM_write_page(0,0,0, uartInput,sizeof(uartInput));
-			memset(uartInput,0,sizeof(uartInput));
+			getState = true;
 			i = 0;
 		}
-		rg_onoff(true,false);
+		else if(i > 6 && uartInput[0] == 's' && uartInput[1] == 'e' && uartInput[2] == 'n' && uartInput[3] == 'd' && uartInput[4] == 'l'&& uartInput[5] == 'o' && uartInput[6] == 'g')
+		{
+			//sendlogToUART();
+		}
+		else if (i > 6)
+		{
+			i = 0;
+		}
+		while(getState)
+		{
+			if(uart0_num_rx_chars_available() > 0)
+			{
+				if(i < 512)
+				{
+					uartInput[i] = uart0_get_char();
+					i++;
+				}
+			}
+			if(i >= sizeof(uartInput))
+			{
+				EEPROM_write_page(0,0,0, uartInput,sizeof(uartInput));
+				memset(uartInput,0,sizeof(uartInput));
+				i = 0;
+				getState = false;
+			}
+		}
 	}
 }

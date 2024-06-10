@@ -23,12 +23,12 @@ typedef struct Point {
 } point_t;
 
 typedef struct DateTime{
-    int year;
-    int month;
-    int day;
-    int hour;
-    int minute;
-    int second;
+    uint16_t year;
+    uint8_t month;
+    uint8_t day;
+    uint8_t hour;
+    uint8_t minute;
+    uint8_t second;
 } dateTime_t;
 
 typedef struct DataGps {
@@ -41,7 +41,7 @@ typedef struct DataGps {
 typedef struct GameLocation {
   point_t location;
 	char *question[30];
-	char *answer[4][30];
+	char *answer[4][20];
 	int goodAnswer;
 } gameLocation_t;
 

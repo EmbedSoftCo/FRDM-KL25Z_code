@@ -208,12 +208,12 @@ dateTime_t convert_unix_timestamp(uint32_t unix_timestamp) {
 			dt = localtime(&time);
 		}
     // Extract the components
-    result.year = dt->tm_year + 1900;
-    result.month = dt->tm_mon + 1;
-    result.day = dt->tm_mday;
-    result.hour = dt->tm_hour +2; //Set to CET summertime
-    result.minute = dt->tm_min;
-    result.second = dt->tm_sec;
+    result.year = (uint8_t)(dt->tm_year + 1900);
+    result.month = (uint8_t)(dt->tm_mon + 1);
+    result.day = (uint8_t)(dt->tm_mday);
+    result.hour = (uint8_t)(dt->tm_hour +2); //Set to CET summertime
+    result.minute = (uint8_t)(dt->tm_min);
+    result.second = (uint8_t)(dt->tm_sec);
     
     return result;
 }

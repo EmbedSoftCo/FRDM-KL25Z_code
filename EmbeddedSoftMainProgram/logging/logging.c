@@ -9,16 +9,16 @@
 
 extern volatile bool logFlag;
 static volatile struct LogData PageBuffer[32] = {0};
-static uint32_t numOfRecords = 0;
+static uint16_t numOfRecords = 0;
 
-extern uint8_t finishedRoute;
-static uint8_t page = 0x1; // Page 0 = 0x0 	// Page 7 = E00
+static uint8_t block = 0x1;  // Block 0 = 0x0 	// Block 15 = 0xF
+static uint8_t sector = 0x0; // Sector 0 = 0x0 // Sector 15 = 0xF
+static uint8_t page = 0x0; // Page 0 = 0x0 	// Page 7 = E00
 
 static uint8_t readData[512];
-static char preparedData[512];
 
 void logInfo(void);
-static void readPage(uint8_t page);
+static void readPage(uint8_t rBlock, uint8_t rSector, uint8_t rPage);
 static void convert_page_to_String(uint8_t* data);
 
 /********************************************
@@ -40,15 +40,35 @@ void periodicLogging(void) {
   PageBuffer[numOfRecords + RECORDS_OFFSET] = tmpbuf;
 
   numOfRecords++;
-
-  /* Check if numOfRecords is 32, or
-		 Game is finished. Log then the data to EEPROM
-   */													 
-  if (numOfRecords == 32 || finishedRoute == 1) {
-    logInfo();
+	
+	//Log the data to EEPROM
+	logInfo();
+													 
+  //Check if numOfRecords is 32													 
+  if (numOfRecords == 32) {
     numOfRecords = 0;
-    page++;
+		if(page == 7)
+		{
+			page = 0;
+			if(sector == 7)
+			{
+				if(block < 15)
+				{
+					block++;
+				}				
+			}
+			else
+			{
+				sector++;
+			}
+		}
+		else
+		{
+			page++;
+		}
   }
+  // Reset  the log flag
+  logFlag = false;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -56,35 +76,28 @@ void periodicLogging(void) {
  * @brief log the data in the buffer to the EEPROM *
  ***************************************************/
 void logInfo(void) {
-  uint8_t block = 0x0;  // Block 0 = 0x0 	// Block 15 = 0xF
-  uint8_t sector = 0x0; // Sector 0 = 0x0 // Sector 15 = 0xF
 
   /* ================ Read data ================ */
 	
 	// numOfRecords that will be written into EEPROM
-  struct MetaData md = {.countOfRecords = numOfRecords-RECORDS_OFFSET};
-
+  struct MetaData md = {.countOfRecords = ((page) * 32) + ((sector)*(256)) + ((block-1)*(3840)) + numOfRecords-RECORDS_OFFSET};
+		
 	// Convert Metadata struct to a logdata struct and save into bufferpage 0
   PageBuffer[0] = *(struct LogData *)&md;
 
   /* ================ Write data to EEPROM ================ */
 	
-   EEPROM_write_page(block, sector, page, (uint8_t*) PageBuffer, sizeof(PageBuffer));
-
-  // Reset  the log flag
-  logFlag = false;
+	EEPROM_write_page(block, sector, page, (uint8_t*)PageBuffer, sizeof(PageBuffer));
+	
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**************************************************************************
  * @brief Read the page in EEPROM, save the read data to readData[] array *
  **************************************************************************/
-void readPage(uint8_t locpage)
+void readPage(uint8_t rBlock, uint8_t rSector, uint8_t rPage)
 {
-	uint8_t block = 0x0;
-  uint8_t sector = 0x0;
-	
-	EEPROM_read_page(block, sector, locpage, (uint8_t*)PageBuffer, sizeof(readData));
+	EEPROM_read_page(rBlock, rSector, rPage, (uint8_t*)PageBuffer, sizeof(readData));
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -94,38 +107,61 @@ void readPage(uint8_t locpage)
 void sendlogToUART(void)
 {
 	bool finalPage = false;
+	
+	uint8_t blocks = 0;
+	uint8_t sectors = 0;
 	uint8_t pages = 0;
-	uint32_t writtenPages = 0;
-
+	uint16_t pagesWritten = 0;
+	uint16_t cnt = 0;
+	
+	//Read numOfRecords to read how much there is to read
+	readPage(1,0,0);
+	pagesWritten = (uint16_t)(PageBuffer[0].lattitude/16); // divided by 16 to go from records to pages. because there are 16 records in one page
+	
 	while(!finalPage)	
 	{
-		// Read EEPROM page
-		readPage(pages);
+		readPage(blocks, sectors, pages);
 		
-		// Go to next page
-		pages++;
+		if(pages == 7)
+		{
+			pages = 0;
+			if(sectors == 7)
+			{
+				blocks++;			
+			}
+			else
+			{
+				sectors++;
+			}
+		}
+		else
+		{
+			pages++;
+		}
 		
-		// Save numOfRecords data in writtenPages
-		writtenPages =  PageBuffer[0].lattitude;
-			
-		//Check if 
-		if(writtenPages == 0) 
-		{	
-			finalPage = true;
-			break;
-		}		
-		
-	// Send EEPROM Page
+		// Send EEPROM Page
 		for(uint16_t iter=0; iter<=512;iter++)
 		{
 			while(!(UART0->S1 & UART_S1_TDRE_MASK)){}
 			UART0->D = ((uint8_t*)PageBuffer)[iter];
 		}		
-	
-		// Send last ASCII character (DEL)
-	   while(!(UART0->S1 & UART_S1_TDRE_MASK)){}
-	   UART0->D = 0x7f;
-			 
-		//uart0_put_char(0x7f);
+		
+		//Check if 
+		if(cnt == pagesWritten) 
+		{	
+			finalPage = true;
+			break;
+		}
+		cnt++;			
 	}
+	
+	// Send last ASCII character (DEL)
+	while(!(UART0->S1 & UART_S1_TDRE_MASK)){}
+	UART0->D = 0x7f;
+	// Send last ASCII character (DEL)
+	while(!(UART0->S1 & UART_S1_TDRE_MASK)){}
+	UART0->D = 0x7f;
+	// Send last ASCII character (DEL)
+	while(!(UART0->S1 & UART_S1_TDRE_MASK)){}
+	UART0->D = 0x7f;
 }

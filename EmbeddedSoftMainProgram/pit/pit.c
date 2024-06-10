@@ -50,8 +50,8 @@ void pit_init(void)
 	// Initialize PITO to generate an event every 1 seconds
 	PIT->CHANNEL[0].LDVAL = PIT_LDVAL_TSV(24e6-1);
 	
-	// Initialize PIT1 to generate an event every 1 minute
-	PIT->CHANNEL[1].LDVAL = PIT_LDVAL_TSV(1440e6-1);
+	// Initialize PIT1 to generate an event every 15 seconds
+	PIT->CHANNEL[1].LDVAL = PIT_LDVAL_TSV((1440e6/4)-1);
 	
 	// No chaining
 	PIT->CHANNEL[0].TCTRL &= ~PIT_TCTRL_CHN_MASK; 

@@ -153,11 +153,12 @@ void displayDistance(const char *distance, const char *time, const char *temp, c
 		ssd1306_putstring(0,36,"Temp: ");
 		ssd1306_putstring(0,48,"Hum: ");
 		ssd1306_putstring(60,12,distance);
+		ssd1306_putstring(110,12," m");
 		ssd1306_putstring(60,24, time);
 		ssd1306_putstring(60,36, temp);
-		ssd1306_putstring(100,36," C");
+		ssd1306_putstring(110,36," C");
 		ssd1306_putstring(60,48, hum);
-		ssd1306_putstring(105,48," %");
+		ssd1306_putstring(110,48," %");
 		ssd1306_update();
 }
 
@@ -191,13 +192,13 @@ bool displayPuzzle(const char *aPuzzle, const char *aAnswer_1, const char *aAnsw
 		if(answer == *goodAnswer)
 		{
 			result = true;
-			displayShowText("Good Answer!");
+			displayShowText("Good Answer!", "Good job");
 			delay_us(1000000);
 		}
 		else
 		{
 			result = false;
-			displayShowText("Wrong Answer");
+			displayShowText("Wrong Answer", "Try again");
 			delay_us(1000000);
 		}
 	
@@ -213,11 +214,13 @@ bool displayPuzzle(const char *aPuzzle, const char *aAnswer_1, const char *aAnsw
  *
 * \return nothing
  */
-void displayShowText(const char *text)
+void displayShowText(const char *title, const char *text)
 {
 		ssd1306_clearscreen();
     ssd1306_setfont(Dialog_plain_12);
-    ssd1306_putstring(0,0,text);
+    ssd1306_putstring(0,0,title);
+		ssd1306_setfont(Monospaced_plain_10);
+    ssd1306_putstring(0,24,text);
 		ssd1306_update();	
 }
 
