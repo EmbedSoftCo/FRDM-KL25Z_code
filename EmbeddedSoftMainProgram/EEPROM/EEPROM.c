@@ -54,7 +54,7 @@ void spi_init(void)
     //
     // BaudRateDivisor = 2 x 1 = 2
     // BaudRate = 48 MHz / 2 = 24 MHz
-    SPI0->BR = SPI_BR_SPPR(0) | SPI_BR_SPR(0);
+    SPI0->BR = SPI_BR_SPPR(1) | SPI_BR_SPR(0);
 
     // Setup SPI0
     //  SPIE  = 0: SPI interrupt disable
@@ -197,20 +197,7 @@ static inline bool EEPROM_write_mode(bool enable)
     // CS high, deselects the slave device
     GPIOA->PSOR = (1<<17);
 		
-		const uint8_t cmd2 = RDSR;
-    // CS low, selects the slave device
-    GPIOA->PCOR = (1<<17);
-
-    spi_send(&cmd2, sizeof(cmd2));
-
-		//Check if write mode is enabled
-		uint8_t data = {0x00};
-		spi_recv(&data, sizeof(data));
-		
-		// CS high, deselects the slave device
-    GPIOA->PSOR = (1<<17);
-		
-		return data == 0x02;
+		return true;
 }
 
 /*!
@@ -241,7 +228,7 @@ void EEPROM_write_page(const uint8_t block, const uint8_t sector, const uint8_t 
 		
 		// CS low, selects the slave device
 		GPIOA->PCOR = (1<<17);
-		delay_us(2500);
+		delay_us(10000);
 		EEPROM_write_mode(false);
 }
 
@@ -259,6 +246,7 @@ void EEPROM_write_page(const uint8_t block, const uint8_t sector, const uint8_t 
  */
 void EEPROM_read_page(const uint8_t block, const uint8_t sector, const uint8_t page, uint8_t * const data, const uint32_t len)
 {	
+		EEPROM_write_mode(false);
 		uint8_t cmd[] = {READ, block, sector, page};
 	
 		// CS low, selects the slave device

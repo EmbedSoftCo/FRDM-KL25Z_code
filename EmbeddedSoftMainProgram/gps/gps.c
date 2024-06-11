@@ -208,7 +208,7 @@ dateTime_t convert_unix_timestamp(uint32_t unix_timestamp) {
 			dt = localtime(&time);
 		}
     // Extract the components
-    result.year = (uint8_t)(dt->tm_year + 1900);
+    result.year = (uint16_t)(dt->tm_year + 1900);
     result.month = (uint8_t)(dt->tm_mon + 1);
     result.day = (uint8_t)(dt->tm_mday);
     result.hour = (uint8_t)(dt->tm_hour +2); //Set to CET summertime

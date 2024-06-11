@@ -42,7 +42,5 @@
 #define FONTS_H_
 
 extern const char Monospaced_plain_10[];
-extern const char Dialog_plain_12[];
-extern const char Monospaced_bold_24[];
 
 #endif // FONTS_H_

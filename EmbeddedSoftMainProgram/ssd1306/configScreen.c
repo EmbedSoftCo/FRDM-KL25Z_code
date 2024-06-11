@@ -96,9 +96,8 @@ void displayInit(void)
 		ssd1306_init();
 		ssd1306_setorientation(1);   
     ssd1306_clearscreen();
-    ssd1306_setfont(Dialog_plain_12);
-		ssd1306_putstring(0,0,"Welkom");
     ssd1306_setfont(Monospaced_plain_10);
+		ssd1306_putstring(0,0,"WELKOM");
 		ssd1306_putstring(10,24, "Starting..."); 
 		ssd1306_update();
 }
@@ -116,9 +115,8 @@ bool displayStart(void)
 		int answer = false;
 		bool result = false;
     ssd1306_clearscreen();
-    ssd1306_setfont(Dialog_plain_12);
-		ssd1306_putstring(0,0,"Select user:");
     ssd1306_setfont(Monospaced_plain_10);
+		ssd1306_putstring(0,0,"SELECT USER:");
 		ssd1306_putstring(10,24, "Admin"); 
 		ssd1306_putstring(10,36, "User");
 		ssd1306_update();
@@ -145,9 +143,8 @@ bool displayStart(void)
 void displayDistance(const char *distance, const char *time, const char *temp, const char *hum) 
 {
 		ssd1306_clearscreen();	
-		ssd1306_setfont(Dialog_plain_12);
-		ssd1306_putstring(0,0,"Find the location");
 		ssd1306_setfont(Monospaced_plain_10);
+		ssd1306_putstring(0,0,"FIND THE LOCATION");
 		ssd1306_putstring(0,12,"Distance: ");
 		ssd1306_putstring(0,24,"Time: ");
 		ssd1306_putstring(0,36,"Temp: ");
@@ -217,9 +214,8 @@ bool displayPuzzle(const char *aPuzzle, const char *aAnswer_1, const char *aAnsw
 void displayShowText(const char *title, const char *text)
 {
 		ssd1306_clearscreen();
-    ssd1306_setfont(Dialog_plain_12);
+    ssd1306_setfont(Monospaced_plain_10);
     ssd1306_putstring(0,0,title);
-		ssd1306_setfont(Monospaced_plain_10);
     ssd1306_putstring(0,24,text);
 		ssd1306_update();	
 }

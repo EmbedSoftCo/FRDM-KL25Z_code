@@ -31,11 +31,11 @@ void state5(void);
 //Local variabels
 static dataGps_t data;
 static int32_t temp = 0x0000;
-static char sTemp[10];
+static char sTemp[8];
 static int32_t hum = 0x0000;
-static char sHum[10];
+static char sHum[8];
 static char sDistance[32];
-static char sTime[32];\
+static char sTime[32];
 static dateTime_t timestamp;
 static uint8_t uartInput[512];
 static uint16_t i = 0;
@@ -142,7 +142,7 @@ void state1(void) //USER state -> WAIT FOR FIX SCREEN and wait for pressing star
 		if(runOnce == true)
 		{
 			runOnce = false;
-			displayShowText("Waiting for Satelites", "Don't hide ;)");
+			displayShowText("WAITING FOR SATELLITES", "Don't hide ;)");
 		}
 		
 		if(gpsFlag || data.state == 0)
@@ -153,7 +153,7 @@ void state1(void) //USER state -> WAIT FOR FIX SCREEN and wait for pressing star
 		
 		if(data.state == FIX || data.state == GUESSING)
 		{
-			displayShowText("Press to start!" , "Press center button.");
+			displayShowText("PRESS TO START!" , "Press center button.");
 			if(sw_pressed(KEY_CENTER))
 			{
 				varState2 = true;
@@ -185,7 +185,7 @@ void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is se
 			sprintf(sDistance, "%.2lf", distance);
 			delay_us(20);
 			timestamp = convert_unix_timestamp(data.utc);
-			if(timestamp.hour < 5 || timestamp.year < 2024)
+			if(timestamp.hour < 5 && timestamp.year < 2024)
 			{
 				// do nothing
 			}
@@ -208,11 +208,12 @@ void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is se
 		{
 			varState3 = true;
 			varState2 = false;
-			displayShowText("Location found!", "");
+			displayShowText("LOCATION FOUND!", "");
 			delay_us(5000);
 		}
 		if(logFlag ==	true)
 		{
+			// Reset  the log flag
 			logFlag = false;
 			periodicLogging();
 		}
@@ -294,19 +295,21 @@ void state5(void) //SHOW ADMIN SCREEN -> UART0 																															->
 		{
 			uartInput[i] = uart0_get_char();
 			i++;
-		}
-		if(i > 5 && uartInput[0] == 'g' && uartInput[1] == 'e' && uartInput[2] == 't' && uartInput[3] == 'L' && uartInput[4] == 'o'&& uartInput[5] == 'g')
-		{
-			getState = true;
-			i = 0;
-		}
-		else if(i > 6 && uartInput[0] == 's' && uartInput[1] == 'e' && uartInput[2] == 'n' && uartInput[3] == 'd' && uartInput[4] == 'l'&& uartInput[5] == 'o' && uartInput[6] == 'g')
-		{
-			//sendlogToUART();
-		}
-		else if (i > 6)
-		{
-			i = 0;
+			if(uartInput[0] == 'g')
+			{
+				getState = true;
+				i = 0;
+			}
+			else if(uartInput[0] == 's')
+			{
+				sendlogToUART();
+				i = 0;
+			}
+			else
+			{
+				uart0_put_char('0');
+				i = 0;
+			}
 		}
 		while(getState)
 		{
