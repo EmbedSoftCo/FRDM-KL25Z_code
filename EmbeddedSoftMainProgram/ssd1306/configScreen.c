@@ -189,14 +189,10 @@ bool displayPuzzle(const char *aPuzzle, const char *aAnswer_1, const char *aAnsw
 		if(answer == *goodAnswer)
 		{
 			result = true;
-			displayShowText("Good Answer!", "Good job");
-			delay_us(1000000);
 		}
 		else
 		{
 			result = false;
-			displayShowText("Wrong Answer", "Try again");
-			delay_us(1000000);
 		}
 	
 		return result;

@@ -46,6 +46,7 @@ static uint16_t i = 0;
 
 static uint8_t amountLocations;
 static uint8_t counter;
+static uint8_t punishTime;
 
 																																		
 /*!
@@ -99,7 +100,8 @@ int main(void)
 		
 		amountLocations = 3;
 		counter = 1;
-	
+		punishTime = 60;
+		
 		//Wait for starting to show welcome screen
 		delay_us(2000000);
 						
@@ -175,11 +177,16 @@ void state1(void) //USER state -> WAIT FOR FIX SCREEN and wait for pressing star
 
 void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is set
 {
-	displayFlag = true;
-	logFlag = true;
-	distance = 99;
+	bool runOnce = true;
 	while(varState2 == true)
 	{
+		if(runOnce)
+		{
+			runOnce = false;
+			displayFlag = true;
+			logFlag = true;
+			distance = 99;
+		}
 		if(gpsFlag)
 		{
 			gpsFlag = false;
@@ -212,7 +219,7 @@ void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is se
 			varState3 = true;
 			varState2 = false;
 			displayShowText("LOCATION FOUND!", "");
-			delay_us(5000);
+			delay_us(2000000);
 		}
 		if(logFlag ==	true)
 		{
@@ -225,6 +232,7 @@ void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is se
 
 void state3(void) //SHOW QUESTION SCREEN -> show question and let user choose answer
 {
+	bool timerFinished = false;
 	while(varState3 == true)
 	{
 		bool answer = false;
@@ -233,12 +241,16 @@ void state3(void) //SHOW QUESTION SCREEN -> show question and let user choose an
 		{
 			if(counter >= amountLocations)
 			{
+				displayShowText("GOOD ANSWER", "You have done it!");
+				delay_us(2000000);
 				varState4 = true;
 				varState3 = false;
 				return;
 			}
 			else
 			{
+				displayShowText("GOOD ANSWER", "Go to next location");
+				delay_us(2000000);
 				counter++;
 				varState2 = true;
 				varState3 = false;
@@ -249,11 +261,31 @@ void state3(void) //SHOW QUESTION SCREEN -> show question and let user choose an
 		{
 			if(counter >= 2)
 			{
+				displayShowText("WRONG ANSWER", "Go to previous location");
 				counter--;
+				timerFinished = true;
 			}
+			else 
+			{
+				uint16_t sec = 0;
+				while(sec != punishTime)
+				{
+					if (gpsFlag)
+					{
+						gpsFlag = false;
+						char tmp[20];
+						sprintf(tmp, "Wait %u seconds", (punishTime-sec));
+						displayShowText("WRONG ANSWER", tmp);
+						sec++;
+					}
+				}
+			}
+			if(timerFinished)
+			{
 				varState2 = true;
 				varState3 = false;
 				return;
+			}
 		}
 	}
 }

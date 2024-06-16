@@ -129,7 +129,7 @@ dataGps_t gps_newData(void) {
 
                         uint32_t tempUtc = mktime(&date);
                         if (tempUtc != (uint32_t) -1) { //check if the conversion is successful
-                            gpsData.utc = tempUtc;
+                            gpsData.utc = tempUtc+3360; //Set to CET summertime. 4 minutes offset to set get it exactly on time.
                         }
 												checkZDA = true;
                     }
@@ -200,7 +200,7 @@ dateTime_t convert_unix_timestamp(uint32_t unix_timestamp) {
 		if(unix_timestamp > 1717668169)
 		{
 			// Convert the Unix timestamp to a struct tm
-			dt = localtime(&unix_timestamp);
+			dt = localtime(&unix_timestamp); 
 		}
 		else
 		{
@@ -211,7 +211,7 @@ dateTime_t convert_unix_timestamp(uint32_t unix_timestamp) {
     result.year = (uint16_t)(dt->tm_year + 1900);
     result.month = (uint8_t)(dt->tm_mon + 1);
     result.day = (uint8_t)(dt->tm_mday);
-    result.hour = (uint8_t)(dt->tm_hour +2); //Set to CET summertime
+    result.hour = (uint8_t)(dt->tm_hour); 
     result.minute = (uint8_t)(dt->tm_min);
     result.second = (uint8_t)(dt->tm_sec);
     
