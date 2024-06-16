@@ -144,23 +144,12 @@ void sendlogToUART(void)
 			UART0->D = ((uint8_t*)ReadPage)[iter];
 		}		
 		
-		// Send last ASCII character (DEL)
-		while(!(UART0->S1 & UART_S1_TDRE_MASK)){}
-		UART0->D = 0x7f;
-		
 		//Check if 
 		if(ReadPage[0].lattitude < 31) 
 		{	
 			finalPage = true;
 		}			
 	}
-	
-	// Send last ASCII character (DEL)
-	while(!(UART0->S1 & UART_S1_TDRE_MASK)){}
-	UART0->D = 0x7f;
-	// Send last ASCII character (DEL)
-	while(!(UART0->S1 & UART_S1_TDRE_MASK)){}
-	UART0->D = 0x7f;
 }
 
 /****************************************************************************
