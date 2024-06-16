@@ -30,17 +30,20 @@ void state5(void);
 
 //Local variabels
 static dataGps_t data;
+static gameLocation_t location[4];
+static dateTime_t timestamp;
+
 static int32_t temp = 0x0000;
 static char sTemp[8];
 static int32_t hum = 0x0000;
 static char sHum[8];
+static double distance = 99;
 static char sDistance[32];
 static char sTime[32];
-static dateTime_t timestamp;
+
 static uint8_t uartInput[512];
 static uint16_t i = 0;
-static double distance = 99;
-static gameLocation_t location[4];
+
 static uint8_t amountLocations;
 static uint8_t counter;
 
@@ -213,7 +216,7 @@ void state2(void) //SHOW DISTANCE SCREEN -> update screen when displayFlag is se
 		}
 		if(logFlag ==	true)
 		{
-			// Reset  the log flag
+			// Reset the log flag
 			logFlag = false;
 			periodicLogging();
 		}
@@ -266,6 +269,7 @@ void state4(void) //SHOW VICTORY SCREEN -> open box once and wait for confirm bu
 			displayShowText("YOU WON", "press center button to continue");
 			solenoid_trigger();
 			periodicLogging();
+			resetLog();
 		}
 		if(sw_pressed(KEY_CENTER))
 		{
@@ -285,6 +289,7 @@ void state5(void) //SHOW ADMIN SCREEN -> UART0 																															->
 	{
 		if(runOnce == true)
 		{
+			runOnce = false;
 			displayShowText("ADMIN MODE", "");
 		}
 		if(sw_pressed(KEY_DOWN))
@@ -293,22 +298,14 @@ void state5(void) //SHOW ADMIN SCREEN -> UART0 																															->
 		}
 		if(uart0_num_rx_chars_available() > 0)
 		{
-			uartInput[i] = uart0_get_char();
-			i++;
-			if(uartInput[0] == 'g')
+			uartInput[0] = uart0_get_char();
+			if(uartInput[0] == 's')
 			{
 				getState = true;
-				i = 0;
 			}
-			else if(uartInput[0] == 's')
+			else if(uartInput[0] == 'g')
 			{
 				sendlogToUART();
-				i = 0;
-			}
-			else
-			{
-				uart0_put_char('0');
-				i = 0;
 			}
 		}
 		while(getState)

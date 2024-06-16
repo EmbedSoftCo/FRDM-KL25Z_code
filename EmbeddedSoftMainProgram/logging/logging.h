@@ -20,5 +20,6 @@ struct /*__attribute__((packed))*/ MetaData {
 
 void periodicLogging(void);
 void sendlogToUART(void);
+void resetLog(void);
 
 #endif // LOGGING_H
