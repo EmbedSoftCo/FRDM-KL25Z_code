@@ -40,8 +40,8 @@ typedef struct DataGps {
 
 typedef struct GameLocation {
   point_t location;
-	char *question[30];
-	char *answer[4][20];
+	char *question[22];
+	char *answer[4][22];
 	int goodAnswer;
 } gameLocation_t;
 

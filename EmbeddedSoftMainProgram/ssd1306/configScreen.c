@@ -172,7 +172,7 @@ void displayDistance(const char *distance, const char *time, const char *temp, c
 * \return bool: true is correct answer and false is incorrect answer.
  */
 bool displayPuzzle(const char *aPuzzle, const char *aAnswer_1, const char *aAnswer_2, const char *aAnswer_3, volatile int *goodAnswer){
-			
+		
 		bool result = false;
 		int answer;
 	
@@ -207,7 +207,7 @@ bool displayPuzzle(const char *aPuzzle, const char *aAnswer_1, const char *aAnsw
  *
 * \return nothing
  */
-void displayShowText(const char *title, const char *text)
+void displayShowText(char *title, char *text)
 {
 		ssd1306_clearscreen();
     ssd1306_setfont(Monospaced_plain_10);

@@ -74,7 +74,7 @@ int main(void)
 		//location 1
 		location[1].location.lat = 5948933; 
 		location[1].location.lon = 51989406;
-		*location[1].question = "Welkom heb je er zin in?";
+		*location[1].question = "Welkom,\nheb je er zin in?";
 		*location[1].answer[1] = "Ja";
 		*location[1].answer[2] = "Nee";
 		*location[1].answer[3] = "Misschien";
@@ -83,7 +83,7 @@ int main(void)
 		//location 2
 		location[2].location.lat = 5950352;
 		location[2].location.lon = 51988188;
-		*location[2].question = "Welk gebouw staan we bij?";
+		*location[2].question = "Bij welk gebouw\nstaan we?";
 		*location[2].answer[1] = "29";
 		*location[2].answer[2] = "31";
 		*location[2].answer[3] = "26";
@@ -92,7 +92,7 @@ int main(void)
 		//location 3
 		location[3].location.lat = 5947739; 
 		location[3].location.lon = 51988807;
-		*location[3].question = "Hoeveel paaltjes staan er?";
+		*location[3].question = "Hoeveel paaltjes\nstaan er?";
 		*location[3].answer[1] = "3";
 		*location[3].answer[2] = "6";
 		*location[3].answer[3] = "9";
@@ -147,7 +147,7 @@ void state1(void) //USER state -> WAIT FOR FIX SCREEN and wait for pressing star
 		if(runOnce == true)
 		{
 			runOnce = false;
-			displayShowText("WAITING FOR SATELLITES", "Don't hide ;)");
+			displayShowText("WAITING FOR SATELLITE", "Don't hide ;)");
 		}
 		
 		if(gpsFlag || data.state == 0)
@@ -261,7 +261,7 @@ void state3(void) //SHOW QUESTION SCREEN -> show question and let user choose an
 		{
 			if(counter >= 2)
 			{
-				displayShowText("WRONG ANSWER", "Go to previous location");
+				displayShowText("WRONG ANSWER", "Go to\nprevious location");
 				counter--;
 				timerFinished = true;
 			}
@@ -298,7 +298,7 @@ void state4(void) //SHOW VICTORY SCREEN -> open box once and wait for confirm bu
 		if(runOnce == true)
 		{
 			runOnce = false;
-			displayShowText("YOU WON", "press center button to continue");
+			displayShowText("YOU WON", "press center button\nto continue");
 			solenoid_trigger();
 			periodicLogging();
 			resetLog();
